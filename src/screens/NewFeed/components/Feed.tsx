@@ -12,6 +12,7 @@ import Tag from './Tag';
 import { salaryFormatter } from 'utils/formatter';
 import { noop } from 'lodash';
 import moment from 'moment';
+import navigationService from 'services/navigationService';
 
 interface IProps extends Partial<ActionSheetProps> {
   data: IFeed;
@@ -35,12 +36,17 @@ class Feed extends Component<IProps> {
     );
   };
 
+  handleFeedPress = () => {
+    navigationService.navigate({ routeName: 'FeedDetail'});
+  };
+
   render() {
     const { data = {} as IFeed } = this.props;
     const { company = {} as ISource, name ,  skill = [], salary, created_at } = data;
     return (
       <ListItem
-        onLongPress={this.handleLongPress}
+        // onLongPress={this.handleLongPress}
+        onPress={this.handleFeedPress}
         leftAvatar={{
           rounded: true,
           title: company.name[0],

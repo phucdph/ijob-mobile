@@ -4,15 +4,23 @@ import navigationService from 'services/navigationService';
 import { themeVariables } from 'themes/themeVariables';
 import { TouchableOpacity } from 'react-native';
 
-class HeaderBackButton extends Component {
+interface IProps {
+  color?: string;
+}
+
+class HeaderBackButton extends Component<IProps> {
+  static defaultProps = {
+    color: 'white'
+  };
   render() {
+    const { color } = this.props;
     return (
       <TouchableOpacity onPress={navigationService.goBack}>
         <Icon
           containerStyle={{ paddingHorizontal: themeVariables.spacing_md }}
           name="ios-arrow-back"
           type="ionicon"
-          color="white"
+          color={color}
           size={30}
         />
       </TouchableOpacity>

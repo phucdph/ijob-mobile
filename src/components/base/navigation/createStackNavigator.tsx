@@ -31,6 +31,7 @@ export default function createAllScreenStackNavigator(
               },
             };
           }
+
           return StackViewTransitionConfigs.defaultTransitionConfig;
         },
         defaultNavigationOptions: {
