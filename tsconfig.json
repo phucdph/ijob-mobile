@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "jsx": "react-native",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "target": "esnext",
+    "baseUrl": "./src",
+    "paths": {
+      "components/*": ["components/*"],
+      "services/*": ["services/*"],
+      "utils/*": ["utils/*"],
+      "pages/*": ["pages/*"],
+      "themes/*": ["themes/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
