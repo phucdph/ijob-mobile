@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, FlatList } from 'react-native';
+import { View } from 'react-native';
 import HeaderSearchBar from 'components/HeaderSearchBar';
 import Feed from './components/Feed';
 import WhiteSpace from 'components/base/WhiteSpace';
@@ -9,6 +9,7 @@ import { IFeed } from './services/typings';
 import { IPageableData } from 'services/models';
 import ListItemSpinner from 'components/base/ListItemSpinner';
 import Spinner from 'components/base/Spinner';
+import FlatList from 'components/base/FlatList';
 
 interface IProps {
   data: IPageableData<IFeed>;
@@ -46,19 +47,23 @@ class NewFeed extends React.Component<IProps> {
     const { data, onRefresh, onLoadMore, isLoadingNext, isRefreshing, isLoading } = this.props;
     if (data.data.length === 0 && isLoading) { return <Spinner loading={true}/>; }
     return (
-      <View style={{ flex: 1, backgroundColor: themeVariables.fill_base_color }}>
+      <View
+        style={{ flex: 1, backgroundColor: themeVariables.fill_base_color }}
+      >
         <FlatList
           data={data.data}
           refreshing={isRefreshing}
           renderItem={this.renderFeedItem}
           onRefresh={onRefresh}
           ItemSeparatorComponent={this.renderItemSeparatorComponent}
-          keyExtractor={(item: IFeed, index: number) => `${item.id}-${index}`}
+          keyExtractor={(item: IFeed, index: number) =>
+            `${item.id}-${index}`
+          }
           showsVerticalScrollIndicator={false}
           onEndReached={onLoadMore}
           onEndReachedThreshold={0.5}
           scrollEventThrottle={16}
-          ListFooterComponent={<ListItemSpinner loading={isLoadingNext}/>}
+          ListFooterComponent={<ListItemSpinner loading={isLoadingNext} />}
           initialNumToRender={10}
           maxToRenderPerBatch={20}
           shouldRasterizeIOS={true}

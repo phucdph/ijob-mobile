@@ -35,6 +35,7 @@
         "CAMERA",
         "READ_EXTERNAL_STORAGE"
       ]
-    }
+    },
+    "description": ""
   }
 }

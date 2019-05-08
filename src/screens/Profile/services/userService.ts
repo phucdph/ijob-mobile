@@ -11,8 +11,8 @@ class UserService extends RestAPIClient {
   };
 
   getMyProfile = async (): Promise<IUser> => {
-    const res = await this.get('auth/validateToken', {});
-    return res.profile;
+    const res = await this.get('auth/validateToken');
+    return res.data.profile;
   };
 }
 

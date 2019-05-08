@@ -23,7 +23,7 @@ class RestAPIClient {
   async request(contextPath: string, method: string, payload?: any) {
     try {
       let url = `${API_URL}/${this.path}${contextPath}`;
-      if (method === 'GET') {
+      if (method === 'GET' && payload) {
         url = `${url}?${querystring.stringify(payload || {})}`;
       }
       const options = {
@@ -59,7 +59,7 @@ class RestAPIClient {
     }
   }
 
-  get = (contextPath: string, params: object) =>
+  get = (contextPath: string, params?: object) =>
     this.request(contextPath, 'GET', params);
 
   post = (contextPath: string, body: object) =>

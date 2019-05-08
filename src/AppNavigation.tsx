@@ -2,7 +2,8 @@ import {
   createAppContainer,
   createSwitchNavigator,
   NavigationScreenConfigProps,
-  NavigationActions
+  NavigationActions,
+  createBottomTabNavigator
 } from 'react-navigation';
 import { connect } from 'react-redux';
 import { AuthNavigators, AppNavigators } from './navigators';
@@ -33,15 +34,19 @@ const HomeStack = createAllScreenStackNavigator(AppNavigators, {
   initialRouteName: 'NewFeed'
 });
 
-const Tabs = createMaterialBottomTabNavigator(
+const ProfileStack = createAllScreenStackNavigator(AppNavigators, {
+  initialRouteName: 'Profile'
+});
+
+const Tabs = createBottomTabNavigator(
   {
     Home: HomeStack,
+    ProfileTab: ProfileStack,
     Notifications: NotificationStack,
     Settings: SettingStack
   },
   {
     lazy: true,
-    shifting: true,
     defaultNavigationOptions: ({
       navigation
     }: NavigationScreenConfigProps) => ({
@@ -56,19 +61,25 @@ const Tabs = createMaterialBottomTabNavigator(
         } else if (routeName === 'Notifications') {
           iconName = 'ios-notifications';
         }
+        else if (routeName === 'ProfileTab') {
+          iconName = 'ios-contact';
+        }
         return (
           <IconComponent
             name={iconName}
-            size={25}
+            size={30}
             color={tintColor as string}
           />
         );
       }
     }),
-    activeColor: themeVariables.primary_color,
-    inactiveColor: 'gray',
-    barStyle: { backgroundColor: 'white' }
-  }
+    // tabBarPosition: 'bottom',
+    tabBarOptions: {
+      activeTintColor: themeVariables.primary_color,
+      inactiveTintColor: 'gray',
+      showLabel: false,
+    },
+   }
 );
 
 const AppContainer = createAppContainer(

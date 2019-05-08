@@ -20,4 +20,5 @@ export const themeVariables = {
   window_width: width,
   profile_avatar_size: 150,
   profile_cover_size: 200,
+  title_font_size: 15,
 };

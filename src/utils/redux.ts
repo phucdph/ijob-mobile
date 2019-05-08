@@ -67,6 +67,7 @@ function createSelectorsA(context: string, keys?: string[]): any {
   if (isEmpty(keys)) {
     return stateSelector;
   }
+  // @ts-ignore
   return keys.map((key: string) => {
     return (stateValue: any) => get(stateSelector(stateValue), key);
   });

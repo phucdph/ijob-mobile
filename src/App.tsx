@@ -1,5 +1,3 @@
-import { useScreens } from 'react-native-screens';
-useScreens();
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import AppNavigation from './AppNavigation';
@@ -8,10 +6,7 @@ import { noop } from 'lodash';
 import { StatusBar } from 'react-native';
 import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { PersistGate } from 'redux-persist/integration/react';
-import { setExpoStatusBarHeight } from 'react-navigation-collapsible';
-import { Constants } from 'expo';
-setExpoStatusBarHeight(Constants.statusBarHeight);
-
+import { AppLoading } from 'expo';
 
 interface IProps {}
 
@@ -41,8 +36,8 @@ class App extends React.Component<IProps, IState> {
   render() {
     return (
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <StatusBar hidden={false} barStyle={'light-content'} />
+        <PersistGate loading={<AppLoading/>} persistor={persistor}>
+          {/*<StatusBar hidden={false} barStyle={'light-content'} />*/}
           <ActionSheetProvider>
             <AppNavigation />
           </ActionSheetProvider>

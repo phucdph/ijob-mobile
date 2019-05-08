@@ -38,7 +38,7 @@ class Setting extends Component<IProps> {
     const { profile = {} as IUser } = this.props;
     const { firstName = '', lastName = '' } = profile;
     navigationService.navigate({
-      routeName: 'Profile',
+      routeName: 'ProfileTab',
       params: {
         placeholder: `${firstName} ${lastName}`
       }

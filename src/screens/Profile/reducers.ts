@@ -1,5 +1,5 @@
 import {
-  getUserProfile, getUserProfileSuccess, getUserProfileFail
+  getUserProfile, getUserProfileSuccess, getUserProfileFail, refreshUserProfile
 } from './actions';
 import { createReducers } from 'utils/redux';
 import { stateContext, IUserState, initialState } from './state';
@@ -10,6 +10,12 @@ import { Action } from 'services/typings';
 const userReducers = [
   {
     on: getUserProfile,
+    reducer: (state: IUserState, action: Action<{}>) => {
+      state.action = action.type;
+    }
+  },
+  {
+    on: refreshUserProfile,
     reducer: (state: IUserState, action: Action<{}>) => {
       state.action = action.type;
     }

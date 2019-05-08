@@ -5,5 +5,6 @@ export interface IUser {
   lastName: string;
   avatar: string;
   createdAt: string;
+  email: string;
   token?: string;
 }

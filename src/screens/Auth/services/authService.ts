@@ -15,7 +15,7 @@ class AuthService extends RestAPIClient {
   };
 
   checkTokenValid = async () => {
-    return (await this.post('/validateToken', {})).data;
+    return (await this.get('/validateToken')).data;
   };
 
   presistAuth = async (req: ISignUpRequest) => {

@@ -11,9 +11,9 @@
           "stores": "./src/stores",
           "utils": "./src/utils",
           "services": "./src/services",
-          "themes": "./src/themes",
+          "themes": "./src/themes"
         }
-      },
-    ],
-  ],
+      }
+    ]
+  ]
 }

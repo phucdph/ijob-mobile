@@ -9,6 +9,7 @@ import { Easing, Animated } from 'react-native';
 import { themeVariables } from 'themes/themeVariables';
 import HeaderBackButton from 'components/HeaderBackButton';
 import * as React from 'react';
+import { Constants } from 'expo';
 
 export default function createAllScreenStackNavigator(
   route: NavigationScreenRouteConfig,
@@ -19,7 +20,7 @@ export default function createAllScreenStackNavigator(
     merge(
       {
         headerTransitionPreset: 'fade-in-place',
-        headerMode: isIOS? 'float' : 'screen',
+        headerMode: isIOS ? 'float' : 'screen',
         transitionConfig: (transitionProps: any, prevTransitionProps: any, isModal: any) => {
           // @ts-ignore
           if (last(get(transitionProps, 'scenes')).route.routeName === 'Search') {
@@ -34,10 +35,12 @@ export default function createAllScreenStackNavigator(
 
           return StackViewTransitionConfigs.defaultTransitionConfig;
         },
+
         defaultNavigationOptions: {
           headerStyle: {
             backgroundColor: themeVariables.primary_color,
             elevation: 0,
+            height: 44,
           },
           headerBackImage: <HeaderBackButton/>,
           headerBackTitle: null,
@@ -47,7 +50,27 @@ export default function createAllScreenStackNavigator(
           headerTitleStyle: {
             color: 'white',
           },
-        }
+          headerForceInset: {
+            top: isIOS ? Constants.statusBarHeight : 'never',
+          }
+        },
+        headerTitleInterpolator: sceneProps => {
+          const { layout, position, scene } = sceneProps;
+          const { index } = scene;
+
+          return {
+            opacity: position.interpolate({
+              inputRange: [index - 1, index, index + 1],
+              outputRange: [ 0, 1, 0],
+            }),
+            transform: [{
+              translateX: position.interpolate({
+                inputRange: [index - 1, index, index + 1],
+                outputRange: [-50, 0, 50],
+              }),
+            }]
+          };
+        },
       },
       config
     )

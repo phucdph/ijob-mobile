@@ -17,7 +17,8 @@ export const initialState: IUserState = {
     firstName: '',
     lastName: '',
     avatar: '',
-    createdAt: ''
+    createdAt: '',
+    email: '',
   },
   error: null,
 };

@@ -44,9 +44,11 @@ class AppLoading extends Component<IProps> {
         await authService.presistAuth({ ...res.profile, token: auth.token });
         navigation.navigate('App');
       } else {
+        authService.clearPresistAuth();
         navigation.navigate('Auth');
       }
     } catch (e) {
+      authService.clearPresistAuth();
       navigation.navigate('Auth');
     }
   };
