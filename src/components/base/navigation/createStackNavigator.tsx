@@ -26,7 +26,7 @@ export default function createAllScreenStackNavigator(
           if (last(get(transitionProps, 'scenes')).route.routeName === 'Search') {
             return {
               transitionSpec: {
-                duration: 0,
+                duration: 5,
                 timing: Animated.timing,
                 easing: Easing.step0,
               },

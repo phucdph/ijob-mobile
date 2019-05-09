@@ -1,5 +1,4 @@
 import AuthNavigator  from './screens/Auth/navigator';
-import MainNavigator from './screens/Main/navigator';
 import NewFeedNavigator  from './screens/NewFeed/navigator';
 import SettingNavigator from './screens/Setting/navigator';
 import SearchNavigator from './screens/Search/navigator';
@@ -11,7 +10,6 @@ export const AuthNavigators = {
 };
 
 export const AppNavigators = {
-  ...MainNavigator,
   ...NewFeedNavigator,
   ...SettingNavigator,
   ...SearchNavigator,

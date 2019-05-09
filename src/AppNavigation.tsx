@@ -3,7 +3,7 @@ import {
   createSwitchNavigator,
   NavigationScreenConfigProps,
   NavigationActions,
-  createBottomTabNavigator
+  createBottomTabNavigator, StackViewTransitionConfigs, createStackNavigator, NavigationTransitionProps
 } from 'react-navigation';
 import { connect } from 'react-redux';
 import { AuthNavigators, AppNavigators } from './navigators';
@@ -82,15 +82,29 @@ const Tabs = createBottomTabNavigator(
    }
 );
 
+const ModalNavigators = Object.keys(AppNavigators).reduce((accumulator: any, currentValue: string) => {
+  accumulator[`${currentValue}Modal`] = AppNavigators[currentValue];
+  return accumulator;
+}, {});
+
 const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
       AppLoading,
-      App: Tabs,
-      Auth: AuthStack
+      App: createAllScreenStackNavigator({
+        Main: {
+          screen: Tabs,
+          navigationOptions: () => ({ header: null })
+        },
+        ...ModalNavigators,
+      },{
+        headerMode: 'screen',
+        transitionConfig: () => StackViewTransitionConfigs.ModalSlideFromBottomIOS
+      }),
+      Auth: AuthStack,
     },
     {
-      initialRouteName: 'AppLoading'
+      initialRouteName: 'AppLoading',
     }
   )
 );

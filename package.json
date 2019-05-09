@@ -32,6 +32,7 @@
     "redux-persist-transform-compress": "^4.2.0",
     "redux-saga": "^1.0.2",
     "reselect": "^4.0.0",
+    "uglify-es": "3.2.2",
     "yup": "^0.27.0"
   },
   "devDependencies": {

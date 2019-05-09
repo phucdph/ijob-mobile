@@ -22,7 +22,7 @@ class Search extends Component<IProps> {
     return {
       headerRight: null,
       headerLeft: null,
-      headerTitle: <HeaderSearchBarInput />
+      headerTitle: <HeaderSearchBarInput />,
     };
   };
 
