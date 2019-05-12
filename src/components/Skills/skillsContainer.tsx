@@ -1,28 +1,29 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { searchNextSkills, searchSkills, refreshSearchSkills } from './actions';
-import {
-  locationDataStateSelector,
-  locationStateSelector
-} from 'components/Locations/selectors';
+import { searchNextSkills, searchSkills, refreshSearchSkills, resetSearchSkills } from './actions';
 import { IError } from 'services/models/Error';
 import { ISearchSKillRequest, ISkill } from 'components/Skills/services/typings';
 import { IPageableData } from 'services/models';
+import { skillStateSelector } from 'components/Skills/selectors';
+import { SKILL_PAGING_SIZE } from 'components/Skills/constants';
 
 interface IProps {
   dispatchSearchSkill: (req: ISearchSKillRequest) => void;
   dispatchSearchNextSkill: (req: ISearchSKillRequest) => void;
   dispatchRefreshSkill: (req: ISearchSKillRequest) => void
+  dispatchResetSearchSkill: () => void;
   skills: IPageableData<ISkill>;
   action: string;
   error: IError;
 }
 
-export default function locationContainer(Component: any) {
+export default function skillContainer(Component: any) {
   class SearchSkillContainer extends React.Component<IProps> {
+    static navigationOptions = Component.navigationOptions;
+
     req: ISearchSKillRequest = {
       searchText: '',
-      limit: 30,
+      limit: SKILL_PAGING_SIZE,
       offset: 0,
     };
 
@@ -39,14 +40,15 @@ export default function locationContainer(Component: any) {
     };
 
     handleSearchNext = () => {
-      const { dispatchSearchSkill } = this.props;
+      const { dispatchSearchNextSkill, skills } = this.props;
       const { searchText, offset } = this.req;
+      if (skills.data.length >= skills.total || this.isLoading() || this.isLoadingNext() ) { return; }
       this.req = {
         searchText,
-        limit: 30,
-        offset: offset + 30,
+        limit: SKILL_PAGING_SIZE,
+        offset: offset + SKILL_PAGING_SIZE,
       };
-      dispatchSearchSkill(this.req);
+      dispatchSearchNextSkill(this.req);
     };
 
     handleRefresh = () => {
@@ -54,11 +56,15 @@ export default function locationContainer(Component: any) {
       const { searchText } = this.req;
       this.req = {
         searchText,
-        limit: 30,
+        limit: SKILL_PAGING_SIZE,
         offset: 0,
       };
       dispatchRefreshSkill(this.req);
     };
+
+    componentWillUnmount(): void {
+      this.props.dispatchResetSearchSkill();
+    }
 
     render() {
       const {
@@ -85,11 +91,11 @@ export default function locationContainer(Component: any) {
   }
 
   const mapStateToProps = (state: any) => {
-    const locationState = locationStateSelector(state);
+    const skillState = skillStateSelector(state);
     return {
-      action: locationState.action,
-      error: locationState.error,
-      locations: locationDataStateSelector(state)
+      action: skillState.action,
+      error: skillState.error,
+      skills: skillState.data
     };
   };
 
@@ -97,7 +103,8 @@ export default function locationContainer(Component: any) {
     return {
       dispatchSearchSkill: (req: ISearchSKillRequest) => dispatch(searchSkills(req)),
         dispatchSearchNextSkill: (req: ISearchSKillRequest) => dispatch(searchNextSkills(req)),
-        dispatchRefreshSkill: (req: ISearchSKillRequest) => dispatch(refreshSearchSkills(req))
+        dispatchRefreshSkill: (req: ISearchSKillRequest) => dispatch(refreshSearchSkills(req)),
+      dispatchResetSearchSkill: () => dispatch(resetSearchSkills())
     };
   };
 

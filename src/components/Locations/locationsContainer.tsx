@@ -18,9 +18,10 @@ interface IProps {
 
 export default function locationContainer(Component: any) {
   class LocationsContainer extends React.Component<IProps> {
+  static navigationOptions = Component.navigationOptions;
 
     loadLocations = () => {
-      const { dispatchGetLocations, locations = [] } = this.props;
+      const { dispatchGetLocations, locations } = this.props;
       if (!(locations && locations.length > 0 )) {
         dispatchGetLocations();
       }

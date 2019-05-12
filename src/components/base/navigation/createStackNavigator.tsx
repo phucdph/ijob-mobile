@@ -1,7 +1,8 @@
 import {
   StackNavigatorConfig,
   NavigationScreenRouteConfig,
-  createStackNavigator, StackViewTransitionConfigs
+  createStackNavigator,
+  StackViewTransitionConfigs
 } from 'react-navigation';
 import { merge, get, last } from 'lodash';
 import { isIOS } from 'utils/platform';
@@ -21,37 +22,43 @@ export default function createAllScreenStackNavigator(
       {
         headerTransitionPreset: 'fade-in-place',
         headerMode: isIOS ? 'float' : 'screen',
-        transitionConfig: (transitionProps: any, prevTransitionProps: any, isModal: any) => {
+        transitionConfig: (
+          transitionProps: any,
+          prevTransitionProps: any,
+          isModal: any
+        ) => {
           // @ts-ignore
-          if (last(get(transitionProps, 'scenes')).route.routeName === 'Search') {
+          if (
+            last(get(transitionProps, 'scenes')).route.routeName === 'Search'
+          ) {
             return {
               transitionSpec: {
                 duration: 5,
                 timing: Animated.timing,
-                easing: Easing.step0,
-              },
+                easing: Easing.step0
+              }
             };
           }
 
           return StackViewTransitionConfigs.defaultTransitionConfig;
         },
-
+        headerLayoutPreset: 'center',
         defaultNavigationOptions: {
           headerStyle: {
             backgroundColor: themeVariables.primary_color,
             elevation: 0,
-            height: 44,
+            height: 44
           },
-          headerBackImage: <HeaderBackButton/>,
+          headerBackImage: <HeaderBackButton />,
           headerBackTitle: null,
           headerBackTitleStyle: {
-            color: 'white',
+            color: 'white'
           },
           headerTitleStyle: {
-            color: 'white',
+            color: 'white'
           },
           headerForceInset: {
-            top: isIOS ? Constants.statusBarHeight : 'never',
+            top: isIOS ? Constants.statusBarHeight : 'never'
           }
         },
         headerTitleInterpolator: sceneProps => {
@@ -61,16 +68,18 @@ export default function createAllScreenStackNavigator(
           return {
             opacity: position.interpolate({
               inputRange: [index - 1, index, index + 1],
-              outputRange: [ 0, 1, 0],
+              outputRange: [0, 1, 0]
             }),
-            transform: [{
-              translateX: position.interpolate({
-                inputRange: [index - 1, index, index + 1],
-                outputRange: [-50, 0, 50],
-              }),
-            }]
+            transform: [
+              {
+                translateX: position.interpolate({
+                  inputRange: [index - 1, index, index + 1],
+                  outputRange: [-50, 0, 50]
+                })
+              }
+            ]
           };
-        },
+        }
       },
       config
     )

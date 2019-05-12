@@ -19,6 +19,7 @@ class HeaderSearchBarInput extends React.Component<IProps> {
   };
 
   render() {
+    const { onChangeText } = this.props;
     return (
         <View style={styles.container}>
           <Input
@@ -36,6 +37,8 @@ class HeaderSearchBarInput extends React.Component<IProps> {
               name={'ios-search'}
               style={{ fontSize: 20, color: '#7d7d7d' }}
             />}
+            onChangeText={onChangeText}
+            clearButtonMode={'always'}
           />
           <TouchableOpacity
             onPress={this.handleCancelPress}

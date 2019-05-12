@@ -1,5 +1,6 @@
 import RestAPIClient from 'services/RestAPIClient';
 import { ILocation } from './typings';
+import { get } from 'lodash';
 
 class LocationService extends RestAPIClient {
   constructor() {
@@ -9,7 +10,7 @@ class LocationService extends RestAPIClient {
 
   getLocations = async (): Promise<ILocation[]> => {
     const res = await this.get('');
-    return res.data;
+    return get(res, 'data.data', []);
   };
 }
 

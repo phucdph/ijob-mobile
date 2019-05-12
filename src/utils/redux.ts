@@ -1,4 +1,4 @@
-import { reduce, isEmpty, flatten, get, set } from 'lodash';
+import { reduce, isEmpty, flatten, get, set, isArray } from 'lodash';
 import { createSelector } from 'reselect';
 import { takeLatest } from 'redux-saga/effects';
 import {
@@ -40,7 +40,11 @@ function createReducers(
   const mapReducers = reduce(
     flatten(reducers),
     (reducer: any, action: any) => {
-      reducer[action.on] = action.reducer;
+      if (isArray(action.on)) {
+        action.on.forEach((elm: any) => {
+          reducer[elm] = action.reducer;
+        })
+      } else { reducer[action.on] = action.reducer; }
       return reducer;
     },
     {}

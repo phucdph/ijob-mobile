@@ -8,13 +8,13 @@ interface IProps {
 
 class HeaderTitle extends React.Component<IProps> {
   static defaultProps = {
-    size: 16
+    size: 18
   };
   render() {
     const { title, size } = this.props;
     return (
-      <View>
-        <Text style={{ fontWeight: 'bold', fontSize: size }}>{title}</Text>
+      <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+        <Text style={{ fontWeight: 'bold', fontSize: size, color: 'white' }}>{title}</Text>
       </View>
     );
   }

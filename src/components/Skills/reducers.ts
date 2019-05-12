@@ -1,11 +1,11 @@
 import {
   searchSkills,
   searchSkillsSuccess,
-  searchsSkillFail,
+  searchSkillsFail,
   searchNextSkills,
   searchNextSkillsSuccess,
-  searchsNextSkillFail,
-  refreshSearchSkills
+  searchNextSkillsFail,
+  refreshSearchSkills, resetSearchSkills
 } from './actions';
 import { createReducers } from 'utils/redux';
 import { stateContext, ILocationState, initialState } from './state';
@@ -30,7 +30,17 @@ const skillReducers = [
     }
   },
   {
-    on: [searchsSkillFail, searchsNextSkillFail],
+    on: resetSearchSkills,
+    reducer: (state: ILocationState) => {
+      // tslint:disable-next-line:forin
+      for (const key in state) {
+        // @ts-ignore
+        state[key] = initialState[key];
+      };
+    }
+  },
+  {
+    on: [searchSkillsFail, searchNextSkillsFail],
     reducer: (state: ILocationState, action: Action<IError>) => {
       state.action = action.type;
       state.error = new ErrorState(action.payload);

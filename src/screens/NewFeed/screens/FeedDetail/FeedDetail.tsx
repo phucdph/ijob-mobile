@@ -7,13 +7,14 @@ import { themeVariables } from 'themes/themeVariables';
 import Tag from '../../components/Tag';
 import { ISkill } from '../../services/typings';
 import WhiteSpace from 'components/base/WhiteSpace';
+import { isIOS } from 'utils/platform';
 
 class FeedDetail extends Component {
   static navigationOptions = {
     header: (
       <View
         style={{
-          paddingTop: Constants.statusBarHeight,
+          paddingTop: isIOS ? Constants.statusBarHeight : 0,
           backgroundColor: 'white'
         }}
       />
@@ -142,7 +143,7 @@ class FeedDetail extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <StatusBar barStyle={'dark-content'} />
+        <StatusBar barStyle={'dark-content'} backgroundColor={'white'}/>
         <View
           style={{
             flexDirection: 'row',

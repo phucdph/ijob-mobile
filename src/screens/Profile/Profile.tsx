@@ -4,7 +4,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
-  RefreshControl
+  RefreshControl, ActivityIndicator, ImagePickerIOS
 } from 'react-native';
 import {
   NavigationInjectedProps,
@@ -16,11 +16,14 @@ import { Avatar, Icon, Image } from 'react-native-elements';
 import { themeVariables } from 'themes/themeVariables';
 import { IUser } from './services/typings';
 import WhiteSpace from 'components/base/WhiteSpace';
-import { get } from 'lodash';
+import { get, noop } from 'lodash';
 import { ISkill } from '../NewFeed/services/typings';
 import Tag from '../NewFeed/components/Tag';
-import { ImagePicker, Permissions } from 'expo';
-import { cloudiaryService } from 'services/cloudiaryService';
+import { ImagePicker, Permissions, Camera } from 'expo';
+import navigationService from 'services/navigationService';
+import {
+  connectActionSheet,
+} from '@expo/react-native-action-sheet';
 
 interface IProps extends NavigationInjectedProps {
   profile: IUser;
@@ -28,12 +31,17 @@ interface IProps extends NavigationInjectedProps {
   refreshProfile: () => void;
   isLoading?: boolean;
   isRefreshing?: boolean;
+  isUpdatingAvatar?: boolean;
+  onUpdateAvatar: (req: string) => void;
+  showActionSheetWithOptions?: (req: any) => void;
 }
-
+// @ts-ignore
+@connectActionSheet
 class Profile extends Component<IProps> {
   static defaultProps = {
     isLoading: false,
-    isRefreshing: false
+    isRefreshing: false,
+    showActionSheetWithOptions: noop,
   };
 
   static navigationOptions = ({ navigation }: NavigationScreenConfigProps) => {
@@ -69,6 +77,39 @@ class Profile extends Component<IProps> {
     }
   }
 
+  handleOpenActionSheet = () => {
+    const options = ['Take new photo', 'Select new from gallery', 'Cancel'];
+    const cancelButtonIndex = 2;
+    // @ts-ignore
+    this.props.showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex,
+      },
+      (buttonIndex: number) => {
+        switch (buttonIndex) {
+          case 0: {
+            this.handleTakeNewPhoto();
+            break;
+          }
+          case 1: {
+            this.handleImagePicker();
+            break;
+          }
+          default: {
+            break;
+          }
+        }
+      },
+    );
+  };
+
+  handleTakeNewPhoto = () => {
+    navigationService.navigate({
+      routeName: 'CameraModal',
+    })
+  };
+
   handleImagePicker = async () => {
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
     if (status !== 'granted') {
@@ -83,12 +124,11 @@ class Profile extends Component<IProps> {
     if (img.cancelled) {
       return;
     }
-    const res = await cloudiaryService.uploadImage(img.base64);
-    console.log(res);
+    this.props.onUpdateAvatar(img.base64);
   };
 
   renderCoverAndAvatar = () => {
-    const { profile } = this.props;
+    const { profile, isUpdatingAvatar } = this.props;
     const { avatar, firstName, lastName } = profile;
     return (
       <View style={{ backgroundColor: 'white' }}>
@@ -115,6 +155,18 @@ class Profile extends Component<IProps> {
           }}
         >
           <View style={{ zIndex: 2 }}>
+            {isUpdatingAvatar && <View style={{
+              zIndex: 3,
+              position: 'absolute',
+              width: themeVariables.profile_avatar_size,
+              height: themeVariables.profile_avatar_size,
+              borderRadius: 100,
+              backgroundColor: themeVariables.fill_base_color,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+              <ActivityIndicator size={'large'}/>
+            </View>}
             <Avatar
               source={{
                 uri: avatar ? avatar : undefined
@@ -124,7 +176,7 @@ class Profile extends Component<IProps> {
               rounded={true}
               containerStyle={{ borderWidth: 5, borderColor: 'white' }}
             />
-            <TouchableOpacity onPress={this.handleImagePicker}>
+            <TouchableOpacity onPress={this.handleOpenActionSheet}>
               <Icon
                 name={'md-create'}
                 type={'ionicon'}
@@ -172,7 +224,12 @@ class Profile extends Component<IProps> {
     );
   };
 
+  handleEditSkillPress = () => {
+    navigationService.navigate({ routeName: 'ListOfSkillModal'});
+  };
+
   renderSkill = () => {
+    const { skills = [] } = this.props.profile;
     return (
       <View
         style={{
@@ -188,22 +245,49 @@ class Profile extends Component<IProps> {
           }}
         >
           <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Skill</Text>
-          <Icon name={'md-create'} type={'ionicon'} />
+          <Icon
+            name={'md-create'}
+            type={'ionicon'}
+            onPress={this.handleEditSkillPress}
+          />
         </View>
-        <View style={{ padding: themeVariables.spacing_md }}>
-          <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-            {[{ id: '1', name: 'ReactJS' }, { id: '2', name: 'React Native' }].map((s: ISkill, i: number) => (
-              <Tag
-                name={s.name.trim()}
-                key={`${s.id}-${i}`}
-                style={{
-                  marginRight: themeVariables.spacing_sm,
-                  marginVertical: themeVariables.spacing_xs
-                }}
-              />
-            ))}
+        {skills.length > 0 ? (
+          <View style={{ padding: themeVariables.spacing_md }}>
+            {
+              <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                {(skills || []).map((s: ISkill, i: number) => (
+                  <Tag
+                    name={s.name.trim()}
+                    key={`${s.id}-${i}`}
+                    style={{
+                      marginRight: themeVariables.spacing_sm,
+                      marginVertical: themeVariables.spacing_xs
+                    }}
+                  />
+                ))}
+              </View>
+            }
           </View>
-        </View>
+        ) : (
+          <TouchableOpacity onPress={this.handleEditSkillPress}>
+            <View
+              style={{
+                padding: themeVariables.spacing_md,
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 80
+              }}
+            >
+              <View
+                style={{ paddingHorizontal: themeVariables.spacing_xl * 2 }}
+              >
+                <Text style={{ textAlign: 'center', fontSize: 15 }}>
+                  You currently do not have any skills. Tap here to add.
+                </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        )}
       </View>
     );
   };
@@ -224,15 +308,20 @@ class Profile extends Component<IProps> {
           }}
         >
           <Text style={{ fontWeight: 'bold', fontSize: themeVariables.title_font_size }}>Saved job</Text>
-          {/*<Icon name={'md-create'} type={'ionicon'} />*/}
+          <Icon name={'md-create'} type={'ionicon'} />
         </View>
         <View style={{ padding: themeVariables.spacing_md }} />
       </View>
     );
   };
 
+  handleEditInfoPress = () => {
+    navigationService.navigate({routeName: 'EditInfoModal'});
+  };
+
   renderInfo = () => {
     const { email } = this.props.profile;
+    const location = get(this.props, 'profile.location.name');
     return (
       <View
         style={{
@@ -248,7 +337,7 @@ class Profile extends Component<IProps> {
           }}
         >
           <Text style={{ fontWeight: 'bold', fontSize: themeVariables.title_font_size }}>Information</Text>
-          <Icon name={'md-create'} type={'ionicon'} />
+          <Icon name={'md-create'} type={'ionicon'} onPress={this.handleEditInfoPress}/>
         </View>
         <View
           style={{ padding: themeVariables.spacing_md, flexDirection: 'row' }}
@@ -260,6 +349,16 @@ class Profile extends Component<IProps> {
             <Text>{email}</Text>
           </View>
         </View>
+        {location && <View
+          style={{ padding: themeVariables.spacing_md, flexDirection: 'row' }}
+        >
+          <View style={{ flex: 0.3 }}>
+            <Text style={{ fontWeight: 'bold' }}>Address:</Text>
+          </View>
+          <View style={{ flex: 0.7, alignItems: 'flex-end' }}>
+            <Text>{location}</Text>
+          </View>
+        </View>}
       </View>
     );
   };

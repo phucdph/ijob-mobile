@@ -1,5 +1,14 @@
 import {
-  getUserProfile, getUserProfileSuccess, getUserProfileFail, refreshUserProfile
+  getUserProfile,
+  getUserProfileSuccess,
+  getUserProfileFail,
+  refreshUserProfile,
+  updateUserProfile,
+  updateUserProfileSuccess,
+  updateUserProfileFail,
+  updateUserAvatar,
+  updateUserAvatarSuccess,
+  updateUserAvatarFail
 } from './actions';
 import { createReducers } from 'utils/redux';
 import { stateContext, IUserState, initialState } from './state';
@@ -34,6 +43,26 @@ const userReducers = [
       state.error = new ErrorState(action.payload);
     }
   },
+  {
+    on: [updateUserProfile, updateUserAvatar],
+    reducer: (state: IUserState, action: Action<{}>) => {
+      state.action = action.type;
+    }
+  },
+  {
+    on: [updateUserProfileSuccess, updateUserAvatarSuccess],
+    reducer: (state: IUserState, action: Action<IUser>) => {
+      state.action = action.type;
+      state.data = { ...state.data, ...action.payload };
+    }
+  },
+  {
+    on: [updateUserProfileFail, updateUserAvatarFail],
+    reducer: (state: IUserState, action: Action<IError>) => {
+      state.action = action.type;
+      state.error = new ErrorState(action.payload);
+    }
+  }
 ];
 
 export default createReducers(stateContext, userReducers, initialState);

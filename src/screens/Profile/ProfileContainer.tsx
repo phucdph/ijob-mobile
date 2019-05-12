@@ -3,13 +3,14 @@ import Profile from './Profile';
 import { currentProfileSelector, userStateSelector } from './selectors';
 import { connect } from 'react-redux';
 import { IUser } from './services/typings';
-import { getUserProfile, refreshUserProfile } from './actions';
+import { getUserProfile, refreshUserProfile, updateUserAvatar } from './actions';
 
 interface IProps {
   profile: IUser;
   dispatchGetProfile: () => void;
   dispatchRefreshProfile: () => void;
   action: string;
+  dispatchUpdateUserAvatar: (req: string) => void;
 }
 
 class ProfileContainer extends Component<IProps> {
@@ -18,6 +19,13 @@ class ProfileContainer extends Component<IProps> {
   isLoading = () => getUserProfile.is(this.props.action);
 
   isRefreshing = () => refreshUserProfile.is(this.props.action);
+
+  isUpdatingAvatar = () => updateUserAvatar.is(this.props.action);
+
+  handleUpdateAvatar = (req: string) => {
+    const { dispatchUpdateUserAvatar } = this.props;
+    dispatchUpdateUserAvatar(req);
+  };
 
   render() {
     const { profile, dispatchGetProfile, dispatchRefreshProfile } = this.props;
@@ -28,6 +36,8 @@ class ProfileContainer extends Component<IProps> {
         refreshProfile={dispatchRefreshProfile}
         isLoading={this.isLoading()}
         isRefreshing={this.isRefreshing()}
+        isUpdatingAvatar={this.isUpdatingAvatar()}
+        onUpdateAvatar={this.handleUpdateAvatar}
       />
     );
   }
@@ -44,7 +54,9 @@ const mapStateToProps = (state: any) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     dispatchGetProfile: () => dispatch(getUserProfile()),
-    dispatchRefreshProfile: () => dispatch(refreshUserProfile())
+    dispatchRefreshProfile: () => dispatch(refreshUserProfile()),
+    dispatchUpdateUserAvatar: (req: string) =>
+      dispatch(updateUserAvatar(req))
   };
 };
 

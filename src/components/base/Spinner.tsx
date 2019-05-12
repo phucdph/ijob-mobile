@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, View } from 'react-native';
+import { default as RNSpinner } from 'react-native-loading-spinner-overlay';
 
 interface IProps {
   isModal?: boolean;
@@ -11,12 +12,14 @@ class Spinner extends Component<IProps> {
   static defaultProps: Partial<IProps> = {
     isModal: false,
     loading: false,
-    overlay: 0,
+    overlay: 0
   };
 
   render() {
-    const { isModal, loading, overlay } = this.props;
-    if (!loading) return null;
+    const { isModal, loading, overlay, children } = this.props;
+    if (!loading) {
+      return children;
+    }
     if (!isModal) {
       return (
         <View
@@ -24,7 +27,7 @@ class Spinner extends Component<IProps> {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: `rgba(0,0,0,${overlay} )`,
+            backgroundColor: `rgba(0,0,0,${overlay} )`
           }}
         >
           <ActivityIndicator size={'large'} />
@@ -32,21 +35,10 @@ class Spinner extends Component<IProps> {
       );
     } else {
       return (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            right: 0,
-            backgroundColor: `rgba(0,0,0,${overlay} )`,
-          }}
-        >
-          <ActivityIndicator size={'large'} />
-        </View>
+        <>
+          <RNSpinner visible={loading} animation={'fade'}/>
+          {children}
+        </>
       );
     }
   }

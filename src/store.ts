@@ -54,6 +54,7 @@ sagas.forEach((saga: any) => {
 class StoreHolder {
   private Store: any;
   private Persistor: any;
+  // tslint:disable-next-line:no-shadowed-variable
   public setStore = (store: Store) => (this.Store = store);
   public getStore = () => this.Store;
   public setPersistor = (p: any) => (this.Persistor = p);
