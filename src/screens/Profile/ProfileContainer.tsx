@@ -3,7 +3,19 @@ import Profile from './Profile';
 import { currentProfileSelector, userStateSelector } from './selectors';
 import { connect } from 'react-redux';
 import { IUser } from './services/typings';
-import { getUserProfile, refreshUserProfile, updateUserAvatar } from './actions';
+import {
+  getUserProfile,
+  refreshUserProfile,
+  updateUserAvatar
+} from './actions';
+import { userTypeSelector } from '../../selectors';
+import { UserType } from '../../state';
+import Authorize from 'components/base/Authorize';
+import { View, Text } from 'react-native';
+import { themeVariables } from 'themes/themeVariables';
+import WhiteSpace from 'components/base/WhiteSpace';
+import { Button, Icon } from 'react-native-elements';
+import navigationService from 'services/navigationService';
 
 interface IProps {
   profile: IUser;
@@ -11,6 +23,7 @@ interface IProps {
   dispatchRefreshProfile: () => void;
   action: string;
   dispatchUpdateUserAvatar: (req: string) => void;
+  userType: UserType;
 }
 
 class ProfileContainer extends Component<IProps> {
@@ -27,18 +40,81 @@ class ProfileContainer extends Component<IProps> {
     dispatchUpdateUserAvatar(req);
   };
 
-  render() {
-    const { profile, dispatchGetProfile, dispatchRefreshProfile } = this.props;
+  renderGuestView = () => {
     return (
-      <Profile
-        profile={profile}
-        loadProfile={dispatchGetProfile}
-        refreshProfile={dispatchRefreshProfile}
-        isLoading={this.isLoading()}
-        isRefreshing={this.isRefreshing()}
-        isUpdatingAvatar={this.isUpdatingAvatar()}
-        onUpdateAvatar={this.handleUpdateAvatar}
-      />
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: 'white',
+          alignItems: 'center',
+          // justifyContent: 'center',
+          paddingHorizontal: themeVariables.spacing_xl,
+          flexDirection: 'column'
+        }}
+      >
+        <View style={{ height: '25%' }} />
+        <Icon
+          name={'ios-rocket'}
+          type={'ionicon'}
+          color={themeVariables.accent_color}
+          size={100}
+        />
+        <WhiteSpace size={'lg'} />
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+          What are you wating for?
+        </Text>
+        <WhiteSpace size={'lg'} />
+        <Text style={{ fontSize: 16, textAlign: 'center' }}>
+          By customize your profile, you can receive job recommendations base on
+          your skill.
+        </Text>
+        <View style={{ height: '20%' }} />
+        <View>
+          <Button
+            type={'outline'}
+            title={'Join IJob'}
+            titleStyle={{ color: themeVariables.primary_color }}
+            buttonStyle={{
+              borderColor: themeVariables.primary_color,
+              borderWidth: 1
+            }}
+            onPress={() => navigationService.push({ routeName: 'SignIn'})}
+          />
+          <WhiteSpace size={'md'} />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={{ fontSize: 16 }}>Already have an account? </Text>
+            <Button
+              title={'Signin'}
+              type={'clear'}
+              titleStyle={{ color: themeVariables.primary_color }}
+              onPress={() => navigationService.push({ routeName: 'SignUp'})}
+            />
+          </View>
+        </View>
+      </View>
+    );
+  };
+
+  render() {
+    const {
+      profile,
+      dispatchGetProfile,
+      dispatchRefreshProfile,
+      userType
+    } = this.props;
+    return (
+      <Authorize GuestViewComponent={this.renderGuestView}>
+        <Profile
+          profile={profile}
+          loadProfile={dispatchGetProfile}
+          refreshProfile={dispatchRefreshProfile}
+          isLoading={this.isLoading()}
+          isRefreshing={this.isRefreshing()}
+          isUpdatingAvatar={this.isUpdatingAvatar()}
+          onUpdateAvatar={this.handleUpdateAvatar}
+          userType={userType}
+        />
+      </Authorize>
     );
   }
 }
@@ -47,7 +123,8 @@ const mapStateToProps = (state: any) => {
   const userState = userStateSelector(state);
   return {
     profile: currentProfileSelector(state),
-    action: userState.action
+    action: userState.action,
+    userType: userTypeSelector(state)
   };
 };
 
@@ -55,8 +132,7 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     dispatchGetProfile: () => dispatch(getUserProfile()),
     dispatchRefreshProfile: () => dispatch(refreshUserProfile()),
-    dispatchUpdateUserAvatar: (req: string) =>
-      dispatch(updateUserAvatar(req))
+    dispatchUpdateUserAvatar: (req: string) => dispatch(updateUserAvatar(req))
   };
 };
 

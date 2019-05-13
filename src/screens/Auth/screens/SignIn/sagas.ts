@@ -8,6 +8,8 @@ import { NavigationActions } from 'react-navigation';
 import { Alert } from 'react-native';
 import { SignInStatus } from './constants';
 import { getUserProfileSuccess } from '../../../Profile/actions';
+import { setUserType } from '../../../../actions';
+import { UserType } from '../../../../state';
 
 const signInSaga = {
   on: signIn,
@@ -18,7 +20,8 @@ const signInSaga = {
       yield all([
         put(signInSuccess()),
         call(authService.presistAuth, res.data),
-        put(getUserProfileSuccess(res.data.profile))
+        put(getUserProfileSuccess(res.data.profile)),
+        put(setUserType(UserType.USER)),
       ]);
       navigationService.dispatch(
         NavigationActions.navigate({

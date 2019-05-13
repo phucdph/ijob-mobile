@@ -7,7 +7,6 @@ import { ILocation } from 'components/Locations/services/typings';
 // @ts-ignore
 import Touchable from 'react-native-platform-touchable';
 import { NavigationInjectedProps, NavigationScreenConfigProps, withNavigation } from 'react-navigation';
-import { IPageableData } from 'services/models';
 import { noop } from 'lodash';
 import HeaderIconButton from 'components/HeaderIconButton';
 import navigationService from 'services/navigationService';
@@ -27,8 +26,9 @@ interface IProps extends NavigationInjectedProps {
 class LocationSelect extends Component<IProps> {
   static navigationOptions = ({ navigation }: NavigationScreenConfigProps) => {
     return {
-      headerRight: <HeaderIconButton name={'ios-close'} type={'ionicon'} onPress={navigationService.goBack}/>,
-      headerTitle: <HeaderTitle title={'Location'}/>
+      headerLeft: <HeaderIconButton name={'ios-close'} type={'ionicon'} onPress={navigationService.goBack}/>,
+      headerTitle: <HeaderTitle title={'Location'}/>,
+      headerRight: null,
     };
   };
 

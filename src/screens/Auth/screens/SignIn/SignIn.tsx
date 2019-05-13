@@ -9,6 +9,7 @@ import TextInput from 'components/base/TextInput';
 import WhiteSpace from 'components/base/WhiteSpace';
 import Button from 'components/base/Button';
 import Link from 'components/base/Link';
+import navigationService from 'services/navigationService';
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string()
@@ -23,6 +24,7 @@ const SignInSchema = Yup.object().shape({
 interface IProps {
   isLoading?: boolean;
   onSignIn: (req: ISignInRequest) => void;
+  onUseAsGuest: () => void;
 }
 
 class SignIn extends React.Component<IProps> {
@@ -99,6 +101,11 @@ class SignIn extends React.Component<IProps> {
     );
   };
 
+  handleUseAsGuestPress = () =>  {
+    this.props.onUseAsGuest();
+    navigationService.navigate({ routeName: 'NewFeed'});
+  };
+
   render() {
     return (
       <KeyboardAwareScrollView
@@ -134,6 +141,23 @@ class SignIn extends React.Component<IProps> {
           <Text>Don't have account? </Text>
           <Link to={{ routeName: 'SignUp' }}>SIGN UP</Link>
         </View>
+        <WhiteSpace />
+        <View style={{
+          padding: themeVariables.spacing_lg
+        }}>
+          <Button
+            onPress={this.handleUseAsGuestPress}
+            title="USE AS GUEST"
+            type="outline"
+            style={{ width: '100%' }}
+            buttonStyle={{
+              borderColor: themeVariables.primary_color,
+              borderWidth: 1
+            }}
+            titleStyle={{ color: themeVariables.primary_color}}
+          />
+        </View>
+
       </KeyboardAwareScrollView>
     );
   }

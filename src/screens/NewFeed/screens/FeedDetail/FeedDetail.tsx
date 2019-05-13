@@ -27,7 +27,7 @@ class FeedDetail extends Component {
         <ListItem
           leftElement={
             <View style={{ width: 25, alignItems: 'center' }}>
-              <Icon name={'ios-card'} type={'ionicon'} />
+              <Icon name={'ios-card'} type={'ionicon'} color={themeVariables.accent_color}/>
             </View>
           }
           containerStyle={{ padding: themeVariables.spacing_xs }}
@@ -37,7 +37,7 @@ class FeedDetail extends Component {
         <ListItem
           leftElement={
             <View style={{ width: 25, alignItems: 'center' }}>
-              <Icon name={'ios-pin'} type={'ionicon'} />
+              <Icon name={'ios-pin'} type={'ionicon'} color={themeVariables.accent_color}/>
             </View>
           }
           containerStyle={{ padding: themeVariables.spacing_xs }}

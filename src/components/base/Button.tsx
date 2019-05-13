@@ -6,7 +6,13 @@ interface IProps extends ButtonProps {}
 
 class Button extends React.Component<IProps> {
   render() {
-    return <RNEButton buttonStyle={{ backgroundColor: themeVariables.primary_color }} {...this.props}/>;
+    return (
+      <RNEButton
+        buttonStyle={{ backgroundColor: themeVariables.primary_color }}
+        titleStyle={{ color: 'white' }}
+        {...this.props}
+      />
+    );
   }
 }
 

@@ -1,29 +1,19 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  RefreshControl, ActivityIndicator, ImagePickerIOS
-} from 'react-native';
-import {
-  NavigationInjectedProps,
-  NavigationScreenConfigProps,
-  withNavigation
-} from 'react-navigation';
+import { ActivityIndicator, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { NavigationInjectedProps, NavigationScreenConfigProps, withNavigation } from 'react-navigation';
 import HeaderSearchBar from 'components/HeaderSearchBar';
-import { Avatar, Icon, Image } from 'react-native-elements';
+import { Icon, Image } from 'react-native-elements';
 import { themeVariables } from 'themes/themeVariables';
 import { IUser } from './services/typings';
 import WhiteSpace from 'components/base/WhiteSpace';
+import Avatar from 'components/base/Avatar';
 import { get, noop } from 'lodash';
 import { ISkill } from '../NewFeed/services/typings';
 import Tag from '../NewFeed/components/Tag';
-import { ImagePicker, Permissions, Camera } from 'expo';
+import { ImagePicker, Permissions } from 'expo';
 import navigationService from 'services/navigationService';
-import {
-  connectActionSheet,
-} from '@expo/react-native-action-sheet';
+import { connectActionSheet } from '@expo/react-native-action-sheet';
+import { UserType } from '../../state';
 
 interface IProps extends NavigationInjectedProps {
   profile: IUser;
@@ -34,6 +24,7 @@ interface IProps extends NavigationInjectedProps {
   isUpdatingAvatar?: boolean;
   onUpdateAvatar: (req: string) => void;
   showActionSheetWithOptions?: (req: any) => void;
+  userType: UserType;
 }
 // @ts-ignore
 @connectActionSheet
@@ -41,7 +32,7 @@ class Profile extends Component<IProps> {
   static defaultProps = {
     isLoading: false,
     isRefreshing: false,
-    showActionSheetWithOptions: noop,
+    showActionSheetWithOptions: noop
   };
 
   static navigationOptions = ({ navigation }: NavigationScreenConfigProps) => {
@@ -54,12 +45,18 @@ class Profile extends Component<IProps> {
   };
 
   componentDidMount(): void {
-    const { loadProfile, profile, navigation } = this.props;
-    loadProfile();
-    const { firstName, lastName } = profile;
-    navigation.setParams({
-      placeholder: `${firstName} ${lastName}`
-    });
+    const { loadProfile, profile, navigation, userType } = this.props;
+    if (userType === UserType.USER) {
+      loadProfile();
+      const { firstName, lastName } = profile;
+      navigation.setParams({
+        placeholder: `${firstName} ${lastName}`
+      });
+    } else {
+      navigation.setParams({
+        placeholder: 'Search'
+      });
+    }
   }
 
   componentDidUpdate(prevProps: Readonly<IProps>): void {
@@ -84,7 +81,7 @@ class Profile extends Component<IProps> {
     this.props.showActionSheetWithOptions(
       {
         options,
-        cancelButtonIndex,
+        cancelButtonIndex
       },
       (buttonIndex: number) => {
         switch (buttonIndex) {
@@ -100,14 +97,27 @@ class Profile extends Component<IProps> {
             break;
           }
         }
-      },
+      }
     );
   };
 
-  handleTakeNewPhoto = () => {
-    navigationService.navigate({
-      routeName: 'CameraModal',
-    })
+  handleTakeNewPhoto = async () => {
+    const [res1, res2] = await Promise.all([
+      Permissions.askAsync(Permissions.CAMERA),
+      Permissions.askAsync(Permissions.CAMERA_ROLL)
+    ]);
+    if (res1.status !== 'granted' || res2.status !== 'granted') {
+      return;
+    }
+    const img = (await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      base64: true,
+      aspect: [1, 1]
+    })) as any;
+    if (img.cancelled) {
+      return;
+    }
+    this.props.onUpdateAvatar(img.base64);
   };
 
   handleImagePicker = async () => {
@@ -119,7 +129,7 @@ class Profile extends Component<IProps> {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       base64: true,
-      aspect: [3, 3]
+      aspect: [1, 1]
     })) as any;
     if (img.cancelled) {
       return;
@@ -155,18 +165,22 @@ class Profile extends Component<IProps> {
           }}
         >
           <View style={{ zIndex: 2 }}>
-            {isUpdatingAvatar && <View style={{
-              zIndex: 3,
-              position: 'absolute',
-              width: themeVariables.profile_avatar_size,
-              height: themeVariables.profile_avatar_size,
-              borderRadius: 100,
-              backgroundColor: themeVariables.fill_base_color,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <ActivityIndicator size={'large'}/>
-            </View>}
+            {isUpdatingAvatar && (
+              <View
+                style={{
+                  zIndex: 3,
+                  position: 'absolute',
+                  width: themeVariables.profile_avatar_size - 3,
+                  height: themeVariables.profile_avatar_size - 3,
+                  borderRadius: 100,
+                  backgroundColor: themeVariables.fill_base_color,
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <ActivityIndicator size={'large'} />
+              </View>
+            )}
             <Avatar
               source={{
                 uri: avatar ? avatar : undefined
@@ -175,33 +189,35 @@ class Profile extends Component<IProps> {
               size={themeVariables.profile_avatar_size}
               rounded={true}
               containerStyle={{ borderWidth: 5, borderColor: 'white' }}
+              showEditButton={true}
+              onEditPress={this.handleOpenActionSheet}
             />
-            <TouchableOpacity onPress={this.handleOpenActionSheet}>
-              <Icon
-                name={'md-create'}
-                type={'ionicon'}
-                containerStyle={{
-                  backgroundColor: 'white',
-                  position: 'absolute',
-                  height: 35,
-                  width: 35,
-                  borderRadius: 50,
-                  padding: 5,
-                  right: 0,
-                  bottom: 0,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 1
-                  },
-                  shadowOpacity: 0.22,
-                  shadowRadius: 2.22,
-                  elevation: 3
-                }}
-              />
-            </TouchableOpacity>
+            {/*<TouchableOpacity onPress={this.handleOpenActionSheet}>*/}
+            {/*  <Icon*/}
+            {/*    name={'md-create'}*/}
+            {/*    type={'ionicon'}*/}
+            {/*    containerStyle={{*/}
+            {/*      backgroundColor: 'white',*/}
+            {/*      position: 'absolute',*/}
+            {/*      height: 35,*/}
+            {/*      width: 35,*/}
+            {/*      borderRadius: 50,*/}
+            {/*      padding: 5,*/}
+            {/*      right: 0,*/}
+            {/*      bottom: 0,*/}
+            {/*      justifyContent: 'center',*/}
+            {/*      alignItems: 'center',*/}
+            {/*      shadowColor: '#000',*/}
+            {/*      shadowOffset: {*/}
+            {/*        width: 0,*/}
+            {/*        height: 1*/}
+            {/*      },*/}
+            {/*      shadowOpacity: 0.22,*/}
+            {/*      shadowRadius: 2.22,*/}
+            {/*      elevation: 3*/}
+            {/*    }}*/}
+            {/*  />*/}
+            {/*</TouchableOpacity>*/}
           </View>
         </View>
         <View
@@ -225,7 +241,7 @@ class Profile extends Component<IProps> {
   };
 
   handleEditSkillPress = () => {
-    navigationService.navigate({ routeName: 'ListOfSkillModal'});
+    navigationService.navigate({ routeName: 'ListOfSkillModal' });
   };
 
   renderSkill = () => {
@@ -307,7 +323,14 @@ class Profile extends Component<IProps> {
             alignItems: 'center'
           }}
         >
-          <Text style={{ fontWeight: 'bold', fontSize: themeVariables.title_font_size }}>Saved job</Text>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: themeVariables.title_font_size
+            }}
+          >
+            Saved job
+          </Text>
           <Icon name={'md-create'} type={'ionicon'} />
         </View>
         <View style={{ padding: themeVariables.spacing_md }} />
@@ -316,7 +339,7 @@ class Profile extends Component<IProps> {
   };
 
   handleEditInfoPress = () => {
-    navigationService.navigate({routeName: 'EditInfoModal'});
+    navigationService.navigate({ routeName: 'EditInfoModal' });
   };
 
   renderInfo = () => {
@@ -336,8 +359,19 @@ class Profile extends Component<IProps> {
             alignItems: 'center'
           }}
         >
-          <Text style={{ fontWeight: 'bold', fontSize: themeVariables.title_font_size }}>Information</Text>
-          <Icon name={'md-create'} type={'ionicon'} onPress={this.handleEditInfoPress}/>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: themeVariables.title_font_size
+            }}
+          >
+            Information
+          </Text>
+          <Icon
+            name={'md-create'}
+            type={'ionicon'}
+            onPress={this.handleEditInfoPress}
+          />
         </View>
         <View
           style={{ padding: themeVariables.spacing_md, flexDirection: 'row' }}
@@ -349,22 +383,25 @@ class Profile extends Component<IProps> {
             <Text>{email}</Text>
           </View>
         </View>
-        {location && <View
-          style={{ padding: themeVariables.spacing_md, flexDirection: 'row' }}
-        >
-          <View style={{ flex: 0.3 }}>
-            <Text style={{ fontWeight: 'bold' }}>Address:</Text>
+        {location && (
+          <View
+            style={{ padding: themeVariables.spacing_md, flexDirection: 'row' }}
+          >
+            <View style={{ flex: 0.3 }}>
+              <Text style={{ fontWeight: 'bold' }}>Address:</Text>
+            </View>
+            <View style={{ flex: 0.7, alignItems: 'flex-end' }}>
+              <Text>{location}</Text>
+            </View>
           </View>
-          <View style={{ flex: 0.7, alignItems: 'flex-end' }}>
-            <Text>{location}</Text>
-          </View>
-        </View>}
+        )}
       </View>
     );
   };
 
   render() {
-    const { refreshProfile, isRefreshing = false } = this.props;
+    const { refreshProfile, isRefreshing = false, userType } = this.props;
+    if (userType === UserType.GUEST) return null;
     return (
       <ScrollView
         style={{ backgroundColor: themeVariables.fill_base_color }}

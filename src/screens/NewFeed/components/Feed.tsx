@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { ListItem } from 'react-native-elements';
 import { Text, View } from 'react-native';
 import { IFeed, ISkill, ISource } from '../services/typings';
@@ -8,6 +8,7 @@ import {
 } from '@expo/react-native-action-sheet';
 import { themeVariables } from 'themes/themeVariables';
 import WhiteSpace from 'components/base/WhiteSpace';
+import Avatar from 'components/base/Avatar';
 import Tag from './Tag';
 import { salaryFormatter } from 'utils/formatter';
 import { noop } from 'lodash';
@@ -20,7 +21,7 @@ interface IProps extends Partial<ActionSheetProps> {
 
 // @ts-ignore
 @connectActionSheet
-class Feed extends Component<IProps> {
+class Feed extends PureComponent<IProps> {
   handleLongPress = () => {
     const { showActionSheetWithOptions = noop } = this.props;
     const options = ['Save', 'Cancel'];
@@ -37,28 +38,39 @@ class Feed extends Component<IProps> {
   };
 
   handleFeedPress = () => {
-    navigationService.navigate({ routeName: 'FeedDetail'});
+    navigationService.navigate({ routeName: 'FeedDetail' });
   };
 
   render() {
     const { data = {} as IFeed } = this.props;
-    const { company = {} as ISource, name ,  skill = [], salary, created_at } = data;
+    const {
+      company = {} as ISource,
+      name,
+      skill = [],
+      salary,
+      created_at
+    } = data;
     return (
       <ListItem
         // onLongPress={this.handleLongPress}
         onPress={this.handleFeedPress}
-        leftAvatar={{
-          rounded: true,
-          title: company.name[0],
-          source: {
-            uri: company.avatar
-          }
-        }}
+        leftElement={
+          <Avatar
+            rounded={true}
+            size={45}
+            title={company.name[0]}
+            source={{
+              uri: company.avatar
+            }}
+          />
+        }
         containerStyle={{ alignItems: 'flex-start' }}
         title={name}
         rightElement={
-          <View style={{maxWidth: 80}}>
-            <Text style={{ fontSize: 12 }}>{moment(created_at).toNow(true)}</Text>
+          <View style={{ maxWidth: 80 }}>
+            <Text style={{ fontSize: 12 }}>
+              {moment(created_at).toNow(true)}
+            </Text>
           </View>
         }
         subtitle={
@@ -70,7 +82,7 @@ class Feed extends Component<IProps> {
             {/*  exercitationem hic*/}
             {/*</Text>*/}
             <WhiteSpace size={'sm'} />
-            <Text style={{ color: 'grey'}}>{salaryFormatter(salary)}</Text>
+            <Text style={{ color: 'grey' }}>{salaryFormatter(salary)}</Text>
             <WhiteSpace size={'sm'} />
             <Text>Ho Chi Minh</Text>
             <WhiteSpace size={'sm'} />

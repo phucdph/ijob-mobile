@@ -7,22 +7,38 @@ import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 import { PersistGate } from 'redux-persist/integration/react';
 import { AppLoading } from 'expo';
 import { themeVariables } from 'themes/themeVariables';
+import { ThemeProvider } from 'react-native-elements';
 
 interface IProps {}
 
 interface IState {}
 
-class App extends React.Component<IProps, IState> {
+const theme = {
+  Button: {
+    titleStyle: {
+      color: themeVariables.primary_color,
+    },
+  }
+};
 
+class App extends React.Component<IProps, IState> {
   render() {
     return (
       <Provider store={store}>
-        <PersistGate loading={<AppLoading/>} persistor={persistor}>
-          <StatusBar hidden={false} barStyle={'light-content'} backgroundColor={themeVariables.primary_color}/>
-          <ActionSheetProvider>
-            <AppNavigation />
-          </ActionSheetProvider>
-      </PersistGate>
+        <PersistGate loading={<AppLoading />} persistor={persistor}>
+          <ThemeProvider theme={theme}>
+            <>
+              <StatusBar
+                hidden={false}
+                barStyle={'light-content'}
+                backgroundColor={themeVariables.primary_color}
+              />
+              <ActionSheetProvider>
+                <AppNavigation />
+              </ActionSheetProvider>
+            </>
+          </ThemeProvider>
+        </PersistGate>
       </Provider>
     );
   }
