@@ -7,7 +7,7 @@ export default (Reactotron as any)
   .useReactNative({
     networking: {
       // optionally, you can turn it off with false.
-      ignoreUrls: /127.0.0.1/
+      ignoreUrls: /logs/
     }
   })
   .connect();

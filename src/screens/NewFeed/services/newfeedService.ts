@@ -1,5 +1,5 @@
 import RestAPIClient from 'services/RestAPIClient';
-import { IFeed, IFeedRequest } from './typings';
+import { IJob, IFeedRequest } from './typings';
 import { IPageableData } from 'services/models';
 
 class NewfeedService extends RestAPIClient {
@@ -7,7 +7,7 @@ class NewfeedService extends RestAPIClient {
     super('job');
   }
 
-  getFeeds = (req: IFeedRequest): Promise<IPageableData<IFeed>> => {
+  getFeeds = (req: IFeedRequest): Promise<IPageableData<IJob>> => {
     return this.get('',req);
   };
 }

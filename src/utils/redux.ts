@@ -1,12 +1,14 @@
 import { reduce, isEmpty, flatten, get, set, isArray } from 'lodash';
 import { createSelector } from 'reselect';
-import { takeLatest } from 'redux-saga/effects';
+import { takeLatest, cancel, take } from 'redux-saga/effects';
 import {
   createAction as ReduxCreateAction,
   handleActions as handleReduxActions,
 } from 'redux-actions';
 import produce from 'immer';
 import { resetAppState } from '../actions';
+import { Action } from 'services/typings';
+import { cleanUpSearch } from '../screens/Search/screens/SearchResult/actions';
 
 export const handleActions = (actions: any, state: any) =>
   handleReduxActions(
@@ -58,10 +60,19 @@ function createReducers(
   };
 }
 
-export function createSagas(sagas: any[]) {
+interface ICreateSagaOption {
+  cancelAction?: Action<any>
+}
+
+// @ts-ignore
+export function createSagas(sagas: any[], options?: ICreateSagaOption = {}) {
   return flatten(sagas).map((saga: any) => {
     return function*() {
-      yield takeLatest(saga.on, saga.worker);
+      const task = yield takeLatest(saga.on, saga.worker);
+      if (options.cancelAction) {
+        yield take(cleanUpSearch);
+        yield cancel(task)
+      }
     };
   });
 }

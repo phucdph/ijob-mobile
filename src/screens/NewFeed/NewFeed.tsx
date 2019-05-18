@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import HeaderSearchBar from 'components/HeaderSearchBar';
-import Feed from './components/Feed';
 import WhiteSpace from 'components/base/WhiteSpace';
 import { themeVariables } from 'themes/themeVariables';
 import { noop } from 'lodash';
-import { IFeed } from './services/typings';
+import { IJob } from './services/typings';
 import { IPageableData } from 'services/models';
 import ListItemSpinner from 'components/base/ListItemSpinner';
 import Spinner from 'components/base/Spinner';
 import FlatList from 'components/base/FlatList';
+import JobItem from './components/JobItem';
 
 interface IProps {
-  data: IPageableData<IFeed>;
+  data: IPageableData<IJob>;
   onRefresh?: () => void;
   isLoading?: boolean;
   isLoadingNext?: boolean;
@@ -37,8 +37,8 @@ class NewFeed extends React.Component<IProps> {
     };
   };
 
-  renderFeedItem = ({ item }: { item: IFeed; index: number }) => {
-    return <Feed data={item} key={item.id}/>;
+  renderFeedItem = ({ item }: { item: IJob; index: number }) => {
+    return <JobItem data={item} key={item.id}/>;
   };
 
   renderItemSeparatorComponent = () => <WhiteSpace style={{ backgroundColor: themeVariables.fill_base_color }}/>;
@@ -56,7 +56,7 @@ class NewFeed extends React.Component<IProps> {
           renderItem={this.renderFeedItem}
           onRefresh={onRefresh}
           ItemSeparatorComponent={this.renderItemSeparatorComponent}
-          keyExtractor={(item: IFeed, index: number) =>
+          keyExtractor={(item: IJob, index: number) =>
             `${item.id}-${index}`
           }
           showsVerticalScrollIndicator={false}

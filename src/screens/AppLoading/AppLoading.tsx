@@ -5,6 +5,8 @@ import { authService } from '../Auth/services/authService';
 import { storeHolder } from '../../store';
 import { getUserProfileSuccess } from '../Profile/actions';
 import { Image, NetInfo } from 'react-native';
+import { setUserType } from '../../actions';
+import { UserType } from '../../state';
 
 function cacheImages(images: any[]) {
   return images.map(image => {
@@ -42,6 +44,7 @@ class AppLoading extends Component<IProps> {
             getUserProfileSuccess({ ...res.profile, token: auth.token })
           );
         await authService.presistAuth({ ...res.profile, token: auth.token });
+        storeHolder.getStore().dispatch(setUserType(UserType.USER));
         navigation.navigate('App');
       } else {
         authService.clearPresistAuth();

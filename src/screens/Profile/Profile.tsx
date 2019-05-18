@@ -165,22 +165,22 @@ class Profile extends Component<IProps> {
           }}
         >
           <View style={{ zIndex: 2 }}>
-            {isUpdatingAvatar && (
-              <View
-                style={{
-                  zIndex: 3,
-                  position: 'absolute',
-                  width: themeVariables.profile_avatar_size - 3,
-                  height: themeVariables.profile_avatar_size - 3,
-                  borderRadius: 100,
-                  backgroundColor: themeVariables.fill_base_color,
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}
-              >
-                <ActivityIndicator size={'large'} />
-              </View>
-            )}
+            {/*{isUpdatingAvatar && (*/}
+            {/*  <View*/}
+            {/*    style={{*/}
+            {/*      zIndex: 3,*/}
+            {/*      position: 'absolute',*/}
+            {/*      width: themeVariables.profile_avatar_size - 3,*/}
+            {/*      height: themeVariables.profile_avatar_size - 3,*/}
+            {/*      borderRadius: 100,*/}
+            {/*      backgroundColor: themeVariables.fill_base_color,*/}
+            {/*      alignItems: 'center',*/}
+            {/*      justifyContent: 'center'*/}
+            {/*    }}*/}
+            {/*  >*/}
+            {/*    <ActivityIndicator size={'large'} />*/}
+            {/*  </View>*/}
+            {/*)}*/}
             <Avatar
               source={{
                 uri: avatar ? avatar : undefined
@@ -401,7 +401,7 @@ class Profile extends Component<IProps> {
 
   render() {
     const { refreshProfile, isRefreshing = false, userType } = this.props;
-    if (userType === UserType.GUEST) return null;
+    if (userType === UserType.GUEST) { return null; }
     return (
       <ScrollView
         style={{ backgroundColor: themeVariables.fill_base_color }}

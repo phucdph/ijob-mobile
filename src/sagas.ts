@@ -9,5 +9,6 @@ export default [
   ...feedSagas,
   ...userSagas,
   ...locationsSagas,
-  ...skillSagas
+  ...skillSagas,
+  ...require('./screens/Search/sagas').default
 ];

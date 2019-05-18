@@ -1,5 +1,5 @@
 import { ErrorState } from 'services/models/Error';
-import { IFeed } from './services/typings';
+import { IJob } from './services/typings';
 
 export const stateContext = 'Feed';
 
@@ -7,7 +7,7 @@ export const stateContext = 'Feed';
 export interface IFeedState {
   action: string;
   data: {
-    data: IFeed[],
+    data: IJob[],
     total: number,
   };
   error: ErrorState;

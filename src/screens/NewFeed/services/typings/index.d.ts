@@ -15,7 +15,7 @@ export interface ISkill {
   name: string;
 }
 
-export interface IFeed {
+export interface IJob {
   id: string;
   salary: ISalary;
   name: string;

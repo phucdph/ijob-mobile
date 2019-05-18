@@ -3,7 +3,7 @@ import NewFeed from './NewFeed';
 import { connect } from 'react-redux';
 import { ErrorState } from 'services/models/Error';
 import { IPageableData } from 'services/models';
-import { IFeed, IFeedRequest } from './services/typings';
+import { IJob, IFeedRequest } from './services/typings';
 import { actionSelector, errorSelector, feedDataSelector } from './selectors';
 import { getFeed, getNextFeed, refreshFeed } from './actions';
 import { PAGE_SIZE } from './constants';
@@ -12,7 +12,7 @@ import { last } from 'lodash';
 interface IProps {
   action: string;
   error: ErrorState;
-  data: IPageableData<IFeed>;
+  data: IPageableData<IJob>;
   dispatchGetFeeds: (req: IFeedRequest) => void;
   dispatchGetNextFeeds: (req: IFeedRequest) => void;
   dispatchRefreshFeeds: (req: IFeedRequest) => void;

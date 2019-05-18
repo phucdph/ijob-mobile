@@ -21,7 +21,6 @@ const signInSaga = {
         put(signInSuccess()),
         call(authService.presistAuth, res.data),
         put(getUserProfileSuccess(res.data.profile)),
-        put(setUserType(UserType.USER)),
       ]);
       navigationService.dispatch(
         NavigationActions.navigate({

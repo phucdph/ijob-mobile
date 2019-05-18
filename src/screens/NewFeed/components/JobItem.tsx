@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { ListItem } from 'react-native-elements';
-import { Text, View } from 'react-native';
-import { IFeed, ISkill, ISource } from '../services/typings';
+import { Text, TouchableOpacity, View } from 'react-native';
+import { IJob, ISkill, ISource } from '../services/typings';
 import {
   connectActionSheet,
   ActionSheetProps
@@ -14,14 +14,20 @@ import { salaryFormatter } from 'utils/formatter';
 import { noop } from 'lodash';
 import moment from 'moment';
 import navigationService from 'services/navigationService';
+import { UserType } from '../../../state';
 
 interface IProps extends Partial<ActionSheetProps> {
-  data: IFeed;
+  data: IJob;
+  userType?: UserType;
 }
 
 // @ts-ignore
 @connectActionSheet
-class Feed extends PureComponent<IProps> {
+class JobItem extends PureComponent<IProps> {
+  static defaultProps = {
+    userType: UserType.GUEST,
+  };
+
   handleLongPress = () => {
     const { showActionSheetWithOptions = noop } = this.props;
     const options = ['Save', 'Cancel'];
@@ -42,7 +48,7 @@ class Feed extends PureComponent<IProps> {
   };
 
   render() {
-    const { data = {} as IFeed } = this.props;
+    const { data = {} as IJob, userType } = this.props;
     const {
       company = {} as ISource,
       name,
@@ -53,6 +59,7 @@ class Feed extends PureComponent<IProps> {
     return (
       <ListItem
         // onLongPress={this.handleLongPress}
+        Component={TouchableOpacity}
         onPress={this.handleFeedPress}
         leftElement={
           <Avatar
@@ -82,7 +89,11 @@ class Feed extends PureComponent<IProps> {
             {/*  exercitationem hic*/}
             {/*</Text>*/}
             <WhiteSpace size={'sm'} />
-            <Text style={{ color: 'grey' }}>{salaryFormatter(salary)}</Text>
+            {userType === UserType.USER ? <Text style={{ color: 'grey' }}>{salaryFormatter(salary)}</Text> :
+            <TouchableOpacity>
+              <Text style={{ color: 'grey' }}>Sign in to view salary</Text>
+            </TouchableOpacity>
+            }
             <WhiteSpace size={'sm'} />
             <Text>Ho Chi Minh</Text>
             <WhiteSpace size={'sm'} />
@@ -105,4 +116,4 @@ class Feed extends PureComponent<IProps> {
   }
 }
 
-export default Feed;
+export default JobItem;

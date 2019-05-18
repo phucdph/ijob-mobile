@@ -10,7 +10,7 @@ import { createReducers } from 'utils/redux';
 import { stateContext, IFeedState, initialState } from './state';
 import { ErrorState, IError } from 'services/models/Error';
 import { IPageableData } from 'services/models';
-import { IFeed } from './services/typings';
+import { IJob } from './services/typings';
 import { Action } from 'services/typings';
 import { get } from 'lodash';
 
@@ -23,7 +23,7 @@ const feedReducers = [
   },
   {
     on: getFeedSuccess,
-    reducer: (state: IFeedState, action: Action<IPageableData<IFeed>>) => {
+    reducer: (state: IFeedState, action: Action<IPageableData<IJob>>) => {
       const { data = [], total = 0 } = action.payload;
       state.action = action.type;
       state.data = {
@@ -47,7 +47,7 @@ const feedReducers = [
   },
   {
     on: getNextFeedSuccess,
-    reducer: (state: IFeedState, action: Action<IPageableData<IFeed>>) => {
+    reducer: (state: IFeedState, action: Action<IPageableData<IJob>>) => {
       const { data = [], total = 0 } = action.payload;
       state.action = action.type;
       state.data = {

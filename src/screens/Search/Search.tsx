@@ -1,30 +1,66 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, FlatList } from 'react-native';
-import { NavigationScreenConfigProps } from 'react-navigation';
+import {
+  View,
+  Text,
+  ScrollView,
+  FlatList,
+  TouchableOpacity
+} from 'react-native';
+import {
+  NavigationInjectedProps,
+  NavigationScreenConfigProps
+} from 'react-navigation';
 import HeaderSearchBarInput from 'components/HeaderSearchBarInput';
 import { themeVariables } from 'themes/themeVariables';
 import { Icon } from 'react-native-elements';
 import WhiteSpace from 'components/base/WhiteSpace';
 import SearchHistoryItem from './components/SearchHistoryItem';
 import { ISearchHistory } from './services/typings';
+import { noop } from 'lodash';
+import navigationService from 'services/navigationService';
+import { SearchType } from './screens/SearchResult/services/typings';
 
 const data = [
   { id: '1', name: 'react js', type: 'text' },
   { id: '1', name: 'react native', type: 'text' },
   { id: '1', name: 'golang', type: 'text' },
-  { id: '1', name: 'kms technology', type: 'text' },
-  ];
+  { id: '1', name: 'kms technology', type: 'text' }
+];
 
-interface IProps {}
+interface IProps extends NavigationInjectedProps {}
 
-class Search extends Component<IProps> {
+interface IState {
+  searchText: string;
+}
+
+class Search extends Component<IProps, IState> {
   static navigationOptions = ({ navigation }: NavigationScreenConfigProps) => {
+    const handleSearchTextChange = navigation.getParam(
+      'onSearchTextChange',
+      noop
+    );
     return {
       headerRight: null,
       headerLeft: null,
-      headerTitle: <HeaderSearchBarInput />,
+      headerTitle: (
+        <HeaderSearchBarInput onChangeText={handleSearchTextChange} />
+      )
     };
   };
+
+  state = {
+    searchText: ''
+  };
+
+  handleSearchTextChange = (searchText: string) =>
+    this.setState({ searchText });
+
+  componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({
+      onSearchTextChange: this.handleSearchTextChange
+    });
+  }
 
   renderSearchForSection = () => {
     return (
@@ -102,7 +138,13 @@ class Search extends Component<IProps> {
     );
   };
 
+  handleSeeResultPress = () => {
+    const { searchText} = this.state;
+    navigationService.navigate({ routeName: 'SearchResult', params: { searchText, searchType: SearchType.ALL }});
+  };
+
   render() {
+    const { searchText } = this.state;
     return (
       <ScrollView style={{ flex: 1 }}>
         {this.renderSearchForSection()}
@@ -110,6 +152,24 @@ class Search extends Component<IProps> {
           style={{ backgroundColor: themeVariables.fill_base_color }}
         />
         {this.renderHistorySection()}
+        {!!searchText && (
+          <TouchableOpacity onPress={this.handleSeeResultPress}>
+            <View
+              style={{
+                paddingHorizontal: themeVariables.spacing_lg
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: themeVariables.primary_color
+                }}
+              >
+                See all result for "{searchText}"
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
       </ScrollView>
     );
   }
