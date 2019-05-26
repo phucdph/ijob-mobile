@@ -17,7 +17,7 @@ class Authorize extends React.Component<IProps> {
     const { userType, children, GuestViewComponent} = this.props;
     if (userType === UserType.GUEST) {
       // @ts-ignore
-      return <GuestViewComponent/>;
+      return GuestViewComponent ? <GuestViewComponent/> : null;
     }
     return children;
   }

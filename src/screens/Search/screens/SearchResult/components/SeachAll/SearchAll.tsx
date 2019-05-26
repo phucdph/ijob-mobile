@@ -17,6 +17,8 @@ import { get, size } from 'lodash';
 import JobItem from '../../../../../NewFeed/components/JobItem';
 import { IJob } from '../../../../../NewFeed/services/typings';
 import Spinner from 'components/base/Spinner';
+import navigationService from 'services/navigationService';
+import { locationFormatter } from 'utils/formatter';
 
 interface IProps {
   companies: IPageableData<ISearchCompany>;
@@ -39,16 +41,26 @@ class SearchAll extends Component<IProps> {
 
   getJobs = () => get(this.props, 'jobs.data', []).slice(0, 5);
 
+  handleCompanyPress = (id: string) => {
+    navigationService.navigate({
+      routeName: 'Company',
+      params: {
+        id,
+      }
+    })
+  };
+
   renderCompanyItem = ({ item }: { item: ISearchCompany }) => {
-    const { name, avatar } = item;
+    const { name, avatar, id, locations } = item;
     return (
       <ListItem
         leftElement={
           <Avatar size={45} rounded={true} source={{ uri: avatar }} />
         }
         title={name}
-        subtitle={'Ho Chi Minh'}
+        subtitle={locationFormatter(locations)}
         subtitleStyle={{ color: themeVariables.secondary_text_color }}
+        onPress={() => this.handleCompanyPress(id)}
       />
     );
   };
@@ -170,7 +182,7 @@ class SearchAll extends Component<IProps> {
       companies,
       jobs
     } = this.props;
-    if (isLoading && size(companies.data) > 0 && size(jobs.data) > 0) {
+    if (isLoading && size(companies.data) === 0 && size(jobs.data) === 0) {
       return <Spinner loading={true} />;
     }
     return (

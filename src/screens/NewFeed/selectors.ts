@@ -1,12 +1,18 @@
 import { createSelectorsA } from 'utils/redux';
-import { IFeedState, stateContext } from './state';
+import { IJobsState, initialJobItem, stateContext } from './state';
 import { createSelector } from 'reselect';
+import { get } from 'lodash';
 
 export const [actionSelector, errorSelector] = createSelectorsA(stateContext, [
   'action',
   'error',
 ]);
 
-const feedStateSelector = createSelectorsA(stateContext);
+export const jobsStateSelector = createSelectorsA(stateContext);
 
-export const feedDataSelector = createSelector(feedStateSelector, (state: IFeedState) => state.data);
+export const jobDataSelector = createSelector(jobsStateSelector, (state: IJobsState) => state.data);
+
+export const jobItemSelector = (state: any, { id }: {id: string}) => {
+  const jobsState = jobsStateSelector(state);
+  return get(jobsState, `jobs.${id}`, initialJobItem);
+};

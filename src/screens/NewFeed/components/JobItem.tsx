@@ -10,11 +10,13 @@ import { themeVariables } from 'themes/themeVariables';
 import WhiteSpace from 'components/base/WhiteSpace';
 import Avatar from 'components/base/Avatar';
 import Tag from './Tag';
-import { salaryFormatter } from 'utils/formatter';
+import { locationFormatter, salaryFormatter } from 'utils/formatter';
 import { noop } from 'lodash';
 import moment from 'moment';
 import navigationService from 'services/navigationService';
 import { UserType } from '../../../state';
+import { userTypeSelector } from '../../../selectors';
+import { connect } from 'react-redux';
 
 interface IProps extends Partial<ActionSheetProps> {
   data: IJob;
@@ -25,7 +27,7 @@ interface IProps extends Partial<ActionSheetProps> {
 @connectActionSheet
 class JobItem extends PureComponent<IProps> {
   static defaultProps = {
-    userType: UserType.GUEST,
+    userType: UserType.GUEST
   };
 
   handleLongPress = () => {
@@ -44,7 +46,13 @@ class JobItem extends PureComponent<IProps> {
   };
 
   handleFeedPress = () => {
-    navigationService.navigate({ routeName: 'FeedDetail' });
+    const { data } = this.props;
+    navigationService.navigate({
+      routeName: 'FeedDetail',
+      params: {
+        id: data.id
+      }
+    });
   };
 
   render() {
@@ -52,9 +60,10 @@ class JobItem extends PureComponent<IProps> {
     const {
       company = {} as ISource,
       name,
-      skill = [],
+      skills = [],
       salary,
-      created_at
+      created_at,
+      locations
     } = data;
     return (
       <ListItem
@@ -89,16 +98,18 @@ class JobItem extends PureComponent<IProps> {
             {/*  exercitationem hic*/}
             {/*</Text>*/}
             <WhiteSpace size={'sm'} />
-            {userType === UserType.USER ? <Text style={{ color: 'grey' }}>{salaryFormatter(salary)}</Text> :
-            <TouchableOpacity>
-              <Text style={{ color: 'grey' }}>Sign in to view salary</Text>
-            </TouchableOpacity>
-            }
-            <WhiteSpace size={'sm'} />
-            <Text>Ho Chi Minh</Text>
+            {userType === UserType.USER ? (
+              <Text style={{ color: 'grey' }}>{salaryFormatter(salary)}</Text>
+            ) : (
+              <TouchableOpacity>
+                <Text style={{ color: 'grey' }}>Sign in to view salary</Text>
+              </TouchableOpacity>
+            )}
+            {!!locations && <WhiteSpace size={'sm'} />}
+            {!!locations && <Text>{locationFormatter(locations)}</Text>}
             <WhiteSpace size={'sm'} />
             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-              {skill.map((s: ISkill, i: number) => (
+              {skills.map((s: ISkill, i: number) => (
                 <Tag
                   name={s.name.trim()}
                   key={`${s.id}-${i}`}
@@ -116,4 +127,11 @@ class JobItem extends PureComponent<IProps> {
   }
 }
 
-export default JobItem;
+const mapStateToProps = (state: any) => {
+  return { userType: userTypeSelector(state) };
+};
+
+export default connect(
+  mapStateToProps,
+  null
+)(JobItem);

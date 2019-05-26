@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { ScrollView, View } from 'react-native';
-import { NavigationInjectedProps, NavigationScreenConfigProps } from 'react-navigation';
+import {
+  NavigationInjectedProps,
+  NavigationScreenConfigProps
+} from 'react-navigation';
 import HeaderSearchBarInput from 'components/HeaderSearchBarInput';
 import { noop, throttle } from 'lodash';
 import SearchAll from './components/SeachAll/SearchAll';
 import { themeVariables } from 'themes/themeVariables';
-import { ISearchCompany, ISearchJob, ISearchRequest, SearchType } from './services/typings';
+import {
+  ISearchCompany,
+  ISearchJob,
+  ISearchRequest,
+  SearchType
+} from './services/typings';
 import { IPageableData } from 'services/models';
 import { Button } from 'react-native-elements';
 import WhiteSpace from 'components/base/WhiteSpace';
@@ -13,8 +21,8 @@ import FilterButton from './components/FilterButton';
 import SearchCompanies from './components/SearchCompanies/SearchCompanies';
 import SearchJobs from './components/SearchJobs/SearchJobs';
 import navigationService from 'services/navigationService';
-import LocationMultiSelect from 'components/Locations/LocationMultiSelect';
 import { ILocation } from 'components/Locations/services/typings';
+import { ISkill } from 'components/Search/SearchSkill/services/typings';
 
 interface IProps extends NavigationInjectedProps {
   isRefreshing: boolean;
@@ -31,6 +39,9 @@ interface IProps extends NavigationInjectedProps {
 
 interface IState {
   searchType: SearchType;
+  companies: ISearchCompany[];
+  skills: ISkill[];
+  locations: ILocation[];
 }
 
 class SearchResult extends Component<IProps, IState> {
@@ -53,11 +64,16 @@ class SearchResult extends Component<IProps, IState> {
     };
   };
 
+  searchText: string = this.props.navigation.getParam('searchText', '');
+
   constructor(props: IProps) {
     super(props);
     this.state = {
       searchType: props.searchType,
-    }
+      locations: [],
+      companies: [],
+      skills: []
+    };
   }
 
   componentDidMount() {
@@ -71,7 +87,9 @@ class SearchResult extends Component<IProps, IState> {
   }
 
   handleSearchTypePress = (searchType: SearchType) => {
-    this.setState({ searchType });
+    this.setState({ searchType, skills: [], locations: [], companies: [] }, () => {
+      this.handleSearch(this.searchText);
+    });
   };
 
   handleCompanyPress = () => this.setState({ searchType: SearchType.COMPANY });
@@ -79,6 +97,7 @@ class SearchResult extends Component<IProps, IState> {
   handleJobPress = () => this.setState({ searchType: SearchType.JOB });
 
   handleSearch = (searchText: string) => {
+    this.searchText = searchText;
     const { req, onSearch } = this.props;
     const { searchType } = this.state;
     onSearch({
@@ -133,6 +152,7 @@ class SearchResult extends Component<IProps, IState> {
   };
 
   renderCompanyFilterBar = () => {
+    const { locations, skills, searchType } = this.state;
     return (
       <ScrollView
         horizontal={true}
@@ -155,7 +175,7 @@ class SearchResult extends Component<IProps, IState> {
           titleStyle={{ color: themeVariables.primary_color, fontSize: 15 }}
           buttonStyle={{
             paddingVertical: 6,
-            paddingHorizontal: 0,
+            paddingHorizontal: 0
           }}
           onPress={() => this.handleSearchTypePress(SearchType.ALL)}
         />
@@ -166,25 +186,33 @@ class SearchResult extends Component<IProps, IState> {
           buttonStyle={{
             backgroundColor: themeVariables.primary_color,
             paddingVertical: 6
-
           }}
           titleStyle={{ color: 'white', fontSize: 15 }}
           onPress={() => this.handleSearchTypePress(SearchType.JOB)}
         />
         <WhiteSpace horizontal={true} />
-        <FilterButton title={'Location'}/>
+        <FilterButton
+          defaultTitle={'Location'}
+          data={searchType === SearchType.COMPANY ? locations : []}
+          onPress={this.handleFilterLocationPress}
+        />
         <WhiteSpace horizontal={true} />
-        <FilterButton title={'Skill'}/>
+        <FilterButton
+          defaultTitle={'Skill'}
+          data={searchType === SearchType.COMPANY ? skills : []}
+          onPress={this.handleFilterSkillPress}
+        />
         <WhiteSpace horizontal={true} />
       </ScrollView>
     );
   };
 
-  handleLocationSelect = (locations: ILocation) => {
-    console.log(locations);
+  handleLocationSelect = (locations: ILocation[]) => {
+    this.setState({ locations });
   };
 
   renderJobFilterBar = () => {
+    const { locations, companies, skills, searchType } = this.state;
     return (
       <ScrollView
         horizontal={true}
@@ -207,7 +235,7 @@ class SearchResult extends Component<IProps, IState> {
           titleStyle={{ color: themeVariables.primary_color, fontSize: 15 }}
           buttonStyle={{
             paddingVertical: 6,
-            paddingHorizontal: 0,
+            paddingHorizontal: 0
           }}
           onPress={() => this.handleSearchTypePress(SearchType.ALL)}
         />
@@ -218,26 +246,70 @@ class SearchResult extends Component<IProps, IState> {
           buttonStyle={{
             backgroundColor: themeVariables.primary_color,
             paddingVertical: 6
-
           }}
           titleStyle={{ color: 'white', fontSize: 15 }}
           onPress={() => this.handleSearchTypePress(SearchType.JOB)}
         />
         <WhiteSpace horizontal={true} />
-        <FilterButton title={'Company'}/>
+        <FilterButton
+          defaultTitle={'Company'}
+          data={searchType === SearchType.JOB ? companies : []}
+          onPress={this.handleFilterCompanyPress}
+        />
         <WhiteSpace horizontal={true} />
-        <FilterButton title={'Location'} onPress={() => navigationService.navigate({
-          routeName: 'LocationMultiSelectModal',
-          params: {
-            value: [],
-            onChange: this.handleLocationSelect
-          }
-        })}/>
+        <FilterButton
+          data={searchType === SearchType.JOB ? locations : []}
+          defaultTitle={'Location'}
+          onPress={this.handleFilterLocationPress}
+        />
         <WhiteSpace horizontal={true} />
-        <FilterButton title={'Skill'}/>
+        <FilterButton
+          defaultTitle={'Skill'}
+          data={searchType === SearchType.JOB ? skills : []}
+          onPress={this.handleFilterSkillPress}
+        />
         <WhiteSpace horizontal={true} />
       </ScrollView>
     );
+  };
+
+  handleFilterLocationPress = () => {
+    const { locations } = this.state;
+    navigationService.navigate({
+      routeName: 'LocationMultiSelectModal',
+      params: {
+        value: locations,
+        onChange: this.handleLocationSelect
+      }
+    });
+  };
+
+  handleFilterCompanyPress = () => {
+    const { locations } = this.state;
+    navigationService.navigate({
+      routeName: 'SearchCompanyMultiSelectModal',
+      params: {
+        value: [],
+        onChange: noop
+      }
+    });
+  };
+
+  handleFilterSkillPress = () => {
+    const { skills } = this.state;
+    navigationService.navigate({
+      routeName: 'SearchSkillMultiSelectModal',
+      params: {
+        value: skills,
+        onChange: this.handleSkillSelect
+      }
+    });
+  };
+
+  handleSkillSelect = (skills: ISkill[]) => {
+    this.setState({
+      skills
+    });
   };
 
   renderFilterBar = () => {
@@ -254,7 +326,6 @@ class SearchResult extends Component<IProps, IState> {
       }
       default: {
         return this.renderAllFilterBar();
-
       }
     }
   };
@@ -273,7 +344,6 @@ class SearchResult extends Component<IProps, IState> {
       }
       default: {
         return this.renderAllFilterBar();
-
       }
     }
   };
@@ -294,7 +364,14 @@ class SearchResult extends Component<IProps, IState> {
   };
 
   renderSearchCompanies = () => {
-    const { companies, isLoading, isRefreshing, onRefresh, isLoadingNext, onSearchNext } = this.props;
+    const {
+      companies,
+      isLoading,
+      isRefreshing,
+      onRefresh,
+      isLoadingNext,
+      onSearchNext
+    } = this.props;
     return (
       <SearchCompanies
         companies={companies}
@@ -308,7 +385,14 @@ class SearchResult extends Component<IProps, IState> {
   };
 
   renderSearchJobs = () => {
-    const { jobs, isLoading, isRefreshing, onRefresh, isLoadingNext, onSearchNext } = this.props;
+    const {
+      jobs,
+      isLoading,
+      isRefreshing,
+      onRefresh,
+      isLoadingNext,
+      onSearchNext
+    } = this.props;
     return (
       <SearchJobs
         jobs={jobs as any}

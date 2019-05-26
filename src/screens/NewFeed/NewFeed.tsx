@@ -9,10 +9,10 @@ import { IPageableData } from 'services/models';
 import ListItemSpinner from 'components/base/ListItemSpinner';
 import Spinner from 'components/base/Spinner';
 import FlatList from 'components/base/FlatList';
-import JobItem from './components/JobItem';
+import ConnectedJobItem from './components/ConnectedJobItem';
 
 interface IProps {
-  data: IPageableData<IJob>;
+  data: IPageableData<string>;
   onRefresh?: () => void;
   isLoading?: boolean;
   isLoadingNext?: boolean;
@@ -37,8 +37,8 @@ class NewFeed extends React.Component<IProps> {
     };
   };
 
-  renderFeedItem = ({ item }: { item: IJob; index: number }) => {
-    return <JobItem data={item} key={item.id}/>;
+  renderFeedItem = ({ item }: { item: string; index: number }) => {
+    return <ConnectedJobItem id={item} key={item}/>;
   };
 
   renderItemSeparatorComponent = () => <WhiteSpace style={{ backgroundColor: themeVariables.fill_base_color }}/>;

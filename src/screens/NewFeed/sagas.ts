@@ -1,53 +1,83 @@
 import { createSagas } from 'utils/redux';
 import {
-  getFeed,
-  getFeedSuccess,
-  getFeedFail,
-  getNextFeed,
-  getNextFeedSuccess,
-  getNextFeedFail,
-  refreshFeed
+  getNextJobsSuccess,
+  getNextJobsFail,
+  getNextJobs,
+  getJobsSuccess,
+  getJobsFail,
+  getJobs,
+  saveJobSuccess,
+  saveJobFail,
+  saveJob, unsaveJob, unsaveJobSuccess, unsaveJobFail, refreshJobs
 } from './actions';
 import { call, put, delay } from 'redux-saga/effects';
 import { Action } from 'services/typings';
-import { newfeedService } from './services/newfeedService';
+import { jobService } from './services/jobService';
 import { IFeedRequest } from './services/typings';
 
+const saveJobSaga = {
+  on: saveJob,
+  *worker(action: Action<string>) {
+    try {
+      yield call(jobService.saveJob, action.payload);
+      yield put(saveJobSuccess(action.payload));
+    } catch (err) {
+      yield put(saveJobFail(err));
+    }
+  }
+};
+
+const unsaveJobSaga = {
+  on: unsaveJob,
+  *worker(action: Action<string>) {
+    try {
+      yield call(jobService.unsaveJob, action.payload);
+      yield put(unsaveJobSuccess(action.payload));
+    } catch (err) {
+      yield put(unsaveJobFail(err));
+    }
+  }
+};
+
 const getFeedSaga = {
-  on: getFeed,
+  on: getJobs,
   *worker(action: Action<IFeedRequest>) {
     try {
-      const res = yield call(newfeedService.getFeeds, action.payload);
-      yield put(getFeedSuccess(res.data));
+      const res = yield call(jobService.getFeeds, action.payload);
+      yield put(getJobsSuccess(res.data));
     } catch (err) {
-      yield put(getFeedFail(err));
+      yield put(getJobsFail(err));
     }
   }
 };
 
 const getNextFeedSaga = {
-  on: getNextFeed,
+  on: getNextJobs,
   *worker(action: Action<IFeedRequest>) {
     try {
-      const res = yield call(newfeedService.getFeeds, action.payload);
-      yield put(getNextFeedSuccess(res.data));
+      const res = yield call(jobService.getFeeds, action.payload);
+      yield delay(1000);
+      yield put(getNextJobsSuccess(res.data));
     } catch (err) {
-      yield put(getNextFeedFail(err));
+      yield put(getNextJobsFail(err));
     }
   }
 };
 
 const refreshFeedSaga = {
-  on: refreshFeed,
+  on: refreshJobs,
   *worker(action: Action<IFeedRequest>) {
     try {
-      const res = yield call(newfeedService.getFeeds, action.payload);
+      const res = yield call(jobService.getFeeds, action.payload);
       yield delay(1000);
-      yield put(getFeedSuccess(res.data));
+      yield put(getJobsSuccess(res.data));
     } catch (err) {
-      yield put(getFeedFail(err));
+      yield put(getJobsFail(err));
     }
   }
 };
 
-export default createSagas([getFeedSaga, getNextFeedSaga, refreshFeedSaga]);
+export default [
+  ...createSagas([getFeedSaga, getNextFeedSaga, refreshFeedSaga, saveJobSaga, unsaveJobSaga]),
+  ...require('./screens/FeedDetail/sagas').default,
+];

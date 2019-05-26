@@ -15,7 +15,7 @@ class Tag extends Component<IProps> {
         style={StyleSheet.flatten([{
           borderRadius: 20,
           borderWidth: 0,
-          paddingHorizontal: themeVariables.spacing_md,
+          paddingHorizontal: themeVariables.spacing_md + 2,
           paddingVertical: themeVariables.spacing_sm,
           backgroundColor: themeVariables.light_primary_color,
         }, style])}

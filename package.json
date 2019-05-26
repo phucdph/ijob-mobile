@@ -9,6 +9,7 @@
   "dependencies": {
     "@expo/react-native-action-sheet": "^2.1.0",
     "expo": "^32.0.0",
+    "expokit": "32.1.1",
     "formik": "^1.5.1",
     "global": "^4.3.2",
     "immer": "^2.1.4",
@@ -24,6 +25,7 @@
     "react-native-loading-spinner-overlay": "^1.0.1",
     "react-native-paper": "^2.15.2",
     "react-native-platform-touchable": "^1.1.1",
+    "react-native-tab-view": "^2.4.0",
     "react-native-textinput-effects": "^0.5.1",
     "react-native-vector-icons": "^6.4.1",
     "react-navigation": "^3.9.0",
@@ -32,11 +34,9 @@
     "redux": "^4.0.1",
     "redux-actions": "^2.6.5",
     "redux-persist": "^5.10.0",
-    "redux-persist-expo-securestore": "^0.1.1",
     "redux-persist-transform-compress": "^4.2.0",
     "redux-saga": "^1.0.2",
     "reselect": "^4.0.0",
-    "uglify-es": "3.2.2",
     "yup": "^0.27.0"
   },
   "devDependencies": {

@@ -1,14 +1,24 @@
 import { createAsyncAction, createAction } from 'utils/redux';
 
-export const { getFeed, getFeedSuccess, getFeedFail } = createAsyncAction(
-  'getFeed',
-  'GET_FEED'
+export const { getJobs, getJobsSuccess, getJobsFail } = createAsyncAction(
+  'getJobs',
+  'GET_JOBS'
 );
 
-export const { getNextFeed, getNextFeedSuccess, getNextFeedFail } = createAsyncAction(
-  'getNextFeed',
-  'GET_NEXT_FEED'
+export const { getNextJobs, getNextJobsSuccess, getNextJobsFail } = createAsyncAction(
+  'getNextJobs',
+  'GET_NEXT_JOBS'
 );
 
-export const refreshFeed = createAction('REFRESH_FEED');
+export const { saveJob, saveJobSuccess, saveJobFail } = createAsyncAction(
+  'saveJob',
+  'SAVE_JOB'
+);
+
+export const { unsaveJob, unsaveJobSuccess, unsaveJobFail } = createAsyncAction(
+  'unsaveJob',
+  'UNSAVE_JOB'
+);
+
+export const refreshJobs = createAction('REFRESH_JOBS');
 

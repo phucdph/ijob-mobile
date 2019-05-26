@@ -19,11 +19,24 @@ export interface IJob {
   id: string;
   salary: ISalary;
   name: string;
-  skill: ISkill[];
-  benefit: string[];
+  skills: ISkill[];
   company: ISource;
   isActive: boolean;
   created_at: string;
+  saved?: boolean;
+}
+
+export interface IJobDetail {
+  id: string;
+  salary: ISalary;
+  name: string;
+  skills: ISkill[];
+  benefit: string[];
+  require: string[];
+  company: ISource;
+  isActive: boolean;
+  created_at: string;
+  saved: boolean;
 }
 
 export interface IFeedRequest {

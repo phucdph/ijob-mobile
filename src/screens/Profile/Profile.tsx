@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { NavigationInjectedProps, NavigationScreenConfigProps, withNavigation } from 'react-navigation';
 import HeaderSearchBar from 'components/HeaderSearchBar';
 import { Icon, Image } from 'react-native-elements';
@@ -185,39 +185,34 @@ class Profile extends Component<IProps> {
               source={{
                 uri: avatar ? avatar : undefined
               }}
-              title={firstName[0]}
               size={themeVariables.profile_avatar_size}
-              rounded={true}
-              containerStyle={{ borderWidth: 5, borderColor: 'white' }}
-              showEditButton={true}
-              onEditPress={this.handleOpenActionSheet}
             />
-            {/*<TouchableOpacity onPress={this.handleOpenActionSheet}>*/}
-            {/*  <Icon*/}
-            {/*    name={'md-create'}*/}
-            {/*    type={'ionicon'}*/}
-            {/*    containerStyle={{*/}
-            {/*      backgroundColor: 'white',*/}
-            {/*      position: 'absolute',*/}
-            {/*      height: 35,*/}
-            {/*      width: 35,*/}
-            {/*      borderRadius: 50,*/}
-            {/*      padding: 5,*/}
-            {/*      right: 0,*/}
-            {/*      bottom: 0,*/}
-            {/*      justifyContent: 'center',*/}
-            {/*      alignItems: 'center',*/}
-            {/*      shadowColor: '#000',*/}
-            {/*      shadowOffset: {*/}
-            {/*        width: 0,*/}
-            {/*        height: 1*/}
-            {/*      },*/}
-            {/*      shadowOpacity: 0.22,*/}
-            {/*      shadowRadius: 2.22,*/}
-            {/*      elevation: 3*/}
-            {/*    }}*/}
-            {/*  />*/}
-            {/*</TouchableOpacity>*/}
+            <TouchableOpacity onPress={this.handleOpenActionSheet}>
+              <Icon
+                name={'md-create'}
+                type={'ionicon'}
+                containerStyle={{
+                  backgroundColor: 'white',
+                  position: 'absolute',
+                  height: 35,
+                  width: 35,
+                  borderRadius: 50,
+                  padding: 5,
+                  right: 0,
+                  bottom: 0,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 1
+                  },
+                  shadowOpacity: 0.22,
+                  shadowRadius: 2.22,
+                  elevation: 3
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View

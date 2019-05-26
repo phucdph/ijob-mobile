@@ -1,4 +1,4 @@
-import { ISkill } from 'components/Skills/services/typings';
+import { ISkill } from 'components/Search/SearchSkill/services/typings';
 import { ILocation } from 'components/Locations/services/typings';
 
 export interface IUser {

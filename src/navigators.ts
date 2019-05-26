@@ -5,6 +5,7 @@ import SearchNavigator from './screens/Search/navigator';
 import ProfileNavigator from './screens/Profile/navigator';
 import NotificationNavigator from './screens/Notification/navigator';
 import LocationNavigator from './components/Locations/navigator';
+import SkillNavigator from './components/Search/SearchSkill/navigator';
 import CameraNavigator from './components/base/Camera/navigator';
 
 export const AuthNavigators = {
@@ -19,4 +20,7 @@ export const AppNavigators = {
   ...NotificationNavigator,
   ...LocationNavigator,
   ...CameraNavigator,
+  ...SkillNavigator,
+  ...require('./components/Search/SearchCompany/navigator').default,
+  ...require('./screens/Company/navigator').default
 };

@@ -14,18 +14,13 @@ import HeaderSearchBarInput from 'components/HeaderSearchBarInput';
 import { themeVariables } from 'themes/themeVariables';
 import { Icon } from 'react-native-elements';
 import WhiteSpace from 'components/base/WhiteSpace';
-import SearchHistoryItem from './components/SearchHistoryItem';
+import SearchHistoryItem from './components/SearchHistory/components/SearchHistoryItem';
 import { ISearchHistory } from './services/typings';
 import { noop } from 'lodash';
 import navigationService from 'services/navigationService';
 import { SearchType } from './screens/SearchResult/services/typings';
-
-const data = [
-  { id: '1', name: 'react js', type: 'text' },
-  { id: '1', name: 'react native', type: 'text' },
-  { id: '1', name: 'golang', type: 'text' },
-  { id: '1', name: 'kms technology', type: 'text' }
-];
+import SearchHistory from './components/SearchHistory/SearchHistory';
+import Authorize from 'components/base/Authorize';
 
 interface IProps extends NavigationInjectedProps {}
 
@@ -43,7 +38,10 @@ class Search extends Component<IProps, IState> {
       headerRight: null,
       headerLeft: null,
       headerTitle: (
-        <HeaderSearchBarInput onChangeText={handleSearchTextChange} />
+        <HeaderSearchBarInput
+          placeholder={'Search'}
+          onChangeText={handleSearchTextChange}
+        />
       )
     };
   };
@@ -64,89 +62,99 @@ class Search extends Component<IProps, IState> {
 
   renderSearchForSection = () => {
     return (
-      <View style={{ padding: themeVariables.spacing_md }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            fontSize: themeVariables.title_font_size
-          }}
-        >
-          Search For
-        </Text>
-        <WhiteSpace />
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-around'
-          }}
-        >
-          <View style={{ alignItems: 'center' }}>
-            <View style={{ height: 70 }}>
-              <Icon
-                name={'briefcase-outline'}
-                type={'material-community'}
-                size={55}
-                color={themeVariables.accent_color}
-              />
-            </View>
-            <Text style={{ fontSize: themeVariables.title_font_size }}>
-              Job
-            </Text>
-          </View>
-          <View style={{ alignItems: 'center' }}>
-            <View style={{ height: 70 }}>
-              <Icon
-                name={'building-o'}
-                type={'font-awesome'}
-                size={55}
-                color={themeVariables.accent_color}
-              />
-            </View>
-            <Text style={{ fontSize: themeVariables.title_font_size }}>
-              Company
-            </Text>
+      <View style={{ backgroundColor: 'white' }}>
+        <View style={{ padding: themeVariables.spacing_md }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: themeVariables.title_font_size
+            }}
+          >
+            Search For
+          </Text>
+          <WhiteSpace />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'space-around'
+            }}
+          >
+            <TouchableOpacity onPress={this.handleSearchJobPress}>
+              <View style={{ alignItems: 'center' }}>
+                <View style={{ height: 70 }}>
+                  <Icon
+                    name={'briefcase-outline'}
+                    type={'material-community'}
+                    size={55}
+                    color={themeVariables.accent_color}
+                  />
+                </View>
+                <Text style={{ fontSize: themeVariables.title_font_size }}>
+                  Job
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={this.handleSearchCompanyPress}>
+              <View style={{ alignItems: 'center' }}>
+                <View style={{ height: 70 }}>
+                  <Icon
+                    name={'building-o'}
+                    type={'font-awesome'}
+                    size={55}
+                    color={themeVariables.accent_color}
+                  />
+                </View>
+                <Text style={{ fontSize: themeVariables.title_font_size }}>
+                  Company
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
     );
   };
 
-  renderSearchHistoryItem = ({ item }: { item: ISearchHistory }) => {
-    return <SearchHistoryItem data={item} />;
-  };
-
   renderHistorySection = () => {
     return (
-      <View style={{ padding: themeVariables.spacing_md }}>
-        <Text
-          style={{
-            fontWeight: 'bold',
-            fontSize: themeVariables.title_font_size
-          }}
-        >
-          Recent Searches
-        </Text>
-        <FlatList
-          data={data}
-          keyExtractor={(item: ISearchHistory, index: number) =>
-            `${item.id}-${index}`
-          }
-          renderItem={this.renderSearchHistoryItem}
-        />
-      </View>
+      <Authorize>
+        <SearchHistory />
+      </Authorize>
     );
   };
 
   handleSeeResultPress = () => {
-    const { searchText} = this.state;
-    navigationService.navigate({ routeName: 'SearchResult', params: { searchText, searchType: SearchType.ALL }});
+    const { searchText } = this.state;
+    navigationService.navigate({
+      routeName: 'SearchResult',
+      params: { searchText, searchType: SearchType.ALL }
+    });
+  };
+
+  handleSearchJobPress = () => {
+    const { searchText } = this.state;
+    navigationService.navigate({
+      routeName: 'SearchResult',
+      params: { searchText, searchType: SearchType.JOB }
+    });
+  };
+
+  handleSearchCompanyPress = () => {
+    const { searchText } = this.state;
+    navigationService.navigate({
+      routeName: 'SearchResult',
+      params: { searchText, searchType: SearchType.COMPANY }
+    });
   };
 
   render() {
     const { searchText } = this.state;
     return (
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView
+        style={{ flex: 1, backgroundColor: themeVariables.fill_base_color }}
+        keyboardShouldPersistTaps={'handled'}
+      >
         {this.renderSearchForSection()}
         <WhiteSpace
           style={{ backgroundColor: themeVariables.fill_base_color }}

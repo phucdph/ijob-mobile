@@ -9,7 +9,7 @@ import {
 import { themeVariables } from 'themes/themeVariables';
 import HeaderTitle from 'components/HeaderTitle';
 import HeaderButton from 'components/HeaderButton';
-import { ISkill } from 'components/Skills/services/typings';
+import { ISkill } from 'components/Search/SearchSkill/services/typings';
 import WhiteSpace from 'components/base/WhiteSpace';
 import navigationService from 'services/navigationService';
 import { IUser } from '../../services/typings';

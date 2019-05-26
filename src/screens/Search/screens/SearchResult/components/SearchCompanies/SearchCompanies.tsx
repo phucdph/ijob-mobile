@@ -9,6 +9,9 @@ import Avatar from 'components/base/Avatar';
 import ListItemSpinner from 'components/base/ListItemSpinner';
 import { PAGE_SIZE } from '../../../../../NewFeed/constants';
 import { size } from 'lodash';
+import Spinner from 'components/base/Spinner';
+import navigationService from 'services/navigationService';
+import { locationFormatter } from 'utils/formatter';
 
 interface IProps {
   companies: IPageableData<ISearchCompany>;
@@ -20,16 +23,27 @@ interface IProps {
 }
 
 class SearchCompanies extends Component<IProps> {
+
+  handleCompanyPress = (id: string) => {
+    navigationService.navigate({
+      routeName: 'Company',
+      params: {
+        id,
+      }
+    });
+  };
+
   renderCompanyItem = ({ item }: { item: ISearchCompany }) => {
-    const { name, avatar } = item;
+    const { name, avatar, location } = item;
     return (
       <ListItem
         leftElement={
           <Avatar size={45} rounded={true} source={{ uri: avatar }} />
         }
         title={name}
-        subtitle={'Ho Chi Minh'}
+        subtitle={locationFormatter(location)}
         subtitleStyle={{ color: themeVariables.secondary_text_color }}
+        onPress={() => this.handleCompanyPress(item.id)}
       />
     );
   };
@@ -52,7 +66,10 @@ class SearchCompanies extends Component<IProps> {
   };
 
   render() {
-    const { companies, isLoadingNext } = this.props;
+    const { companies, isLoadingNext, onRefresh, isRefreshing, isLoading } = this.props;
+    if (isLoading && size(companies.data) === 0) {
+      return <Spinner loading={true} />;
+    }
     return (
       <View
         style={{
@@ -73,6 +90,8 @@ class SearchCompanies extends Component<IProps> {
           onEndReached={this.handleLoadingMore}
           onEndReachedThreshold={0.3}
           scrollEventThrottle={16}
+          onRefresh={onRefresh}
+          refreshing={isRefreshing}
           ListFooterComponent={<ListItemSpinner loading={isLoadingNext} />}
         />
       </View>

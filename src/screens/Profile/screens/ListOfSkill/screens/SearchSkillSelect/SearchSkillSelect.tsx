@@ -6,11 +6,11 @@ import {
   NavigationScreenConfigProps,
   withNavigation
 } from 'react-navigation';
-import skillsContainer from 'components/Skills/skillsContainer';
+import skillsContainer from 'components/Search/SearchSkill/skillsContainer';
 import {
   ISearchSKillRequest,
   ISkill
-} from 'components/Skills/services/typings';
+} from 'components/Search/SearchSkill/services/typings';
 import { Divider, ListItem } from 'react-native-elements';
 import { IPageableData } from 'services/models';
 import { throttle, noop } from 'lodash';

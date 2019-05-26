@@ -3,16 +3,16 @@ import NewFeed from './NewFeed';
 import { connect } from 'react-redux';
 import { ErrorState } from 'services/models/Error';
 import { IPageableData } from 'services/models';
-import { IJob, IFeedRequest } from './services/typings';
-import { actionSelector, errorSelector, feedDataSelector } from './selectors';
-import { getFeed, getNextFeed, refreshFeed } from './actions';
+import { IFeedRequest } from './services/typings';
+import { actionSelector, errorSelector, jobDataSelector } from './selectors';
+import { getNextJobs, getJobs, refreshJobs } from './actions';
 import { PAGE_SIZE } from './constants';
 import { last } from 'lodash';
 
 interface IProps {
   action: string;
   error: ErrorState;
-  data: IPageableData<IJob>;
+  data: IPageableData<string>;
   dispatchGetFeeds: (req: IFeedRequest) => void;
   dispatchGetNextFeeds: (req: IFeedRequest) => void;
   dispatchRefreshFeeds: (req: IFeedRequest) => void;
@@ -30,11 +30,11 @@ class NewFeedContainer extends Component<IProps> {
     dispatchGetFeeds({ limit: PAGE_SIZE });
   };
 
-  isLoading = () => getFeed.is(this.props.action);
+  isLoading = () => getJobs.is(this.props.action);
 
-  isLoadingNext = () => getNextFeed.is(this.props.action);
+  isLoadingNext = () => getNextJobs.is(this.props.action);
 
-  isRefreshing = () => refreshFeed.is(this.props.action);
+  isRefreshing = () => refreshJobs.is(this.props.action);
 
   loadMore = () => {
     const { data, dispatchGetNextFeeds } = this.props;
@@ -47,7 +47,7 @@ class NewFeedContainer extends Component<IProps> {
     }
     dispatchGetNextFeeds({
       limit: PAGE_SIZE,
-      offset: (last(data.data) || ({} as any)).id
+      offset: (last(data.data) || ({} as any))
     });
   };
 
@@ -75,15 +75,15 @@ const mapStateToProps = (state: any) => {
   return {
     action: actionSelector(state),
     error: errorSelector(state),
-    data: feedDataSelector(state)
+    data: jobDataSelector(state)
   };
 };
 
 const mapDispatchToProp = (dispatch: Dispatch<any>) => {
   return {
-    dispatchGetFeeds: (req: IFeedRequest) => dispatch(getFeed(req)),
-    dispatchGetNextFeeds: (req: IFeedRequest) => dispatch(getNextFeed(req)),
-    dispatchRefreshFeeds: (req: IFeedRequest) => dispatch(refreshFeed(req))
+    dispatchGetFeeds: (req: IFeedRequest) => dispatch(getJobs(req)),
+    dispatchGetNextFeeds: (req: IFeedRequest) => dispatch(getNextJobs(req)),
+    dispatchRefreshFeeds: (req: IFeedRequest) => dispatch(refreshJobs(req))
   };
 };
 
