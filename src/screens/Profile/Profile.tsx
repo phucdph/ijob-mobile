@@ -1,19 +1,95 @@
 import React, { Component } from 'react';
-import { RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { NavigationInjectedProps, NavigationScreenConfigProps, withNavigation } from 'react-navigation';
+import {
+  RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import {
+  NavigationInjectedProps,
+  NavigationScreenConfigProps,
+  withNavigation
+} from 'react-navigation';
 import HeaderSearchBar from 'components/HeaderSearchBar';
-import { Icon, Image } from 'react-native-elements';
+import { Divider, Icon, Image } from 'react-native-elements';
 import { themeVariables } from 'themes/themeVariables';
 import { IUser } from './services/typings';
 import WhiteSpace from 'components/base/WhiteSpace';
 import Avatar from 'components/base/Avatar';
 import { get, noop } from 'lodash';
-import { ISkill } from '../NewFeed/services/typings';
+import { IJob, ISkill } from '../NewFeed/services/typings';
 import Tag from '../NewFeed/components/Tag';
 import { ImagePicker, Permissions } from 'expo';
 import navigationService from 'services/navigationService';
 import { connectActionSheet } from '@expo/react-native-action-sheet';
 import { UserType } from '../../state';
+import FlatList from 'components/base/FlatList';
+import JobItem from '../NewFeed/components/JobItem';
+// @ts-ignore
+import Touchable from 'react-native-platform-touchable';
+
+const mockData = [
+  {
+    _id: '5cec1ded2575ce3efd488af5',
+    id: 'job_faace450-80a3-11e9-9a22-39bc7e46d514',
+    name: 'E-Commerce PHP Programmer',
+    skills: [
+      {
+        id: 'skill_2c00cd40-80a5-11e9-9a22-39bc7e46d514',
+        name: 'Jquery'
+      },
+      {
+        id: 'skill_2cba8050-80a5-11e9-9a22-39bc7e46d514',
+        name: 'Web Development'
+      },
+      {
+        id: 'skill_2cec8cd0-80a5-11e9-9a22-39bc7e46d514',
+        name: 'MySQL'
+      },
+      {
+        id: 'skill_2d0062f0-80a5-11e9-9a22-39bc7e46d514',
+        name: 'PHP'
+      },
+      {
+        id: 'skill_32353de0-80a5-11e9-9a22-39bc7e46d514',
+        name: 'Css3'
+      }
+    ],
+    salary: {
+      from: 400,
+      to: 800,
+      currency: 'USD'
+    },
+    created_at: 1558630800000,
+    company: {
+      id: 'company_f9c59190-80a3-11e9-9a22-39bc7e46d514',
+      name: 'GAMELOFT VIETNAM',
+      avatar:
+        'http://res.cloudinary.com/xtek/image/upload/v1558979803/img-company/knznutideogvk6eoy2md.png',
+      location: [
+        {
+          _id: '5cec1c9e2575ce3efd4889d8',
+          id: 'location_e02f94b0-80a3-11e9-9a22-39bc7e46d514',
+          name: 'Đà Nẵng',
+          __v: 0
+        },
+        {
+          _id: '5cec1c9d2575ce3efd4889d7',
+          id: 'location_e01a37f0-80a3-11e9-9a22-39bc7e46d514',
+          name: 'Hà Nội',
+          __v: 0
+        },
+        {
+          _id: '5cec1c9e2575ce3efd4889da',
+          id: 'location_e03a1c00-80a3-11e9-9a22-39bc7e46d514',
+          name: 'Hồ Chí Minh',
+          __v: 0
+        }
+      ]
+    }
+  }
+];
 
 interface IProps extends NavigationInjectedProps {
   profile: IUser;
@@ -40,7 +116,7 @@ class Profile extends Component<IProps> {
     return {
       headerRight: null,
       headerLeft: null,
-      headerTitle: <HeaderSearchBar placeholder={placeholder} />
+      headerTitle: <HeaderSearchBar placeholder={placeholder || 'Search'} />
     };
   };
 
@@ -303,7 +379,62 @@ class Profile extends Component<IProps> {
     );
   };
 
+  renderJobItem = ({ item }: { item: IJob }) => {
+    return <JobItem data={item} showSkill={false}/>;
+  };
+
+  handleSeeAllJobPress = () => {
+    navigationService.navigate({
+      routeName: 'SavedJobs',
+    })
+  };
+
+
   renderSavedJob = () => {
+    return (
+      <View
+        style={{
+          backgroundColor: 'white',
+          paddingHorizontal: themeVariables.spacing_md
+        }}
+      >
+        <WhiteSpace/>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: themeVariables.title_font_size
+            }}
+          >
+            Saved jobs
+          </Text>
+        </View>
+        <View style={{ padding: themeVariables.spacing_md }}>
+          <FlatList
+            data={mockData}
+            renderItem={this.renderJobItem}
+            keyExtractor={(item: IJob) => item.id}
+            ItemSeparatorComponent={Divider}
+          />
+        </View>
+
+        <Divider/>
+        <Touchable onPress={this.handleSeeAllJobPress}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingVertical: themeVariables.spacing_md}}>
+            <Text style={{ fontSize: 16, color: themeVariables.primary_color}}>See all</Text>
+          </View>
+        </Touchable>
+      </View>
+    );
+  };
+
+  renderCompany = () => {
     return (
       <View
         style={{
@@ -324,9 +455,8 @@ class Profile extends Component<IProps> {
               fontSize: themeVariables.title_font_size
             }}
           >
-            Saved job
+            Companies that you're following
           </Text>
-          <Icon name={'md-create'} type={'ionicon'} />
         </View>
         <View style={{ padding: themeVariables.spacing_md }} />
       </View>
@@ -396,7 +526,9 @@ class Profile extends Component<IProps> {
 
   render() {
     const { refreshProfile, isRefreshing = false, userType } = this.props;
-    if (userType === UserType.GUEST) { return null; }
+    if (userType === UserType.GUEST) {
+      return null;
+    }
     return (
       <ScrollView
         style={{ backgroundColor: themeVariables.fill_base_color }}
@@ -421,6 +553,10 @@ class Profile extends Component<IProps> {
           style={{ backgroundColor: themeVariables.fill_base_color }}
         />
         {this.renderSavedJob()}
+        <WhiteSpace
+          style={{ backgroundColor: themeVariables.fill_base_color }}
+        />
+        {this.renderCompany()}
       </ScrollView>
     );
   }

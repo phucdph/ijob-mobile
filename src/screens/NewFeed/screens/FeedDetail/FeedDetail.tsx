@@ -36,15 +36,10 @@ interface IProps extends Partial<ActionSheetProps> {
 // @ts-ignore
 @connectActionSheet
 class FeedDetail extends Component<IProps> {
-  static navigationOptions = {
-    header: (
-      <View
-        style={{
-          paddingTop: isIOS ? Constants.statusBarHeight : 0,
-          backgroundColor: 'white'
-        }}
-      />
-    )
+  static navigationOptions = () => {
+    return {
+    header: null,
+    }
   };
 
   componentDidMount() {
@@ -225,9 +220,7 @@ class FeedDetail extends Component<IProps> {
             <ListItem
               leftElement={
                 <Avatar
-                  rounded={true}
                   size={45}
-                  title={name[0]}
                   source={{
                     uri: avatar,
                   }}
@@ -267,7 +260,7 @@ class FeedDetail extends Component<IProps> {
     const { name } = this.props.data;
     const { isRefresing, onRefresh } = this.props;
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, paddingTop: Constants.statusBarHeight }}>
         <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
         {this.renderHeader()}
         <ScrollView

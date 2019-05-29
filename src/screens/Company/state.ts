@@ -22,6 +22,7 @@ export const initialCompanyData: ICompany = {
   ourPeople: [],
   skills: [],
   email: '',
+  follow: false,
 };
 
 export const initialCompanyState: ICompanyState = {

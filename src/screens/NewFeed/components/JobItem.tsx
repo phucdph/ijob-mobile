@@ -21,13 +21,15 @@ import { connect } from 'react-redux';
 interface IProps extends Partial<ActionSheetProps> {
   data: IJob;
   userType?: UserType;
+  showSkill?: boolean;
 }
 
 // @ts-ignore
 @connectActionSheet
 class JobItem extends PureComponent<IProps> {
   static defaultProps = {
-    userType: UserType.GUEST
+    userType: UserType.GUEST,
+    showSkill: true,
   };
 
   handleLongPress = () => {
@@ -56,7 +58,7 @@ class JobItem extends PureComponent<IProps> {
   };
 
   render() {
-    const { data = {} as IJob, userType } = this.props;
+    const { data = {} as IJob, userType, showSkill } = this.props;
     const {
       company = {} as ISource,
       name,
@@ -92,12 +94,6 @@ class JobItem extends PureComponent<IProps> {
         subtitle={
           <View>
             <WhiteSpace size={'sm'} />
-            {/*<Text>*/}
-            {/*  Lorem ipsum dolor sit amet, consectetur adipisicing elit.*/}
-            {/*  Architecto consequatur consequuntur culpa doloribus ducimus*/}
-            {/*  exercitationem hic*/}
-            {/*</Text>*/}
-            <WhiteSpace size={'sm'} />
             {userType === UserType.USER ? (
               <Text style={{ color: 'grey' }}>{salaryFormatter(salary)}</Text>
             ) : (
@@ -107,7 +103,7 @@ class JobItem extends PureComponent<IProps> {
             )}
             {!!locations && <WhiteSpace size={'sm'} />}
             {!!locations && <Text>{locationFormatter(locations)}</Text>}
-            <WhiteSpace size={'sm'} />
+            { showSkill && <><WhiteSpace size={'sm'} />
             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               {skills.map((s: ISkill, i: number) => (
                 <Tag
@@ -120,6 +116,8 @@ class JobItem extends PureComponent<IProps> {
                 />
               ))}
             </View>
+            </>
+            }
           </View>
         }
       />

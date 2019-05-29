@@ -3,7 +3,6 @@ import {
   View,
   Text,
   ScrollView,
-  FlatList,
   TouchableOpacity
 } from 'react-native';
 import {
@@ -14,12 +13,10 @@ import HeaderSearchBarInput from 'components/HeaderSearchBarInput';
 import { themeVariables } from 'themes/themeVariables';
 import { Icon } from 'react-native-elements';
 import WhiteSpace from 'components/base/WhiteSpace';
-import SearchHistoryItem from './components/SearchHistory/components/SearchHistoryItem';
-import { ISearchHistory } from './services/typings';
 import { noop } from 'lodash';
 import navigationService from 'services/navigationService';
 import { SearchType } from './screens/SearchResult/services/typings';
-import SearchHistory from './components/SearchHistory/SearchHistory';
+import SearchHistory from './components/SearchHistory/SearchHistoryContainer';
 import Authorize from 'components/base/Authorize';
 
 interface IProps extends NavigationInjectedProps {}

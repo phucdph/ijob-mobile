@@ -1,9 +1,10 @@
 import RestAPIClient from 'services/RestAPIClient';
-import { ISearchRequest } from './typings';
+import { ISearchRequest } from '../../screens/SearchResult/services/typings';
 import { omit } from 'lodash';
 import { IPageableData } from 'services/models';
 import { ISearchSKillRequest, ISkill } from 'components/Search/SearchSkill/services/typings';
 import { ISearchCompanyRequest } from 'components/Search/SearchCompany/services/typings';
+import { ISearchHistory } from './index';
 
 class SearchService extends RestAPIClient {
   constructor() {
@@ -24,6 +25,14 @@ class SearchService extends RestAPIClient {
     const res = await this.get('/skill', req);
     return res.data;
   };
+
+  getHistory = async () => {
+    return (await this.get('/history')).data;
+  };
+
+  createHistory = async (req: ISearchHistory) => {
+    return (await this.post('/history', req)).data;
+  }
 }
 
 export const searchService = new SearchService();

@@ -9,7 +9,13 @@ import {
   getCompany,
   refreshCompany,
   getCompanySuccess,
-  getCompanyFail
+  getCompanyFail,
+  followCompany,
+  followCompanySuccess,
+  followCompanyFail,
+  unFollowCompany,
+  unFollowCompanySuccess,
+  unFollowCompanyFail
 } from './actions';
 import { Action } from 'services/typings';
 import { ICompany } from './services/typings';
@@ -25,13 +31,35 @@ import { IJobsDetailState } from '../NewFeed/screens/FeedDetail/state';
 
 const companyReducers = [
   {
-    on: [getCompany, refreshCompany],
+    on: [getCompany, refreshCompany, followCompanySuccess, unFollowCompanySuccess],
     reducer: (state: ICompaniesState, action: Action<string>) => {
       const id = action.payload;
       if (!state[id]) {
         state[id] = initialCompanyState;
       }
       state[id].action = action.type;
+    }
+  },
+  {
+    on: followCompany,
+    reducer: (state: ICompaniesState, action: Action<string>) => {
+      const id = action.payload;
+      if (!state[id]) {
+        state[id] = initialCompanyState;
+      }
+      state[id].action = action.type;
+      set(state, `${id}.data.follow`, true);
+    }
+  },
+  {
+    on: unFollowCompany,
+    reducer: (state: ICompaniesState, action: Action<string>) => {
+      const id = action.payload;
+      if (!state[id]) {
+        state[id] = initialCompanyState;
+      }
+      state[id].action = action.type;
+      set(state, `${id}.data.follow`, false);
     }
   },
   {
@@ -43,7 +71,7 @@ const companyReducers = [
     }
   },
   {
-    on: getCompanyFail,
+    on: [getCompanyFail,followCompanyFail, unFollowCompanyFail],
     reducer: (
       state: ICompaniesState,
       action: Action<{ id: string; error: IError }>

@@ -8,7 +8,7 @@ import {
   searchNextSuccess,
 } from './actions';
 import { Action } from 'services/typings';
-import { searchService } from './services/searchService';
+import { searchService } from '../../services/typings/searchService';
 import {
   put,
   call,

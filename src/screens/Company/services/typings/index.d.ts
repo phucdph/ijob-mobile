@@ -8,6 +8,7 @@ export interface ICompany {
   address: string[];
   ourPeople: IOurPeople[];
   skills: ISkill[];
+  follow: boolean;
 }
 
 interface IOurPeople {

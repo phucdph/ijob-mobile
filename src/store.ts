@@ -30,7 +30,7 @@ const sagaMiddleware = createSagaMiddleware();
 export function configureStore() {
   const middlewares = [sagaMiddleware];
   const enhancers = applyMiddleware(...middlewares);
-  // if (__DEV__) {
+  if (__DEV__) {
     const Reactotron = require('./config/Reactotron').default;
     return createStore(
       persistedReducer,
@@ -39,7 +39,7 @@ export function configureStore() {
         Reactotron.createEnhancer()
       )
     );
-  // }
+  }
   return createStore(combineReducers(reducers), compose(enhancers));
 }
 

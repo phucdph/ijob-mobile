@@ -11,7 +11,18 @@ const data = [
   { id: '1', name: 'kms technology', type: 'text' }
 ];
 
-class SearchHistory extends Component {
+interface IProps {
+  data: ISearchHistory[];
+  isLoading: boolean;
+  onLoad: () => void;
+}
+
+class SearchHistory extends Component<IProps> {
+  componentDidMount() {
+    this.props.onLoad();
+  }
+
+
   renderSearchHistoryItem = ({ item }: { item: ISearchHistory }) => {
     return <SearchHistoryItem data={item} />;
   };

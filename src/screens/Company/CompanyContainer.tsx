@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Company from './Company';
-import { getCompany, refreshCompany } from './actions';
+import { getCompany, refreshCompany, followCompany, unFollowCompany } from './actions';
 import { connect } from 'react-redux';
 import { companyStateSelector } from './selectors';
 import { NavigationInjectedProps } from 'react-navigation';
@@ -13,6 +13,8 @@ interface IProps extends NavigationInjectedProps {
   id: string;
   dispatchGetCompany: (id: string) => void;
   dispatchRefreshCompany: (id: string) => void;
+  dispatchFollowCompany: (id: string) => void,
+  dispatchUnFollowCompany: (id: string) => void,
   userType: UserType;
   data: ICompany;
 }
@@ -34,6 +36,16 @@ class CompanyContainer extends Component<IProps> {
     dispatchRefreshCompany(id);
   };
 
+  handleFollow = () => {
+    const { id, dispatchFollowCompany } = this.props;
+    dispatchFollowCompany(id);
+  };
+
+  handleUnFollow = () => {
+    const { id, dispatchUnFollowCompany } = this.props;
+    dispatchUnFollowCompany(id);
+  };
+
   render() {
     const { data, userType, id } = this.props;
     return (
@@ -43,6 +55,8 @@ class CompanyContainer extends Component<IProps> {
         isRefreshing={this.isRefreshing()}
         onLoad={this.handleLoad}
         onRefresh={this.handleRefresh}
+        onFollow={this.handleFollow}
+        onUnFollow={this.handleUnFollow}
         data={data}
         userType={userType}
      />
@@ -66,6 +80,9 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     dispatchGetCompany: (id: string) => dispatch(getCompany(id)),
     dispatchRefreshCompany: (id: string) => dispatch(refreshCompany(id)),
+    dispatchFollowCompany: (id: string) => dispatch(followCompany(id)),
+    dispatchUnFollowCompany: (id: string) => dispatch(unFollowCompany(id)),
+
   };
 };
 

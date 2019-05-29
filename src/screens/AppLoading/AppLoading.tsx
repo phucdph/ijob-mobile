@@ -36,20 +36,25 @@ class AppLoading extends Component<IProps> {
       }
       await this._loadAssetsAsync();
       const auth = await authService.getPresistedAuth();
-      const res = await authService.checkTokenValid();
-      if (res.profile && auth.token) {
-        storeHolder
-          .getStore()
-          .dispatch(
-            getUserProfileSuccess({ ...res.profile, token: auth.token })
-          );
-        await authService.presistAuth({ ...res.profile, token: auth.token });
-        storeHolder.getStore().dispatch(setUserType(UserType.USER));
-        navigation.navigate('App');
+      if (auth && auth.token) {
+        const res = await authService.checkTokenValid();
+        if (res.profile && auth.token) {
+          storeHolder
+            .getStore()
+            .dispatch(
+              getUserProfileSuccess({ ...res.profile, token: auth.token })
+            );
+          await authService.presistAuth({ ...res.profile, token: auth.token });
+          storeHolder.getStore().dispatch(setUserType(UserType.USER));
+          navigation.navigate('App');
+        } else {
+          authService.clearPresistAuth();
+          navigation.navigate('Auth');
+        }
       } else {
-        authService.clearPresistAuth();
         navigation.navigate('Auth');
       }
+
     } catch (e) {
       authService.clearPresistAuth();
       navigation.navigate('Auth');

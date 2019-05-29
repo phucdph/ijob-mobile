@@ -14,7 +14,7 @@ import {
   withNavigation
 } from 'react-navigation';
 import HeaderSearchBar from 'components/HeaderSearchBar';
-import { Divider, Icon, Image } from 'react-native-elements';
+import { Divider, Icon, Image, Button } from 'react-native-elements';
 import { themeVariables } from 'themes/themeVariables';
 import { ICompany, IUser } from './services/typings';
 import WhiteSpace from 'components/base/WhiteSpace';
@@ -35,6 +35,8 @@ interface IProps extends NavigationInjectedProps {
   isRefreshing?: boolean;
   showActionSheetWithOptions?: (req: any) => void;
   userType: UserType;
+  onFollow: () => void;
+  onUnFollow: () => void;
 }
 
 interface IState {
@@ -106,9 +108,18 @@ class Company extends Component<IProps, IState> {
     }
   }
 
+  handleFollowPress = () => {
+    const { onFollow, onUnFollow, data } = this.props;
+    if (data.follow) {
+      onUnFollow();
+    } else {
+      onFollow()
+    }
+  };
+
   renderCoverAndAvatar = () => {
     const { data } = this.props;
-    const { avatar, name, skills } = data;
+    const { avatar, name, skills, follow } = data;
     return (
       <View style={{ backgroundColor: 'white' }}>
         <Image
@@ -170,11 +181,55 @@ class Company extends Component<IProps, IState> {
         >
           <View style={{ paddingHorizontal: themeVariables.spacing_xl }}>
             <Text
-              style={{ fontSize: 18, fontWeight: 'bold', textAlign: 'center' }}
+              style={{
+                fontSize: 18,
+                fontWeight: 'bold',
+                textAlign: 'center'
+              }}
             >
               {name}
             </Text>
-            <WhiteSpace />
+            <WhiteSpace size={'lg'} />
+            {
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'row'
+                }}
+              >
+                <TouchableOpacity onPress={this.handleFollowPress}>
+                  <View
+                    style={{
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      flexDirection: 'row',
+                      borderWidth: 1,
+                      borderColor: themeVariables.primary_color,
+                      backgroundColor: follow ? themeVariables.primary_color : 'white',
+                      width: 150
+                    }}
+                  >
+                    <Icon
+                      name="ios-checkmark"
+                      type="ionicon"
+                      size={30}
+                      color={follow ? 'white' : themeVariables.primary_color}
+                    />
+                    <WhiteSpace horizontal={true} />
+                    <Text
+                      style={{
+                        fontSize: 17,
+                        color: follow ? 'white' : themeVariables.primary_color
+                      }}
+                    >
+                      {follow ? 'Following' : 'Follow'}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            }
+            <WhiteSpace size={'lg'}/>
             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               {(skills || []).map((s: ISkill, i: number) => (
                 <Tag

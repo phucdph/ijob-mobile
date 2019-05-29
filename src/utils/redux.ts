@@ -8,7 +8,6 @@ import {
 import produce from 'immer';
 import { resetAppState } from '../actions';
 import { Action } from 'services/typings';
-import { cleanUpSearch } from '../screens/Search/screens/SearchResult/actions';
 
 export const handleActions = (actions: any, state: any) =>
   handleReduxActions(
@@ -68,11 +67,7 @@ interface ICreateSagaOption {
 export function createSagas(sagas: any[], options?: ICreateSagaOption = {}) {
   return flatten(sagas).map((saga: any) => {
     return function*() {
-      const task = yield takeLatest(saga.on, saga.worker);
-      if (options.cancelAction) {
-        yield take(cleanUpSearch);
-        yield cancel(task)
-      }
+      yield takeLatest(saga.on, saga.worker);
     };
   });
 }

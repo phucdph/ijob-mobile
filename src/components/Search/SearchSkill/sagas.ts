@@ -11,7 +11,7 @@ import {
 import { call, put, delay } from 'redux-saga/effects';
 import { ISearchSKillRequest } from 'components/Search/SearchSkill/services/typings';
 import { Action } from 'services/typings';
-import { searchService } from '../../../screens/Search/screens/SearchResult/services/searchService';
+import { searchService } from '../../../screens/Search/services/typings/searchService';
 
 const searchSkillSaga = {
   on: [searchSkills, refreshSearchSkills],
