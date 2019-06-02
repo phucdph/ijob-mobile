@@ -1,4 +1,5 @@
 import { ISkill } from 'components/Search/SearchSkill/services/typings';
+import { ILocation } from 'components/Locations/services/typings';
 
 export interface ICompany {
   id: string;
@@ -9,6 +10,7 @@ export interface ICompany {
   ourPeople: IOurPeople[];
   skills: ISkill[];
   follow: boolean;
+  location: ILocation[];
 }
 
 interface IOurPeople {

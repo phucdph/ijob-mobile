@@ -26,4 +26,6 @@ export interface ISearchRequest {
   offset: number
   location_ids?: string[];
   company_ids?: string[];
+  skill_ids?: string[];
+  excluded_ids?: string[];
 }

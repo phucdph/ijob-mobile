@@ -87,9 +87,15 @@ class SearchResult extends Component<IProps, IState> {
   }
 
   handleSearchTypePress = (searchType: SearchType) => {
-    this.setState({ searchType, skills: [], locations: [], companies: [] }, () => {
-      this.handleSearch(this.searchText);
-    });
+    this.setState({ searchType, skills: [], locations: [], companies: [] });
+    const { req, onSearch } = this.props;
+    onSearch({
+      ...req,
+      searchType,
+      skill_ids: [],
+      location_ids: [],
+      company_ids: [],
+    })
   };
 
   handleCompanyPress = () => this.setState({ searchType: SearchType.COMPANY });
@@ -208,7 +214,12 @@ class SearchResult extends Component<IProps, IState> {
   };
 
   handleLocationSelect = (locations: ILocation[]) => {
+    const { onSearch, req } = this.props;
     this.setState({ locations });
+    onSearch({
+      ...req,
+      location_ids: locations.map(this.toId),
+    })
   };
 
   renderJobFilterBar = () => {
@@ -285,12 +296,12 @@ class SearchResult extends Component<IProps, IState> {
   };
 
   handleFilterCompanyPress = () => {
-    const { locations } = this.state;
+    const { companies } = this.state;
     navigationService.navigate({
       routeName: 'SearchCompanyMultiSelectModal',
       params: {
-        value: [],
-        onChange: noop
+        value: companies,
+        onChange: this.handleCompaniesSelect
       }
     });
   };
@@ -306,10 +317,28 @@ class SearchResult extends Component<IProps, IState> {
     });
   };
 
+  toId = (obj: any) => obj.id;
+
+  handleCompaniesSelect = (companies: ISearchCompany[]) => {
+    this.setState({
+      companies
+    });
+    const { req, onSearch } = this.props;
+    onSearch({
+      ...req,
+      company_ids: companies.map(this.toId)
+    })
+  }
+
   handleSkillSelect = (skills: ISkill[]) => {
+    const { onSearch, req } = this.props;
     this.setState({
       skills
     });
+    onSearch({
+      ...req,
+      skill_ids: skills.map(this.toId),
+    })
   };
 
   renderFilterBar = () => {

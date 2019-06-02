@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 import navigationService from 'services/navigationService';
 
 const querystring = require('querystring');
-const API_URL = 'http://35.240.251.69:6969/v1';
+const API_URL = 'http://35.240.251.69:3001';
 
 class RestAPIClient {
 

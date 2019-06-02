@@ -57,19 +57,17 @@ class SearchResultContainer extends Component<IProps> {
   };
 
   handleSearchNext = () => {
-    const { req, dispatchSearchNext } = this.props;
+    const { req, dispatchSearchNext, companies, jobs } = this.props;
     if (this.isRefreshing() || this.isLoadingNext() || this.isLoading()) {
       return;
     }
     const { searchType } = req;
     if (searchType === SearchType.COMPANY) {
-      const { companies } = this.props;
-      if (companies.total < PAGE_SIZE) {
+      if (companies.total < PAGE_SIZE || companies.total <= companies.data.length ) {
         return;
       }
     } else if (searchType === SearchType.JOB) {
-      const { jobs } = this.props;
-      if (jobs.total < PAGE_SIZE) {
+      if (jobs.total < PAGE_SIZE  || jobs.total <= jobs.data.length) {
         return;
       }
     }

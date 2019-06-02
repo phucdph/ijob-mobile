@@ -26,6 +26,7 @@ import companySearchContainer from 'components/Search/SearchCompany/companySearc
 import { ISearchCompany } from '../../../screens/Search/screens/SearchResult/services/typings';
 import Avatar from 'components/base/Avatar';
 import NoResultFound from 'components/Search/components/NoResultFound';
+import { ISearchCompanyRequest } from 'components/Search/SearchCompany/services/typings';
 
 interface IProps extends NavigationInjectedProps {
   isLoading: boolean;
@@ -35,6 +36,7 @@ interface IProps extends NavigationInjectedProps {
   onRefresh: () => void;
   companies: IPageableData<ISearchCompany>;
   onSearch: (req: ISearchSKillRequest) => void;
+  req: ISearchCompanyRequest;
 }
 
 interface IState {
@@ -88,7 +90,8 @@ class SearchCompanyMultiSelect extends Component<IProps, IState> {
     onSearch({
       searchText: '',
       limit: 30,
-      offset: 0
+      offset: 0,
+      excluded_ids: Object.keys(this.state.value)
     });
     navigation.setParams({
       onDone: this.handleDone
@@ -96,11 +99,10 @@ class SearchCompanyMultiSelect extends Component<IProps, IState> {
   }
 
   handleSearch = (searchText: string) => {
-    const { onSearch } = this.props;
+    const { onSearch, req } = this.props;
     onSearch({
+      ...req,
       searchText,
-      limit: 30,
-      offset: 0
     });
   };
 

@@ -3,22 +3,22 @@ import { FlatList, View } from 'react-native';
 import HeaderBackButton from 'components/HeaderBackButton';
 import HeaderTitle from 'components/HeaderTitle';
 import { themeVariables } from 'themes/themeVariables';
-import ConnectedJobItem from '../../../NewFeed/components/ConnectedJobItem';
+import ConnectedCompanyItem from '../../../Company/components/ConnectedCompanyItem';
 import { Divider } from 'react-native-elements';
 
 interface IProps {
   data: string[];
 }
 
-class SavedJobs extends Component<IProps> {
+class FollowingCompanies extends Component<IProps> {
   static navigationOptions = {
     headerRight: <View />,
-    headerTitle: <HeaderTitle title={'Saved Jobs'} />,
+    headerTitle: <HeaderTitle title={'Following Companies'} />,
     headerLeft: <HeaderBackButton />
   };
 
   renderCompanyItem = ({ item }: { item: string }) => {
-    return <ConnectedJobItem id={item} />;
+    return <ConnectedCompanyItem id={item} />;
   };
 
   render() {
@@ -31,11 +31,13 @@ class SavedJobs extends Component<IProps> {
           data={data}
           ItemSeparatorComponent={Divider}
           renderItem={this.renderCompanyItem}
-          keyExtractor={item => item}
+          keyExtractor={(item: string, index: number) =>
+            item + index.toString()
+          }
         />
       </View>
     );
   }
 }
 
-export default SavedJobs;
+export default FollowingCompanies;

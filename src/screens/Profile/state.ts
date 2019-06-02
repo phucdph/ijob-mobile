@@ -19,6 +19,8 @@ export const initialState: IUserState = {
     avatar: '',
     created_at: '',
     email: '',
+    saveJob: [],
+    followCompany: [],
   },
   error: null,
 };

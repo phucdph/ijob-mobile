@@ -33,7 +33,8 @@ export default function companySearchContainer(Component: any) {
     req: ISearchCompanyRequest = {
       searchText: '',
       limit: SEARCH_PAGE_SIZE,
-      offset: 0
+      offset: 0,
+      excluded_ids: [],
     };
 
     isLoading = () => searchCompany.is(this.props.action);
@@ -50,7 +51,7 @@ export default function companySearchContainer(Component: any) {
 
     handleSearchNext = () => {
       const { dispatchSearchNextCompany, companies } = this.props;
-      const { searchText, offset } = this.req;
+      const { searchText, offset, excluded_ids } = this.req;
       if (
         companies.data.length >= companies.total ||
         this.isLoading() ||
@@ -61,16 +62,18 @@ export default function companySearchContainer(Component: any) {
       this.req = {
         searchText,
         limit: SEARCH_PAGE_SIZE,
-        offset: offset + SKILL_PAGING_SIZE
+        offset: offset + SKILL_PAGING_SIZE,
+        excluded_ids,
       };
       dispatchSearchNextCompany(this.req);
     };
 
     handleRefresh = () => {
       const { dispatchRefreshCompany } = this.props;
-      const { searchText } = this.req;
+      const { searchText, excluded_ids } = this.req;
       this.req = {
         searchText,
+        excluded_ids,
         limit: SEARCH_PAGE_SIZE,
         offset: 0
       };
@@ -82,9 +85,10 @@ export default function companySearchContainer(Component: any) {
     }
 
     render() {
-      const { action, error, companies, ...rest } = this.props;
+      const { action, error, companies, req, ...rest } = this.props;
       return (
         <Component
+          req={this.req}
           isLoading={this.isLoading()}
           isRefreshing={this.isRefreshing()}
           isLoadingNext={this.isLoadingNext()}

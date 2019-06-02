@@ -15,6 +15,8 @@ import { stateContext, IUserState, initialState } from './state';
 import { ErrorState, IError } from 'services/models/Error';
 import { IUser } from './services/typings';
 import { Action } from 'services/typings';
+import { IJob } from '../NewFeed/services/typings';
+import { ICompany } from '../Company/services/typings';
 
 const userReducers = [
   {
@@ -32,8 +34,13 @@ const userReducers = [
   {
     on: getUserProfileSuccess,
     reducer: (state: IUserState, action: Action<IUser>) => {
+      const { saveJob = [] as any, followCompany = [] as any } = action.payload;
       state.action = action.type;
-      state.data = action.payload;
+      state.data = {
+        ...action.payload,
+        followCompany: followCompany.map((c: any) => c.id),
+        saveJob: saveJob.map((job: IJob) => job.id),
+      };
     }
   },
   {

@@ -22,7 +22,7 @@ class HeaderBackButton extends Component<IProps> {
         style={{
           paddingHorizontal: themeVariables.spacing_md + 4
         }}
-        hitSlop={{ left: 5, right: 5, bottom: 5, top: 5 }}
+        hitSlop={{ left: 10, right: 10, bottom: 10, top: 10 }}
       >
         <Icon name="ios-arrow-back" type="ionicon" color={color} size={30} />
       </TouchableOpacity>

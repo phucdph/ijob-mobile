@@ -18,7 +18,6 @@ const searchCompanySaga = {
   *worker(action: Action<ISearchCompanyRequest>) {
     try {
       const res = yield call(searchService.searchCompany, action.payload);
-      yield delay(1000);
       yield put(searchCompanySuccess(res));
     } catch (err) {
       yield put(searchCompanyFail(err));
@@ -31,7 +30,6 @@ const searchCompanySkillSaga = {
   *worker(action: Action<ISearchCompanyRequest>) {
     try {
       const res = yield call(searchService.searchCompany, action.payload);
-      yield delay(1000);
       yield put(searchNextCompanySuccess(res));
     } catch (err) {
       yield put(searchNextCompanyFail(err));

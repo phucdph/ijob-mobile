@@ -62,14 +62,6 @@ class SearchSkillMultiSelect extends Component<IProps, IState> {
       )
     };
   };
-  previousSelectedIds: { [key: string]: boolean } = {};
-
-  memoizeFilterSkills = memoizeOne(
-    (data: ISkill[], selected: { [key: string]: boolean }) =>
-      data.filter((item: ISkill) => {
-        return !selected[item.id];
-      })
-  );
 
   constructor(props: IProps) {
     super(props);
@@ -77,11 +69,10 @@ class SearchSkillMultiSelect extends Component<IProps, IState> {
     const mapValue = {} as any;
     value.forEach((elm: ISkill) => {
       mapValue[elm.id] = elm;
-      this.previousSelectedIds[elm.id] = true;
     });
     this.state = {
       value: mapValue,
-      previousSelected: value
+      previousSelected: value,
     };
     this.handleSearch = throttle(this.handleSearch, 300, {
       leading: false,
@@ -91,15 +82,19 @@ class SearchSkillMultiSelect extends Component<IProps, IState> {
 
   componentDidMount() {
     const { onSearch, navigation } = this.props;
+    const value = navigation.getParam('value', []);
     onSearch({
       searchText: '',
       limit: 30,
-      offset: 0
+      offset: 0,
+      excluded_ids: value.map(this.toId),
     });
     navigation.setParams({
       onDone: this.handleDone
     });
   }
+
+  toId = (obj:any) => obj.id;
 
   handleSearch = (searchText: string) => {
     const { onSearch } = this.props;
@@ -206,7 +201,7 @@ class SearchSkillMultiSelect extends Component<IProps, IState> {
                   `PREVIOUS_${item.id}_${index}`
               },
               {
-                data: this.memoizeFilterSkills(skills.data, this.previousSelectedIds),
+                data: skills.data,
                 renderItem: this.renderSkillItem,
                 keyExtractor: (item: ISkill, index: number) =>
                   `SEARCH_${item.id}_${index}`

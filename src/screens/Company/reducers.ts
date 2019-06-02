@@ -28,6 +28,8 @@ import { searchSuccess, searchNextSuccess } from '../Search/screens/SearchResult
 import { ISearchCompany } from '../Search/screens/SearchResult/services/typings';
 import { getJobDetailSuccess } from '../NewFeed/screens/FeedDetail/actions';
 import { IJobsDetailState } from '../NewFeed/screens/FeedDetail/state';
+import { getUserProfileSuccess } from '../Profile/actions';
+import { IUser } from '../Profile/services/typings';
 
 const companyReducers = [
   {
@@ -130,6 +132,20 @@ const companyReducers = [
             ...initialCompanyState,
             data: company
           });
+        }
+      }
+    }
+  },
+  {
+    on: getUserProfileSuccess,
+    reducer: (state: ICompaniesState, action: Action<IUser>) => {
+      const { followCompany: followedCompanies = [] as any } = action.payload;
+      for (const company of followedCompanies) {
+        if (company.id) {
+            set(state, `${company.id}`, {
+              ...initialCompanyState,
+              data: company
+            });
         }
       }
     }

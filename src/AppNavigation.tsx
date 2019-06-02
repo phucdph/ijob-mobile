@@ -15,6 +15,8 @@ import AppLoading from './screens/AppLoading/AppLoading';
 // @ts-ignore
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { themeVariables } from 'themes/themeVariables';
+import { isIOS } from 'utils/platform';
+import { Constants } from 'expo';
 
 
 const AuthStack = createAllScreenStackNavigator(AuthNavigators, {
@@ -98,8 +100,9 @@ const AppContainer = createAppContainer(
         },
         ...ModalNavigators,
       },{
+        mode: 'modal',
         headerMode: 'screen',
-        transitionConfig: () => StackViewTransitionConfigs.ModalSlideFromBottomIOS
+        transitionConfig: () => StackViewTransitionConfigs.ModalSlideFromBottomIOS,
       }),
       Auth: AuthStack,
     },

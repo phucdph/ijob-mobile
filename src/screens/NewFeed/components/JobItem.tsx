@@ -11,7 +11,7 @@ import WhiteSpace from 'components/base/WhiteSpace';
 import Avatar from 'components/base/Avatar';
 import Tag from './Tag';
 import { locationFormatter, salaryFormatter } from 'utils/formatter';
-import { noop } from 'lodash';
+import { noop, get } from 'lodash';
 import moment from 'moment';
 import navigationService from 'services/navigationService';
 import { UserType } from '../../../state';
@@ -64,9 +64,9 @@ class JobItem extends PureComponent<IProps> {
       name,
       skills = [],
       salary,
-      created_at,
-      locations
+      created_at
     } = data;
+    const locations = get(data, 'company.location', []);
     return (
       <ListItem
         // onLongPress={this.handleLongPress}

@@ -19,6 +19,8 @@ import { ErrorState, IError } from 'services/models/Error';
 import { IPageableData } from 'services/models';
 import { IJob } from './services/typings';
 import { Action } from 'services/typings';
+import { getUserProfileSuccess } from '../Profile/actions';
+import { IUser } from '../Profile/services/typings';
 
 const feedReducers = [
   {
@@ -122,7 +124,16 @@ const feedReducers = [
       state.action = action.type;
       state.jobs[action.payload].saved = false;
     }
-  }
+  },
+  {
+    on: getUserProfileSuccess,
+    reducer: (state: IJobsState, action: Action<IUser>) => {
+      const { saveJob: savedJobs = [] as any } = action.payload;
+      savedJobs.forEach((job: IJob) => {
+        (state.jobs as any)[job.id] = {...job, saved: true};
+      });
+    }
+  },
 ];
 
 export default {

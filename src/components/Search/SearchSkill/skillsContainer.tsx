@@ -25,6 +25,7 @@ export default function skillContainer(Component: any) {
       searchText: '',
       limit: SKILL_PAGING_SIZE,
       offset: 0,
+      excluded_ids: [],
     };
 
     isLoading = () => searchSkills.is(this.props.action);
@@ -41,10 +42,11 @@ export default function skillContainer(Component: any) {
 
     handleSearchNext = () => {
       const { dispatchSearchNextSkill, skills } = this.props;
-      const { searchText, offset } = this.req;
+      const { searchText, offset, excluded_ids } = this.req;
       if (skills.data.length >= skills.total || this.isLoading() || this.isLoadingNext() ) { return; }
       this.req = {
         searchText,
+        excluded_ids,
         limit: SKILL_PAGING_SIZE,
         offset: offset + SKILL_PAGING_SIZE,
       };
@@ -53,9 +55,10 @@ export default function skillContainer(Component: any) {
 
     handleRefresh = () => {
       const { dispatchRefreshSkill } = this.props;
-      const { searchText } = this.req;
+      const { searchText, excluded_ids } = this.req;
       this.req = {
         searchText,
+        excluded_ids,
         limit: SKILL_PAGING_SIZE,
         offset: 0,
       };

@@ -47,7 +47,7 @@ export default function createAllScreenStackNavigator(
           headerStyle: {
             backgroundColor: themeVariables.primary_color,
             elevation: 0,
-            height: 44
+            // height: 44
           },
           headerBackImage: <HeaderBackButton />,
           headerBackTitle: null,
@@ -57,9 +57,9 @@ export default function createAllScreenStackNavigator(
           headerTitleStyle: {
             color: 'white'
           },
-          headerForceInset: {
-            top: isIOS ? Constants.statusBarHeight : 'never'
-          }
+          // headerForceInset: {
+          //   top: isIOS ? Constants.statusBarHeight : 'never'
+          // }
         },
         headerTitleInterpolator: sceneProps => {
           const { layout, position, scene } = sceneProps;

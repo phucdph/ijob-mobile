@@ -27,13 +27,15 @@ interface IProps extends Partial<ActionSheetProps> {
   userType?: UserType;
   dispatchSaveJob?: (id: string) => void;
   dispatchUnsaveJob?: (id: string) => void;
+  showSkill?: boolean;
 }
 
 // @ts-ignore
 @connectActionSheet
 class ConnectedJobItem extends PureComponent<IProps> {
   static defaultProps = {
-    userType: UserType.GUEST
+    userType: UserType.GUEST,
+    showSkill: true,
   };
 
   handleLongPress = () => {
@@ -78,7 +80,8 @@ class ConnectedJobItem extends PureComponent<IProps> {
   toName = (i: any) => i.name;
 
   render() {
-    const { data = {} as IJob, userType } = this.props;
+    const { data = {} as IJob, userType, showSkill, id } = this.props;
+    if (!id || !data.id) { return null; }
     const {
       company = {} as ISource,
       name,
@@ -123,6 +126,7 @@ class ConnectedJobItem extends PureComponent<IProps> {
             )}
             <WhiteSpace size={'sm'} />
             <Text>{locations}</Text>
+            {showSkill && <>
             <WhiteSpace size={'sm'} />
             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               {skills.map((s: ISkill, i: number) => (
@@ -136,6 +140,7 @@ class ConnectedJobItem extends PureComponent<IProps> {
                 />
               ))}
             </View>
+              </>}
           </View>
         }
       />

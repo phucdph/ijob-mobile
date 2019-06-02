@@ -1,5 +1,5 @@
 export default {
   SavedJobs: {
-    getScreen: () => require('./SavedJobs').default,
+    getScreen: () => require('./SavedJobsContainer').default,
   }
 }

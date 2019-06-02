@@ -38,7 +38,7 @@ class SearchCompanies extends Component<IProps> {
     return (
       <ListItem
         leftElement={
-          <Avatar size={45} rounded={true} source={{ uri: avatar }} />
+          <Avatar size={45} source={{ uri: avatar }} />
         }
         title={name}
         subtitle={locationFormatter(location)}
