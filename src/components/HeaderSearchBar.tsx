@@ -56,7 +56,7 @@ class HeaderSearchBar extends Component<IProps> {
                 marginRight: 8,
                 marginLeft: backButton ? 2 : 8,
                 flexDirection: 'row',
-                alignItems: 'center'
+                alignItems: 'center', overflow: 'hidden'
               },
               containerStyle
             ])}
@@ -65,7 +65,7 @@ class HeaderSearchBar extends Component<IProps> {
               name={'ios-search'}
               style={{ fontSize: 20, marginHorizontal: 8, color: '#7d7d7d' }}
             />
-            <Text style={{ color: 'grey' }}>{placeholder}</Text>
+            <Text style={{ color: 'grey' }} numberOfLines={1}>{placeholder}</Text>
           </View>
         </TouchableWithoutFeedback>
       </View>

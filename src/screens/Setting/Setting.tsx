@@ -6,6 +6,7 @@ import navigationService from 'services/navigationService';
 import { themeVariables } from 'themes/themeVariables';
 import { Divider } from 'react-native-elements';
 import { IUser } from '../Profile/services/typings';
+import Authorize from 'components/base/Authorize';
 
 interface IProps {
   profile: IUser;
@@ -45,7 +46,7 @@ class Setting extends Component<IProps> {
     });
   };
 
-  handleLogoutPress =  () => {
+  handleLogoutPress = () => {
     this.props.onSignOut();
   };
 
@@ -57,16 +58,18 @@ class Setting extends Component<IProps> {
     const { profile = {} as IUser } = this.props;
     const { firstName = '', lastName = '', avatar } = profile;
     return (
-      <ListItem
-        leftAvatar={{
-          source: { uri: avatar ? avatar : undefined },
-          title: firstName[0]
-        }}
-        title={`${firstName} ${lastName}`}
-        titleStyle={{ fontWeight: 'bold' }}
-        subtitle={'View Profile'}
-        onPress={this.handleProfilePress}
-      />
+      <Authorize>
+        <ListItem
+          leftAvatar={{
+            source: { uri: avatar ? avatar : undefined },
+            title: firstName[0]
+          }}
+          title={`${firstName} ${lastName}`}
+          titleStyle={{ fontWeight: 'bold' }}
+          subtitle={'View Profile'}
+          onPress={this.handleProfilePress}
+        />
+      </Authorize>
     );
   };
 

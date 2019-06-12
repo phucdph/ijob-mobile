@@ -1,20 +1,35 @@
 import React, { Component } from 'react';
-import { ActivityIndicator, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { NavigationInjectedProps, NavigationScreenConfigProps, withNavigation } from 'react-navigation';
+import {
+  RefreshControl,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
+import {
+  NavigationInjectedProps,
+  NavigationScreenConfigProps,
+  withNavigation
+} from 'react-navigation';
 import HeaderSearchBar from 'components/HeaderSearchBar';
-import { Icon, Image } from 'react-native-elements';
+import { Divider, Icon, Image } from 'react-native-elements';
 import { themeVariables } from 'themes/themeVariables';
 import { IUser } from './services/typings';
 import WhiteSpace from 'components/base/WhiteSpace';
 import Avatar from 'components/base/Avatar';
 import { get, noop } from 'lodash';
-import { ISkill } from '../NewFeed/services/typings';
+import { IJob, ISkill } from '../NewFeed/services/typings';
 import Tag from '../NewFeed/components/Tag';
 import { ImagePicker, Permissions } from 'expo';
 import navigationService from 'services/navigationService';
 import { connectActionSheet } from '@expo/react-native-action-sheet';
 import { UserType } from '../../state';
-
+import FlatList from 'components/base/FlatList';
+// @ts-ignore
+import Touchable from 'react-native-platform-touchable';
+import ConnectedJobItem from '../NewFeed/components/ConnectedJobItem';
+import memoize from 'memoize-one';
+import ConnectedCompanyItem from '../Company/components/ConnectedCompanyItem';
 interface IProps extends NavigationInjectedProps {
   profile: IUser;
   loadProfile: () => void;
@@ -40,9 +55,14 @@ class Profile extends Component<IProps> {
     return {
       headerRight: null,
       headerLeft: null,
-      headerTitle: <HeaderSearchBar placeholder={placeholder} />
+      headerTitle: <HeaderSearchBar placeholder={placeholder || 'Search'} />
     };
   };
+
+  sliceJob = memoize((job: string[]) => job.slice(0, 5));
+
+  sliceCompany = memoize((company: string[]) => company.slice(0, 5));
+
 
   componentDidMount(): void {
     const { loadProfile, profile, navigation, userType } = this.props;
@@ -185,39 +205,34 @@ class Profile extends Component<IProps> {
               source={{
                 uri: avatar ? avatar : undefined
               }}
-              title={firstName[0]}
               size={themeVariables.profile_avatar_size}
-              rounded={true}
-              containerStyle={{ borderWidth: 5, borderColor: 'white' }}
-              showEditButton={true}
-              onEditPress={this.handleOpenActionSheet}
             />
-            {/*<TouchableOpacity onPress={this.handleOpenActionSheet}>*/}
-            {/*  <Icon*/}
-            {/*    name={'md-create'}*/}
-            {/*    type={'ionicon'}*/}
-            {/*    containerStyle={{*/}
-            {/*      backgroundColor: 'white',*/}
-            {/*      position: 'absolute',*/}
-            {/*      height: 35,*/}
-            {/*      width: 35,*/}
-            {/*      borderRadius: 50,*/}
-            {/*      padding: 5,*/}
-            {/*      right: 0,*/}
-            {/*      bottom: 0,*/}
-            {/*      justifyContent: 'center',*/}
-            {/*      alignItems: 'center',*/}
-            {/*      shadowColor: '#000',*/}
-            {/*      shadowOffset: {*/}
-            {/*        width: 0,*/}
-            {/*        height: 1*/}
-            {/*      },*/}
-            {/*      shadowOpacity: 0.22,*/}
-            {/*      shadowRadius: 2.22,*/}
-            {/*      elevation: 3*/}
-            {/*    }}*/}
-            {/*  />*/}
-            {/*</TouchableOpacity>*/}
+            <TouchableOpacity onPress={this.handleOpenActionSheet}>
+              <Icon
+                name={'md-create'}
+                type={'ionicon'}
+                containerStyle={{
+                  backgroundColor: 'white',
+                  position: 'absolute',
+                  height: 35,
+                  width: 35,
+                  borderRadius: 50,
+                  padding: 5,
+                  right: 0,
+                  bottom: 0,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 1
+                  },
+                  shadowOpacity: 0.22,
+                  shadowRadius: 2.22,
+                  elevation: 3
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
         <View
@@ -308,14 +323,27 @@ class Profile extends Component<IProps> {
     );
   };
 
+  renderJobItem = ({ item }: { item: string }) => {
+    return <ConnectedJobItem id={item} showSkill={false} />;
+  };
+
+  handleSeeAllJobPress = () => {
+    navigationService.navigate({
+      routeName: 'SavedJobs'
+    });
+  };
+
   renderSavedJob = () => {
+    const { profile } = this.props;
+    const { saveJob = [] } = profile;
     return (
       <View
         style={{
           backgroundColor: 'white',
-          padding: themeVariables.spacing_md
+          paddingHorizontal: themeVariables.spacing_md
         }}
       >
+        <WhiteSpace />
         <View
           style={{
             flexDirection: 'row',
@@ -329,11 +357,108 @@ class Profile extends Component<IProps> {
               fontSize: themeVariables.title_font_size
             }}
           >
-            Saved job
+            Saved jobs
           </Text>
-          <Icon name={'md-create'} type={'ionicon'} />
         </View>
-        <View style={{ padding: themeVariables.spacing_md }} />
+        <View style={{ padding: themeVariables.spacing_md }}>
+          <FlatList
+            data={this.sliceJob(saveJob)}
+            renderItem={this.renderJobItem}
+            keyExtractor={(item: string) => item}
+            ItemSeparatorComponent={Divider}
+          />
+        </View>
+
+        {saveJob.length > 5 && (
+          <>
+            <Divider />
+            <Touchable onPress={this.handleSeeAllJobPress}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingVertical: themeVariables.spacing_md
+                }}
+              >
+                <Text
+                  style={{ fontSize: 16, color: themeVariables.primary_color }}
+                >
+                  See all
+                </Text>
+              </View>
+            </Touchable>
+          </>
+        )}
+      </View>
+    );
+  };
+
+  renderCompanyItem = ({ item }: {item: string}) => {
+    return <ConnectedCompanyItem id={item}/>;
+  };
+
+  handleSeeAllCompanyPress = () => {
+    navigationService.navigate({
+      routeName: 'FollowingCompanies'
+    });
+  };
+
+  renderCompany = () => {
+    const { followCompany = [] } = this.props.profile;
+    return (
+      <View
+        style={{
+          backgroundColor: 'white',
+          paddingHorizontal: themeVariables.spacing_md
+        }}
+      >
+        <WhiteSpace/>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: themeVariables.title_font_size
+            }}
+          >
+            Companies that you're following
+          </Text>
+        </View>
+        <View style={{ padding: themeVariables.spacing_md }} >
+          <FlatList
+            data={this.sliceCompany(followCompany)}
+            renderItem={this.renderCompanyItem}
+            keyExtractor={(item: string, index: number) => item + index.toString()}
+            ItemSeparatorComponent={Divider}
+          />
+        </View>
+        {followCompany.length > 5 && (
+          <>
+            <Divider />
+            <Touchable onPress={this.handleSeeAllCompanyPress}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  paddingVertical: themeVariables.spacing_md
+                }}
+              >
+                <Text
+                  style={{ fontSize: 16, color: themeVariables.primary_color }}
+                >
+                  See all
+                </Text>
+              </View>
+            </Touchable>
+          </>
+        )}
       </View>
     );
   };
@@ -401,7 +526,9 @@ class Profile extends Component<IProps> {
 
   render() {
     const { refreshProfile, isRefreshing = false, userType } = this.props;
-    if (userType === UserType.GUEST) { return null; }
+    if (userType === UserType.GUEST) {
+      return null;
+    }
     return (
       <ScrollView
         style={{ backgroundColor: themeVariables.fill_base_color }}
@@ -426,6 +553,10 @@ class Profile extends Component<IProps> {
           style={{ backgroundColor: themeVariables.fill_base_color }}
         />
         {this.renderSavedJob()}
+        <WhiteSpace
+          style={{ backgroundColor: themeVariables.fill_base_color }}
+        />
+        {this.renderCompany()}
       </ScrollView>
     );
   }

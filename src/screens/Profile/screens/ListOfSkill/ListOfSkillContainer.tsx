@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ListOfSkill from './ListOfSkill';
 import { connect } from 'react-redux';
 import { currentProfileSelector, userStateSelector } from '../../selectors';
-import { ISkill } from 'components/Skills/services/typings';
+import { ISkill } from 'components/Search/SearchSkill/services/typings';
 import { get } from 'lodash';
 import { IUser } from '../../services/typings';
 import { updateUserProfile } from '../../actions';

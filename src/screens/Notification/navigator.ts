@@ -1,5 +1,5 @@
 export default {
   Notification: {
-    getScreen: () => require('./Notification').default
+    getScreen: () => require('./NotificationContainer').default
   }
 };

@@ -6,16 +6,17 @@ import { Action } from 'services/typings';
 import navigationService from 'services/navigationService';
 import { NavigationActions } from 'react-navigation';
 import { getUserProfileSuccess } from '../../../Profile/actions';
+import { registerForPushNotificationsAsync } from 'utils/notification';
 
 const signUpSaga = {
   on: signUp,
   *worker(action: Action<ISignUpRequest>) {
     try {
       const res = yield call(authService.signUp, action.payload);
-      yield delay(1000);
       yield put(signUpSuccess());
       yield call(authService.presistAuth, res.data);
       yield put(getUserProfileSuccess(res.data.profile));
+      registerForPushNotificationsAsync();
       navigationService.dispatch(
         NavigationActions.navigate({
           routeName: 'App'

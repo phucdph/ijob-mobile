@@ -1,57 +1,90 @@
 import React, { Component } from 'react';
-import { View, Text, StatusBar, ScrollView } from 'react-native';
-import { Constants } from 'expo';
+import {
+  View,
+  Text,
+  StatusBar,
+  ScrollView,
+  RefreshControl
+} from 'react-native';
+import Constants from 'expo-constants'
 import { Button, Icon, ListItem } from 'react-native-elements';
 import HeaderBackButton from 'components/HeaderBackButton';
 import { themeVariables } from 'themes/themeVariables';
 import Tag from '../../components/Tag';
-import { ISkill } from '../../services/typings';
+import { IJob, IJobDetail, ISkill, ISource } from '../../services/typings';
 import WhiteSpace from 'components/base/WhiteSpace';
 import { isIOS } from 'utils/platform';
+import { get, noop } from 'lodash';
+import Avatar from 'components/base/Avatar';
+import { salaryFormatter } from 'utils/formatter';
+import { ILocation } from 'components/Locations/services/typings';
+import {
+  ActionSheetProps,
+  connectActionSheet
+} from '@expo/react-native-action-sheet';
+import navigationService from 'services/navigationService';
 
-class FeedDetail extends Component {
-  static navigationOptions = {
-    header: (
-      <View
-        style={{
-          paddingTop: isIOS ? Constants.statusBarHeight : 0,
-          backgroundColor: 'white'
-        }}
-      />
-    )
+interface IProps extends Partial<ActionSheetProps> {
+  data: IJobDetail | IJob;
+  onLoad: () => void;
+  onRefresh: () => void;
+  onSave: () => void;
+  onUnsave: () => void;
+  isLoading: boolean;
+  isRefresing: boolean;
+}
+// @ts-ignore
+@connectActionSheet
+class FeedDetail extends Component<IProps> {
+  static navigationOptions = () => {
+    return {
+    header: null,
+    }
   };
 
+  componentDidMount() {
+    const { onLoad } = this.props;
+    onLoad();
+  }
+
   renderInfo = () => {
+    const { salary, skills = [] } = this.props.data;
+    const locations = get(this.props.data, 'company.location', [])
+      .map((l: ILocation) => l.name)
+      .join(', ');
     return (
       <View style={{ padding: themeVariables.spacing_md }}>
         <ListItem
           leftElement={
             <View style={{ width: 25, alignItems: 'center' }}>
-              <Icon name={'ios-card'} type={'ionicon'} color={themeVariables.accent_color}/>
+              <Icon
+                name={'ios-card'}
+                type={'ionicon'}
+                color={themeVariables.accent_color}
+              />
             </View>
           }
           containerStyle={{ padding: themeVariables.spacing_xs }}
-          title={'500 - 1000 USD'}
+          title={salaryFormatter(salary)}
           titleStyle={{ fontSize: 14 }}
         />
         <ListItem
           leftElement={
             <View style={{ width: 25, alignItems: 'center' }}>
-              <Icon name={'ios-pin'} type={'ionicon'} color={themeVariables.accent_color}/>
+              <Icon
+                name={'ios-pin'}
+                type={'ionicon'}
+                color={themeVariables.accent_color}
+              />
             </View>
           }
           containerStyle={{ padding: themeVariables.spacing_xs }}
-          title={'Ho Chi Minh'}
+          title={locations}
           titleStyle={{ fontSize: 14 }}
         />
         <WhiteSpace size={'sm'} />
         <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-          {[
-            { id: '1', name: 'Javascript' },
-            { id: '2', name: 'React Native' },
-            { id: '3', name: 'Angular' },
-            { id: '4', name: 'Product Backlog' }
-          ].map((s: ISkill, i: number) => (
+          {skills.map((s: ISkill, i: number) => (
             <Tag
               name={s.name.trim()}
               key={`${s.id}-${i}`}
@@ -67,23 +100,17 @@ class FeedDetail extends Component {
   };
 
   renderRequirementSection = () => {
-    const data = [
-      'You’re smart and can pass our test rounds',
-      '2 + years of experience working with one of the following: C#, C++',
-      'Awesome with Cocos2Dx or Unity',
-      'You’ve done at least 3 gaming projects in your last 3 years',
-      'Know how to write native plugin (Java/Object C) is an advantage',
-      'You are superb in using Github (or Gitlab)',
-      'Understanding of OO programming and design patterns',
-      'Can take ownership of, and set the direction for feature development'
-    ];
+    const { require = [] } = this.props.data as IJobDetail;
+    if (require.length === 0) {
+      return null;
+    }
     return (
       <View>
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
           Your Skills and Experience
         </Text>
         <View style={{ padding: themeVariables.spacing_md }}>
-          {data.map((item: string, index: number) => (
+          {require.map((item: string, index: number) => (
             <ListItem
               key={index}
               title={item}
@@ -102,23 +129,17 @@ class FeedDetail extends Component {
   };
 
   renderBenefitSection = () => {
-    const data = [
-      'Great facility to work. You will have a MacBook and extra high definition screens',
-      'Premium health insurance package and annual medical check-up',
-      'Sponsorship for training courses',
-      'Interesting activities: gym/fitness, yoga club at work, English club, corporate social responsibility events...',
-      'Attractive signing bonus for important positions',
-      'With regular discussions with the CEO, founders and executives of the company, you will have a lot of opportunities to learn from experts in their fields',
-      'Annual bonus and project bonus',
-      'International opportunity to expose and grow'
-    ];
+    const { benefit = [] } = this.props.data as IJobDetail;
+    if (benefit.length === 0) {
+      return null;
+    }
     return (
       <View>
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>
           Why You'll Love Working Here
         </Text>
         <View style={{ padding: themeVariables.spacing_md }}>
-          {data.map((item: string, index: number) => (
+          {benefit.map((item: string, index: number) => (
             <ListItem
               key={index}
               title={item}
@@ -137,58 +158,120 @@ class FeedDetail extends Component {
   };
 
   handleMenuPress = () => {
-    console.log('menu press');
+    const {
+      showActionSheetWithOptions = noop,
+      data = { saved: false, id: '' },
+      onSave = noop,
+      onUnsave = noop
+    } = this.props;
+    const { saved } = data;
+    const options = [saved ? 'Unsave' : 'Save', 'Cancel'];
+    const cancelButtonIndex = 2;
+    showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex
+      },
+      buttonIndex => {
+        switch (buttonIndex) {
+          case 0: {
+            saved ? onUnsave() : onSave();
+            return;
+          }
+          default: {
+            return;
+          }
+        }
+      }
+    );
   };
 
-  render() {
+  handleCompanyPress = () => {
+    const { id } = get(this.props.data, 'company', { id: '' });
+    navigationService.navigate({
+      routeName: 'Company',
+      params: {
+        id
+      }
+    });
+  };
+
+  renderHeader = () => {
+    const company = get(this.props.data, 'company', {});
+    const { name = '', avatar } = company as ISource;
     return (
-      <View style={{ flex: 1 }}>
-        <StatusBar barStyle={'dark-content'} backgroundColor={'white'}/>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+        }}
+      >
         <View
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between'
+            flex: 1,
+            paddingLeft: themeVariables.spacing_sm
           }}
         >
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              flex: 1,
-              paddingLeft: themeVariables.spacing_sm
-            }}
-          >
-            <HeaderBackButton color={'black'} />
-            <View style={{ flexDirection: 'column', flex: 1 }}>
-              <ListItem
-                leftAvatar={{
-                  rounded: true,
-                  title: 'K'
-                }}
-                title={'KMS Technology'}
-                subtitle={'Ho Chi Minh'}
-                containerStyle={{
-                  alignItems: 'flex-start',
-                }}
-              />
-            </View>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              minWidth: 50,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Icon name={'ios-more'} type={'ionicon'} onPress={this.handleMenuPress}/>
+          <HeaderBackButton color={'black'} />
+          <View style={{ flexDirection: 'column', flex: 1 }}>
+            <ListItem
+              leftElement={
+                <Avatar
+                  size={45}
+                  source={{
+                    uri: avatar,
+                  }}
+                />
+              }
+              title={name}
+              subtitle={'Ho Chi Minh'}
+              subtitleStyle={{
+                color: themeVariables.secondary_text_color
+              }}
+              containerStyle={{
+                alignItems: 'flex-start'
+              }}
+              onPress={this.handleCompanyPress}
+            />
           </View>
         </View>
-        <ScrollView style={{ padding: themeVariables.spacing_lg }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 18 }}>
-            Senior ReactJS Developer
-          </Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            minWidth: 50,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <Icon
+            name={'ios-more'}
+            type={'ionicon'}
+            onPress={this.handleMenuPress}
+          />
+        </View>
+      </View>
+    );
+  };
+
+  render() {
+    const { name } = this.props.data;
+    const { isRefresing, onRefresh } = this.props;
+    return (
+      <View style={{ flex: 1, paddingTop: Constants.statusBarHeight }}>
+        <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
+        {this.renderHeader()}
+        <ScrollView
+          contentContainerStyle={{ padding: themeVariables.spacing_lg }}
+          keyboardShouldPersistTaps={'handled'}
+          keyboardDismissMode={'on-drag'}
+          refreshControl={
+            <RefreshControl refreshing={isRefresing} onRefresh={onRefresh} />
+          }
+        >
+          <Text style={{ fontWeight: 'bold', fontSize: 18 }}>{name}</Text>
           {this.renderInfo()}
           <WhiteSpace size={'md'} />
           {this.renderRequirementSection()}
@@ -198,6 +281,9 @@ class FeedDetail extends Component {
           <Button
             title={'Apply Now'}
             buttonStyle={{ backgroundColor: themeVariables.accent_color }}
+            titleStyle={{
+              color: 'white'
+            }}
           />
           <WhiteSpace size={'lg'} />
           <WhiteSpace size={'xl'} />

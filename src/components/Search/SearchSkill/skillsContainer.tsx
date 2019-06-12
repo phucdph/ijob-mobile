@@ -2,10 +2,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { searchNextSkills, searchSkills, refreshSearchSkills, resetSearchSkills } from './actions';
 import { IError } from 'services/models/Error';
-import { ISearchSKillRequest, ISkill } from 'components/Skills/services/typings';
+import { ISearchSKillRequest, ISkill } from 'components/Search/SearchSkill/services/typings';
 import { IPageableData } from 'services/models';
-import { skillStateSelector } from 'components/Skills/selectors';
-import { SKILL_PAGING_SIZE } from 'components/Skills/constants';
+import { skillStateSelector } from 'components/Search/SearchSkill/selectors';
+import { SKILL_PAGING_SIZE } from 'components/Search/SearchSkill/constants';
 
 interface IProps {
   dispatchSearchSkill: (req: ISearchSKillRequest) => void;
@@ -25,6 +25,7 @@ export default function skillContainer(Component: any) {
       searchText: '',
       limit: SKILL_PAGING_SIZE,
       offset: 0,
+      excluded_ids: [],
     };
 
     isLoading = () => searchSkills.is(this.props.action);
@@ -41,10 +42,11 @@ export default function skillContainer(Component: any) {
 
     handleSearchNext = () => {
       const { dispatchSearchNextSkill, skills } = this.props;
-      const { searchText, offset } = this.req;
+      const { searchText, offset, excluded_ids } = this.req;
       if (skills.data.length >= skills.total || this.isLoading() || this.isLoadingNext() ) { return; }
       this.req = {
         searchText,
+        excluded_ids,
         limit: SKILL_PAGING_SIZE,
         offset: offset + SKILL_PAGING_SIZE,
       };
@@ -53,9 +55,10 @@ export default function skillContainer(Component: any) {
 
     handleRefresh = () => {
       const { dispatchRefreshSkill } = this.props;
-      const { searchText } = this.req;
+      const { searchText, excluded_ids } = this.req;
       this.req = {
         searchText,
+        excluded_ids,
         limit: SKILL_PAGING_SIZE,
         offset: 0,
       };

@@ -19,7 +19,6 @@ const searchReducers = [
   {
     on: [refreshSearch, searchNext, search],
     reducer(state: IState, action: Action<ISearchRequest>) {
-      console.log(action.payload);
       state.req = action.payload;
       state.action = action.type;
     }

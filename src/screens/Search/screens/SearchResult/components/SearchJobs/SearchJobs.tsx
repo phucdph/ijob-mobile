@@ -7,6 +7,8 @@ import { IPageableData } from 'services/models';
 import { IJob } from '../../../../../NewFeed/services/typings';
 import JobItem from '../../../../../NewFeed/components/JobItem';
 import ListItemSpinner from 'components/base/ListItemSpinner';
+import Spinner from 'components/base/Spinner';
+import { size } from 'lodash';
 
 interface IProps {
   jobs: IPageableData<IJob>;
@@ -34,7 +36,10 @@ class SearchJobs extends Component<IProps> {
   };
 
   render() {
-    const { jobs, onSearchNext, isLoadingNext } = this.props;
+    const { jobs, onSearchNext, isLoadingNext, onRefresh, isRefreshing, isLoading } = this.props;
+    if (isLoading && size(jobs.data) === 0) {
+      return <Spinner loading={true} />;
+    }
     return (
       <View
         style={{
@@ -53,6 +58,8 @@ class SearchJobs extends Component<IProps> {
           onEndReached={onSearchNext}
           onEndReachedThreshold={0.3}
           scrollEventThrottle={16}
+          onRefresh={onRefresh}
+          refreshing={isRefreshing}
           ListFooterComponent={<ListItemSpinner loading={isLoadingNext} />}
         />
       </View>

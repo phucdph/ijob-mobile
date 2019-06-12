@@ -2,44 +2,85 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a47a707a-b55d-4944-bb96-55193f4bb89c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/Locations/LocationMultiSelect.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/reducers.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/sagas.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/SearchResult.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/SearchResultContainer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/actions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/FilterButton.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SeachAll/SearchAll.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SearchCompanies/SearchCompanies.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SearchJobs/SearchJobs.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/navigator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/reducers.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/sagas.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/selectors.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/services/searchService.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/services/typings/index.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/state.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.ts" beforeDir="false" afterPath="$PROJECT_DIR$/App.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/splash.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/splash.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/AppNavigation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/AppNavigation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HeaderBackButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeaderBackButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/HeaderSearchBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeaderSearchBar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/HeaderSearchBarInput.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/HeaderSearchBarInput.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Locations/navigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Locations/navigator.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/base/WhiteSpace.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/WhiteSpace.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config/Reactotron.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/config/Reactotron.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Skills/actions.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Skills/constants.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Skills/reducers.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Skills/sagas.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Skills/selectors.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Skills/services/skillService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Skills/services/typings/index.d.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Skills/skillsContainer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Skills/state.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/base/Authorize.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/Authorize.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/base/Avatar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/Avatar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/base/Spinner.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/Spinner.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/base/navigation/createStackNavigator.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/base/navigation/createStackNavigator.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/navigators.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/navigators.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/reducers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sagas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/sagas.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/AppLoading/AppLoading.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AppLoading/AppLoading.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Auth/screens/SignIn/SignIn.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Auth/screens/SignIn/SignIn.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Auth/screens/SignIn/sagas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Auth/screens/SignIn/sagas.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Auth/screens/SignUp/SignUp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Auth/screens/SignUp/SignUp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Auth/screens/SignUp/sagas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Auth/screens/SignUp/sagas.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/NewFeed.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/NewFeed.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/NewFeedContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/NewFeedContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/components/Feed.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/components/JobItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/actions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/actions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/components/JobItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/components/JobItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/components/Tag.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/components/Tag.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/reducers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/reducers.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/services/newfeedService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/services/newfeedService.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/sagas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/sagas.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/screens/FeedDetail/FeedDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/screens/FeedDetail/FeedDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/screens/FeedDetail/FeedDetailContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/screens/FeedDetail/FeedDetailContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/selectors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/selectors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/services/newfeedService.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/services/typings/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/services/typings/index.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Notification/NotificationContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Notification/NotificationContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Notification/navigator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Notification/navigator.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Profile/Profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Profile/Profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Profile/ProfileContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Profile/ProfileContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Profile/navigator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Profile/navigator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Profile/reducers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Profile/reducers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Profile/screens/ListOfSkill/ListOfSkill.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Profile/screens/ListOfSkill/ListOfSkill.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Profile/screens/ListOfSkill/ListOfSkillContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Profile/screens/ListOfSkill/ListOfSkillContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Profile/screens/ListOfSkill/screens/SearchSkillSelect/SearchSkillSelect.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Profile/screens/ListOfSkill/screens/SearchSkillSelect/SearchSkillSelect.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Profile/services/typings/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Profile/services/typings/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Profile/state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Profile/state.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/Search/Search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/Search.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/Search/navigator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/navigator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/components/SearchHistoryItem.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/reducers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/reducers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/sagas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/sagas.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/SearchResult.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/SearchResult.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/SearchResultContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/SearchResultContainer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/FilterButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/FilterButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SeachAll/SearchAll.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SeachAll/SearchAll.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SearchCompanies/SearchCompanies.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SearchCompanies/SearchCompanies.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SearchJobs/SearchJobs.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SearchJobs/SearchJobs.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/navigator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/navigator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/reducers.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/reducers.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/sagas.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/sagas.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/services/searchService.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/services/typings/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/services/typings/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Search/services/typings/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Search/services/typings/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Setting/Setting.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Setting/Setting.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/RestAPIClient.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/RestAPIClient.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/store.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/formatter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/formatter.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utils/redux.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/redux.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -53,119 +94,107 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/screens/Search/screens/SearchResult/SearchResult.tsx">
+        <entry file="file://$PROJECT_DIR$/app.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="233" column="11" lean-forward="true" selection-start-line="233" selection-start-column="11" selection-end-line="233" selection-end-column="11" />
+            <state relative-caret-position="330">
+              <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AppNavigation.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="576">
+              <caret line="116" column="52" selection-start-line="116" selection-start-column="52" selection-end-line="116" selection-end-column="52" />
               <folding>
-                <element signature="e#0#41#0" expanded="true" />
+                <element signature="e#0#238#0" expanded="true" />
+                <element signature="e#658#713#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/screens/Search/screens/SearchResult/sagas.ts">
+        <entry file="file://$PROJECT_DIR$/src/App.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-206">
-              <caret line="39" column="14" selection-start-line="39" selection-start-column="14" selection-end-line="39" selection-end-column="14" />
+            <state relative-caret-position="415">
+              <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
               <folding>
-                <element signature="e#0#155#0" expanded="true" />
+                <element signature="e#0#31#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SearchCompanies/SearchCompanies.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1139">
-              <caret line="54" column="23" selection-start-line="54" selection-start-column="23" selection-end-line="54" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Locations/LocationMultiSelect.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-280">
-              <caret line="112" column="17" selection-start-line="112" selection-start-column="17" selection-end-line="112" selection-end-column="17" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-                <element signature="e#368#424#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/Locations/navigator.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="44">
-              <caret line="2" column="84" selection-start-line="2" selection-start-column="84" selection-end-line="2" selection-end-column="84" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/Locations/LocationSelect.tsx">
+        <entry file="file://$PROJECT_DIR$/App.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="30" column="23" selection-start-line="30" selection-start-column="19" selection-end-line="30" selection-end-column="23" />
+            <state relative-caret-position="132">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/store.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
               <folding>
-                <element signature="e#0#41#0" expanded="true" />
-                <element signature="e#358#414#0" expanded="true" />
+                <element signature="e#0#96#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/screens/Search/screens/SearchResult/reducers.ts">
+        <entry file="file://$PROJECT_DIR$/src/utils/notification.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="21" column="34" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="34" />
+            <state>
               <folding>
-                <element signature="e#0#45#0" expanded="true" />
+                <element signature="e#0#37#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/screens/Search/screens/SearchResult/selectors.ts">
+        <entry file="file://$PROJECT_DIR$/src/utils/redux.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="3" column="32" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="32" />
+            <state relative-caret-position="516">
+              <caret line="52" column="48" selection-start-line="52" selection-start-column="48" selection-end-line="52" selection-end-column="48" />
               <folding>
-                <element signature="e#0#47#0" expanded="true" />
+                <element signature="e#0#69#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SearchJobs/SearchJobs.tsx">
+        <entry file="file://$PROJECT_DIR$/src/actions.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="36" column="45" selection-start-line="36" selection-start-column="45" selection-end-line="36" selection-end-column="45" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="44">
+              <caret line="2" column="58" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="58" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/screens/Search/screens/SearchResult/SearchResultContainer.tsx">
+        <entry file="file://$PROJECT_DIR$/src/screens/AppLoading/AppLoading.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="55" column="84" selection-start-line="55" selection-start-column="84" selection-end-line="55" selection-end-column="84" />
+            <state relative-caret-position="-190">
+              <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/screens/Auth/screens/SignIn/sagas.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="519">
+              <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
               <folding>
-                <element signature="e#0#41#0" expanded="true" />
+                <element signature="e#0#42#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -190,10 +219,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/components/base/Camera/Camera.tsx" />
-        <option value="$PROJECT_DIR$/src/store.ts" />
-        <option value="$PROJECT_DIR$/src/selectors.ts" />
-        <option value="$PROJECT_DIR$/src/state.ts" />
         <option value="$PROJECT_DIR$/src/screens/NewFeed/screens/FeedDetail/FeedDetail.tsx" />
         <option value="$PROJECT_DIR$/src/components/base/Button.tsx" />
         <option value="$PROJECT_DIR$/src/actions.ts" />
@@ -205,8 +230,6 @@
         <option value="$PROJECT_DIR$/src/services/navigationService.ts" />
         <option value="$PROJECT_DIR$/src/screens/Profile/ProfileContainer.tsx" />
         <option value="$PROJECT_DIR$/src/components/base/Avatar.tsx" />
-        <option value="$PROJECT_DIR$/src/screens/Auth/screens/SignIn/sagas.ts" />
-        <option value="$PROJECT_DIR$/src/screens/AppLoading/AppLoading.tsx" />
         <option value="$PROJECT_DIR$/src/screens/Profile/Profile.tsx" />
         <option value="$PROJECT_DIR$/src/screens/Search/navigator.ts" />
         <option value="$PROJECT_DIR$/src/screens/NewFeed/components/Feed.tsx" />
@@ -226,7 +249,6 @@
         <option value="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/state.ts" />
         <option value="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/services/searchService.ts" />
         <option value="$PROJECT_DIR$/src/components/base/WhiteSpace.tsx" />
-        <option value="$PROJECT_DIR$/src/utils/redux.ts" />
         <option value="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/sagas.ts" />
         <option value="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/FilterButton.tsx" />
         <option value="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/components/SearchAll.tsx" />
@@ -241,6 +263,13 @@
         <option value="$PROJECT_DIR$/src/components/Locations/LocationSelect.tsx" />
         <option value="$PROJECT_DIR$/src/screens/Search/screens/SearchResult/SearchResult.tsx" />
         <option value="$PROJECT_DIR$/src/components/Locations/LocationMultiSelect.tsx" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/screens/Auth/screens/SignIn/sagas.ts" />
+        <option value="$PROJECT_DIR$/app.json" />
+        <option value="$PROJECT_DIR$/src/utils/redux.ts" />
+        <option value="$PROJECT_DIR$/src/screens/AppLoading/AppLoading.tsx" />
+        <option value="$PROJECT_DIR$/src/AppNavigation.tsx" />
+        <option value="$PROJECT_DIR$/App.ts" />
       </list>
     </option>
   </component>
@@ -259,6 +288,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -275,56 +305,12 @@
               <item name="ijob-mobile" type="b2602c69:ProjectViewProjectNode" />
               <item name="ijob-mobile" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ijob-mobile" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ijob-mobile" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="Locations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ijob-mobile" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ijob-mobile" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ijob-mobile" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ijob-mobile" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ijob-mobile" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ijob-mobile" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="Search" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ijob-mobile" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ijob-mobile" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="Search" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ijob-mobile" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ijob-mobile" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="Search" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="SearchResult" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -402,10 +388,11 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="172139000" />
+    <option name="totallyTimeSpent" value="173582000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17829457" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -463,110 +450,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/react-native-elements/src/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4598">
-          <caret line="232" column="55" selection-start-line="232" selection-start-column="44" selection-end-line="232" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/services/navigationService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="41" column="7" selection-start-line="41" selection-start-column="7" selection-end-line="41" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/base/Authorize.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="6" column="69" selection-start-line="6" selection-start-column="69" selection-end-line="6" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/screens/Auth/screens/SignUp/SignUp.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3344">
-          <caret line="161" column="35" lean-forward="true" selection-start-line="161" selection-start-column="35" selection-end-line="161" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/base/Avatar.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/screens/Auth/screens/SignIn/sagas.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/screens/AppLoading/AppLoading.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="501">
-          <caret line="46" column="68" selection-start-line="46" selection-start-column="68" selection-end-line="46" selection-end-column="68" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/screens/Profile/Profile.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="183" column="17" lean-forward="true" selection-start-line="183" selection-start-column="17" selection-end-line="183" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/screens/Search/navigator.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="56" selection-start-line="4" selection-start-column="56" selection-end-line="4" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/screens/NewFeed/services/typings/index.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="21" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/screens/NewFeed/NewFeedContainer.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1200">
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/screens/NewFeed/state.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="13" lean-forward="true" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/screens/NewFeed/reducers.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -711,16 +594,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/screens/Auth/screens/SignIn/SignIn.tsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
@@ -737,16 +610,6 @@
           <caret line="34" selection-start-line="34" selection-end-line="38" selection-end-column="8" />
           <folding>
             <element signature="e#0#199#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/utils/redux.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1408">
-          <caret line="74" column="7" lean-forward="true" selection-start-line="74" selection-start-column="7" selection-end-line="74" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#69#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -921,6 +784,129 @@
             <element signature="e#0#41#0" expanded="true" />
             <element signature="e#358#414#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/screens/Auth/screens/SignIn/selectors.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/screens/Auth/screens/SignIn/sagas.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="519">
+          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#96#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/notification.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/screens/Auth/services/authService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="24" column="17" selection-end-line="34" />
+          <folding>
+            <element signature="e#0#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/actions.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="58" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/redux.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="516">
+          <caret line="52" column="48" selection-start-line="52" selection-start-column="48" selection-end-line="52" selection-end-column="48" />
+          <folding>
+            <element signature="e#0#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/screens/AppLoading/AppLoading.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-190">
+          <caret line="2" column="34" selection-start-line="2" selection-start-column="34" selection-end-line="2" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/screens/Profile/ProfileContainer.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1738">
+          <caret line="96" selection-start-line="96" selection-end-line="96" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AppNavigation.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="576">
+          <caret line="116" column="52" selection-start-line="116" selection-start-column="52" selection-end-line="116" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#238#0" expanded="true" />
+            <element signature="e#658#713#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>

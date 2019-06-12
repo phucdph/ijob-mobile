@@ -4,14 +4,17 @@ import { View, StyleSheet, TouchableOpacity, Text, Dimensions } from 'react-nati
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import navigationService from 'services/navigationService';
 import { Header } from 'react-navigation';
-import { Constants } from 'expo';
+import Constants from 'expo-constants'
 import { themeVariables } from 'themes/themeVariables';
 
-interface IProps extends SearchBarDefault {}
+interface IProps extends SearchBarDefault {
+  cancelButton?: boolean;
+}
 
 class HeaderSearchBarInput extends React.Component<IProps> {
   static defaultProps = {
-    size: 16
+    size: 16,
+    cancelButton: true
   };
 
   handleCancelPress = () => {
@@ -19,9 +22,9 @@ class HeaderSearchBarInput extends React.Component<IProps> {
   };
 
   render() {
-    const { onChangeText, ...rest } = this.props;
+    const { onChangeText, containerStyle, cancelButton, inputContainerStyle, ...rest } = this.props;
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, containerStyle]}>
           <Input
             autoFocus={true}
             autoCapitalize={'none'}
@@ -29,9 +32,11 @@ class HeaderSearchBarInput extends React.Component<IProps> {
             inputStyle={styles.input}
             containerStyle={{
               paddingHorizontal: 0,
-              width: Dimensions.get('window').width - 75
+              width: cancelButton? Dimensions.get('window').width - 75 : '100%'
             }}
-            inputContainerStyle={styles.inputContainer}
+            inputContainerStyle={[styles.inputContainer, {
+              marginRight: cancelButton ? 0 : 8,
+            }, inputContainerStyle]}
             leftIconContainerStyle={styles.leftIconContainerStyle}
             leftIcon={<Ionicons
               name={'ios-search'}
@@ -41,13 +46,13 @@ class HeaderSearchBarInput extends React.Component<IProps> {
             clearButtonMode={'always'}
             {...rest}
           />
-          <TouchableOpacity
+         {cancelButton && <TouchableOpacity
             onPress={this.handleCancelPress}
           >
             <View style={styles.cancelButtonContainer}>
               <Text style={styles.buttonTextStyle}>Cancel</Text>
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity>}
         </View>
     );
   }
@@ -64,6 +69,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginLeft: 6,
+    fontSize: 14,
   },
   inputContainer: {
     borderBottomWidth: 0,
@@ -71,7 +77,7 @@ const styles = StyleSheet.create({
     borderRadius: 9,
     height: 30,
     marginLeft: 8,
-    // marginRight: 8,
+    marginRight: 8,
   },
   rightIconContainerStyle: {
     marginRight: 8

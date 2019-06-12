@@ -13,8 +13,10 @@ import * as React from 'react';
 import navigationService from 'services/navigationService';
 import AppLoading from './screens/AppLoading/AppLoading';
 // @ts-ignore
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { themeVariables } from 'themes/themeVariables';
+import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
+import { Transition } from 'react-native-reanimated';
+
 
 
 const AuthStack = createAllScreenStackNavigator(AuthNavigators, {
@@ -88,7 +90,7 @@ const ModalNavigators = Object.keys(AppNavigators).reduce((accumulator: any, cur
 }, {});
 
 const AppContainer = createAppContainer(
-  createSwitchNavigator(
+  createAnimatedSwitchNavigator(
     {
       AppLoading,
       App: createAllScreenStackNavigator({
@@ -98,14 +100,24 @@ const AppContainer = createAppContainer(
         },
         ...ModalNavigators,
       },{
+        mode: 'modal',
         headerMode: 'screen',
-        transitionConfig: () => StackViewTransitionConfigs.ModalSlideFromBottomIOS
+        transitionConfig: () => StackViewTransitionConfigs.ModalSlideFromBottomIOS,
       }),
       Auth: AuthStack,
     },
     {
       initialRouteName: 'AppLoading',
-    }
+      transition: (
+        <Transition.Together>
+          <Transition.Out
+            type="fade"
+            durationMs={300}
+          />
+          <Transition.In type="fade" durationMs={300} />
+        </Transition.Together>
+      ),
+    } as any
   )
 );
 

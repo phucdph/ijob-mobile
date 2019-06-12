@@ -10,7 +10,7 @@ import { Easing, Animated } from 'react-native';
 import { themeVariables } from 'themes/themeVariables';
 import HeaderBackButton from 'components/HeaderBackButton';
 import * as React from 'react';
-import { Constants } from 'expo';
+import Constants from 'expo-constants'
 
 export default function createAllScreenStackNavigator(
   route: NavigationScreenRouteConfig,
@@ -47,7 +47,7 @@ export default function createAllScreenStackNavigator(
           headerStyle: {
             backgroundColor: themeVariables.primary_color,
             elevation: 0,
-            height: 44
+            // height: 44
           },
           headerBackImage: <HeaderBackButton />,
           headerBackTitle: null,
@@ -57,9 +57,9 @@ export default function createAllScreenStackNavigator(
           headerTitleStyle: {
             color: 'white'
           },
-          headerForceInset: {
-            top: isIOS ? Constants.statusBarHeight : 'never'
-          }
+          // headerForceInset: {
+          //   top: isIOS ? Constants.statusBarHeight : 'never'
+          // }
         },
         headerTitleInterpolator: sceneProps => {
           const { layout, position, scene } = sceneProps;

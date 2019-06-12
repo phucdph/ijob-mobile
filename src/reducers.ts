@@ -2,7 +2,7 @@ import authReducers from './screens/Auth/reducers';
 import feedReducers from './screens/NewFeed/reducers';
 import userReducers from './screens/Profile/reducers';
 import locationReducers from './components/Locations/reducers';
-import skillReducers from './components/Skills/reducers';
+import skillReducers from './components/Search/SearchSkill/reducers';
 import { setUserType } from './actions';
 import { IAppState, initialState, stateContext, UserType } from './state';
 import { createReducers } from 'utils/redux';
@@ -34,5 +34,7 @@ export default {
   ...locationReducers,
   ...skillReducers,
   ...require('./screens/Search/reducers').default,
+  ...require('./components/Search/SearchCompany/reducers').default,
+  ...require('./screens/Company/reducers').default,
   ...createReducers(stateContext, appReducers, initialState),
 };

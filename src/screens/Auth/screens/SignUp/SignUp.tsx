@@ -5,7 +5,7 @@ import WhiteSpace from 'components/base/WhiteSpace';
 import { Formik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Constants } from 'expo';
+import Constants from 'expo-constants'
 import TextInput from 'components/base/TextInput';
 import Button from 'components/base/Button';
 

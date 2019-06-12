@@ -6,14 +6,14 @@ import {
   searchNext,
   searchNextFail,
   searchNextSuccess,
-  cleanUpSearch
 } from './actions';
 import { Action } from 'services/typings';
-import { searchService } from './services/searchService';
+import { searchService } from '../../services/typings/searchService';
 import {
   put,
   call,
   all,
+  delay
 } from 'redux-saga/effects';
 import { createSagas } from 'utils/redux';
 import { ISearchRequest, SearchType } from './services/typings';

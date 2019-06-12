@@ -1,7 +1,9 @@
-import { ISkill } from 'components/Skills/services/typings';
+import { ISkill } from 'components/Search/SearchSkill/services/typings';
 import { ILocation } from 'components/Locations/services/typings';
 
-export interface ISearchJob {}
+export interface ISearchJob {
+  id: string;
+}
 
 export interface ISearchCompany {
   id: string;
@@ -24,4 +26,8 @@ export interface ISearchRequest {
   offset: number
   location_ids?: string[];
   company_ids?: string[];
+  skill_ids?: string[];
+  excluded_ids?: string[];
+  max_salary?: number;
+  min_salary?: number;
 }

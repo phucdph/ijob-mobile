@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import SearchResult from './SearchResult';
 import { connect } from 'react-redux';
 import { searchStateSelector } from './selectors';
-import { ISearchCompany, ISearchJob, ISearchRequest, SearchType } from './services/typings';
+import {
+  ISearchCompany,
+  ISearchJob,
+  ISearchRequest,
+  SearchType
+} from './services/typings';
 import { IPageableData } from 'services/models';
 import { cleanUpSearch, refreshSearch, search, searchNext } from './actions';
 import { PAGE_SIZE } from '../../../NewFeed/constants';
@@ -29,7 +34,7 @@ class SearchResultContainer extends Component<IProps> {
     this.handleSearch({
       ...req,
       searchText,
-      searchType,
+      searchType
     });
   }
 
@@ -47,16 +52,28 @@ class SearchResultContainer extends Component<IProps> {
     this.props.dispatchSearch({
       ...req,
       limit: PAGE_SIZE,
-      offset: 0,
+      offset: 0
     });
   };
 
   handleSearchNext = () => {
-    const { req, dispatchSearchNext } = this.props;
-    if (this.isRefreshing() || this.isLoadingNext() || this.isLoading()) { return; }
+    const { req, dispatchSearchNext, companies, jobs } = this.props;
+    if (this.isRefreshing() || this.isLoadingNext() || this.isLoading()) {
+      return;
+    }
+    const { searchType } = req;
+    if (searchType === SearchType.COMPANY) {
+      if (companies.total < PAGE_SIZE || companies.total <= companies.data.length ) {
+        return;
+      }
+    } else if (searchType === SearchType.JOB) {
+      if (jobs.total < PAGE_SIZE  || jobs.total <= jobs.data.length) {
+        return;
+      }
+    }
     dispatchSearchNext({
       ...req,
-      offset: req.limit + PAGE_SIZE
+      offset: req.offset + PAGE_SIZE
     });
   };
 
@@ -108,8 +125,9 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     dispatchSearch: (req: ISearchRequest) => dispatch(search(req)),
     dispatchSearchNext: (req: ISearchRequest) => dispatch(searchNext(req)),
-    dispatchRefreshSearch: (req: ISearchRequest) => dispatch(refreshSearch(req)),
-    dispatchCleanUpSearch: () => dispatch(cleanUpSearch()),
+    dispatchRefreshSearch: (req: ISearchRequest) =>
+      dispatch(refreshSearch(req)),
+    dispatchCleanUpSearch: () => dispatch(cleanUpSearch())
   };
 };
 

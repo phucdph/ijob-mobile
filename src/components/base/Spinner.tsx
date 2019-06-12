@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { default as RNSpinner } from 'react-native-loading-spinner-overlay';
+import { themeVariables } from 'themes/themeVariables';
 
 interface IProps {
   isModal?: boolean;
@@ -27,7 +28,7 @@ class Spinner extends Component<IProps> {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: `rgba(0,0,0,${overlay} )`
+            backgroundColor: themeVariables.fill_base_color
           }}
         >
           <ActivityIndicator size={'large'} />
