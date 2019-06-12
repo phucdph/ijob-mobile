@@ -16,6 +16,10 @@ class CompanyService extends RestAPIClient {
   unfollow = (id: string) => {
     return this.delete(`/${id}/unfollow`);
   };
+
+  getJob = ({companyId}: any) => {
+    return this.get(`/${companyId}/jobs`);
+  }
 }
 
 export const companyService = new CompanyService();

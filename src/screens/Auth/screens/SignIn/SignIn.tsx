@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Keyboard, Text } from 'react-native';
+import { View, Keyboard, Text, Image } from 'react-native';
 import { Constants } from 'expo';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { themeVariables } from 'themes/themeVariables';
@@ -59,7 +59,11 @@ class SignIn extends React.Component<IProps> {
       <>
         <TextInput
           placeholder="Email"
-          leftIcon={{ type: 'ionicon', name: 'ios-person', color:themeVariables.accent_color }}
+          leftIcon={{
+            type: 'ionicon',
+            name: 'ios-person',
+            color: themeVariables.accent_color
+          }}
           errorMessage={touched.email ? errors.email : ''}
           value={email}
           onChangeText={handleChange('email')}
@@ -68,14 +72,18 @@ class SignIn extends React.Component<IProps> {
           autoCapitalize={'none'}
           inputContainerStyle={{
             backgroundColor: 'white',
-            borderWidth: 1,
+            borderWidth: 1
           }}
-          inputStyle={{ color: themeVariables.primary_text_color}}
+          inputStyle={{ color: themeVariables.primary_text_color }}
         />
         <WhiteSpace />
         <TextInput
           placeholder="Password"
-          leftIcon={{ type: 'ionicon', name: 'ios-lock', color:themeVariables.accent_color }}
+          leftIcon={{
+            type: 'ionicon',
+            name: 'ios-lock',
+            color: themeVariables.accent_color
+          }}
           errorMessage={touched.password ? errors.password : ''}
           value={password}
           onChangeText={handleChange('password')}
@@ -85,9 +93,9 @@ class SignIn extends React.Component<IProps> {
           autoCapitalize={'none'}
           inputContainerStyle={{
             backgroundColor: 'white',
-            borderWidth: 1,
+            borderWidth: 1
           }}
-          inputStyle={{ color: themeVariables.primary_text_color}}
+          inputStyle={{ color: themeVariables.primary_text_color }}
         />
         <WhiteSpace />
         <Button
@@ -101,9 +109,9 @@ class SignIn extends React.Component<IProps> {
     );
   };
 
-  handleUseAsGuestPress = () =>  {
+  handleUseAsGuestPress = () => {
     this.props.onUseAsGuest();
-    navigationService.navigate({ routeName: 'NewFeed'});
+    navigationService.navigate({ routeName: 'NewFeed' });
   };
 
   render() {
@@ -117,13 +125,29 @@ class SignIn extends React.Component<IProps> {
         scrollEnabled={false}
         keyboardShouldPersistTaps={'handled'}
       >
-        <View style={{ height: 180, backgroundColor: themeVariables.primary_color, }} />
+        <View
+          style={{
+            height: 180,
+            backgroundColor: themeVariables.primary_color,
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <Image
+            source={require('../../../../../assets/logo_transparent.png')}
+            style={{
+              width: 100,
+              height: 100,
+              resizeMode: 'contain'
+            }}
+          />
+        </View>
         <View
           style={{
             flex: 1,
             justifyContent: 'center',
             paddingHorizontal: themeVariables.spacing_lg,
-            paddingTop: themeVariables.spacing_lg,
+            paddingTop: themeVariables.spacing_lg
           }}
         >
           <Formik
@@ -142,9 +166,11 @@ class SignIn extends React.Component<IProps> {
           <Link to={{ routeName: 'SignUp' }}>SIGN UP</Link>
         </View>
         <WhiteSpace />
-        <View style={{
-          padding: themeVariables.spacing_lg
-        }}>
+        <View
+          style={{
+            padding: themeVariables.spacing_lg
+          }}
+        >
           <Button
             onPress={this.handleUseAsGuestPress}
             title="USE AS GUEST"
@@ -154,10 +180,9 @@ class SignIn extends React.Component<IProps> {
               borderColor: themeVariables.primary_color,
               borderWidth: 1
             }}
-            titleStyle={{ color: themeVariables.primary_color}}
+            titleStyle={{ color: themeVariables.primary_color }}
           />
         </View>
-
       </KeyboardAwareScrollView>
     );
   }

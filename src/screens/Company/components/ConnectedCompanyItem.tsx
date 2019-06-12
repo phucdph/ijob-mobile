@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 import navigationService from 'services/navigationService';
 import { ISearchCompany } from '../../Search/screens/SearchResult/services/typings';
 import { ListItem } from 'react-native-elements';

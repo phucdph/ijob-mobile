@@ -11,7 +11,7 @@ import {
   getNextJobs,
   getNextJobsFail,
   getNextJobsSuccess,
-  refreshJobs,
+  refreshJobs
 } from './actions';
 import { createReducers } from 'utils/redux';
 import { stateContext, IJobsState, initialState } from './state';
@@ -21,6 +21,12 @@ import { IJob } from './services/typings';
 import { Action } from 'services/typings';
 import { getUserProfileSuccess } from '../Profile/actions';
 import { IUser } from '../Profile/services/typings';
+import { getCompanyJobSuccess } from '../Company/components/ListOfJobs/actions';
+import {
+  ICompaniesJobState,
+  initialCompanyJobState
+} from '../Company/components/ListOfJobs/state';
+import { ICompany } from '../Company/services/typings';
 
 const feedReducers = [
   {
@@ -130,13 +136,22 @@ const feedReducers = [
     reducer: (state: IJobsState, action: Action<IUser>) => {
       const { saveJob: savedJobs = [] as any } = action.payload;
       savedJobs.forEach((job: IJob) => {
-        (state.jobs as any)[job.id] = {...job, saved: true};
+        (state.jobs as any)[job.id] = { ...job, saved: true };
       });
     }
   },
+  {
+    on: getCompanyJobSuccess,
+    reducer(state: IJobsState, action: Action<{ id: string; data: IJob[] }>) {
+      const { data } = action.payload;
+      data.forEach((job: IJob) => {
+        (state.jobs as any)[job.id] = job;
+      });
+    }
+  }
 ];
 
 export default {
   ...createReducers(stateContext, feedReducers, initialState),
-  ...require('./screens/FeedDetail/reducers').default,
+  ...require('./screens/FeedDetail/reducers').default
 };

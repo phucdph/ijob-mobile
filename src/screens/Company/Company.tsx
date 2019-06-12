@@ -26,6 +26,8 @@ import ScrollableTabbar from 'components/base/Tabbar/ScrollableTabbar';
 import About from './screens/About/About';
 import { ISkill } from '../NewFeed/services/typings';
 import Tag from '../NewFeed/components/Tag';
+import ListOfJobs from './components/ListOfJobs/ListOfJobs';
+import ListOfJobsContainer from './components/ListOfJobs/ListOfJobsContainer';
 
 interface IProps extends NavigationInjectedProps {
   data: ICompany;
@@ -37,6 +39,7 @@ interface IProps extends NavigationInjectedProps {
   userType: UserType;
   onFollow: () => void;
   onUnFollow: () => void;
+  id: string;
 }
 
 interface IState {
@@ -72,8 +75,8 @@ class Company extends Component<IProps, IState> {
       component: About
     },
     {
-      title: 'Jobs'
-      // component: About
+      title: 'Jobs',
+      component: () => <ListOfJobsContainer id={this.props.id}/>,
     }
   ];
 
@@ -264,9 +267,6 @@ class Company extends Component<IProps, IState> {
 
   render() {
     const { onRefresh, isRefreshing = false, userType } = this.props;
-    if (userType === UserType.GUEST) {
-      return null;
-    }
     return (
       <>
         <StatusBar barStyle={'light-content'} />

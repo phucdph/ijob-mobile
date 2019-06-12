@@ -20,14 +20,12 @@ import {
 import { Action } from 'services/typings';
 import { ICompany } from './services/typings';
 import { IError } from 'services/models/Error';
-import { getJobsSuccess, getNextJobsSuccess } from '../NewFeed/actions';
 import { get, set } from 'lodash';
 import { IPageableData } from 'services/models';
-import { IJob, IJobDetail } from '../NewFeed/services/typings';
+import { IJobDetail } from '../NewFeed/services/typings';
 import { searchSuccess, searchNextSuccess } from '../Search/screens/SearchResult/actions';
 import { ISearchCompany } from '../Search/screens/SearchResult/services/typings';
 import { getJobDetailSuccess } from '../NewFeed/screens/FeedDetail/actions';
-import { IJobsDetailState } from '../NewFeed/screens/FeedDetail/state';
 import { getUserProfileSuccess } from '../Profile/actions';
 import { IUser } from '../Profile/services/typings';
 
@@ -152,4 +150,7 @@ const companyReducers = [
   },
 ];
 
-export default createReducers(stateContext, companyReducers, initialState);
+export default {
+  ...createReducers(stateContext, companyReducers, initialState),
+  ...require('./components/ListOfJobs/reducers').default
+};

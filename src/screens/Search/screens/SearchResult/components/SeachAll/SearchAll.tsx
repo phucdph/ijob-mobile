@@ -51,14 +51,14 @@ class SearchAll extends Component<IProps> {
   };
 
   renderCompanyItem = ({ item }: { item: ISearchCompany }) => {
-    const { name, avatar, id, locations } = item;
+    const { name, avatar, id, location } = item;
     return (
       <ListItem
         leftElement={
           <Avatar size={45} rounded={true} source={{ uri: avatar }} />
         }
         title={name}
-        subtitle={locationFormatter(locations)}
+        subtitle={locationFormatter(location)}
         subtitleStyle={{ color: themeVariables.secondary_text_color }}
         onPress={() => this.handleCompanyPress(id)}
       />

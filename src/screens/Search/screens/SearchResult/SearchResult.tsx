@@ -42,6 +42,10 @@ interface IState {
   companies: ISearchCompany[];
   skills: ISkill[];
   locations: ILocation[];
+  salary: {
+    max?: number,
+    min?: number
+  }
 }
 
 class SearchResult extends Component<IProps, IState> {
@@ -72,7 +76,8 @@ class SearchResult extends Component<IProps, IState> {
       searchType: props.searchType,
       locations: [],
       companies: [],
-      skills: []
+      skills: [],
+      salary: {},
     };
   }
 
@@ -87,7 +92,7 @@ class SearchResult extends Component<IProps, IState> {
   }
 
   handleSearchTypePress = (searchType: SearchType) => {
-    this.setState({ searchType, skills: [], locations: [], companies: [] });
+    this.setState({ searchType, skills: [], locations: [], companies: [], salary: {} });
     const { req, onSearch } = this.props;
     onSearch({
       ...req,
@@ -95,6 +100,8 @@ class SearchResult extends Component<IProps, IState> {
       skill_ids: [],
       location_ids: [],
       company_ids: [],
+      max_salary: undefined,
+      min_salary: undefined
     })
   };
 
@@ -223,7 +230,7 @@ class SearchResult extends Component<IProps, IState> {
   };
 
   renderJobFilterBar = () => {
-    const { locations, companies, skills, searchType } = this.state;
+    const { locations, companies, skills, searchType, salary } = this.state;
     return (
       <ScrollView
         horizontal={true}
@@ -280,6 +287,12 @@ class SearchResult extends Component<IProps, IState> {
           onPress={this.handleFilterSkillPress}
         />
         <WhiteSpace horizontal={true} />
+        <FilterButton
+          defaultTitle={'Salary'}
+          data={searchType === SearchType.JOB ? salary : {}}
+          onPress={this.handleFilterSalaryPress}
+        />
+        <WhiteSpace horizontal={true} />
       </ScrollView>
     );
   };
@@ -317,6 +330,27 @@ class SearchResult extends Component<IProps, IState> {
     });
   };
 
+  handleFilterSalaryPress = () => {
+    const { salary } = this.state;
+    navigationService.navigate({
+      routeName: 'SalaryRangeModal',
+      params: {
+        value: salary,
+        onChange: this.handleSalarySelect
+      }
+    });
+  };
+
+  handleSalarySelect = (salary: any) => {
+    this.setState({ salary });
+    const { req, onSearch } = this.props;
+    onSearch({
+      ...req,
+      max_salary: salary.max,
+      min_salary: salary.min
+    })
+  };
+
   toId = (obj: any) => obj.id;
 
   handleCompaniesSelect = (companies: ISearchCompany[]) => {
@@ -328,7 +362,7 @@ class SearchResult extends Component<IProps, IState> {
       ...req,
       company_ids: companies.map(this.toId)
     })
-  }
+  };
 
   handleSkillSelect = (skills: ISkill[]) => {
     const { onSearch, req } = this.props;

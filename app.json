@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "IJob",
-    "slug": "ijob",
+    "name": "Kosmos",
+    "slug": "kosmos",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
@@ -13,6 +13,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#3F51B5"
     },

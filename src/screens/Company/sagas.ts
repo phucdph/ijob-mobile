@@ -51,4 +51,7 @@ const unFollowCompanySaga = {
   }
 };
 
-export default createSagas([getCompanySaga, followCompanySaga, unFollowCompanySaga]);
+export default [
+  ...createSagas([getCompanySaga, followCompanySaga, unFollowCompanySaga]),
+  ...require('./components/ListOfJobs/sagas').default,
+];

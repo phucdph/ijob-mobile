@@ -28,4 +28,6 @@ export interface ISearchRequest {
   company_ids?: string[];
   skill_ids?: string[];
   excluded_ids?: string[];
+  max_salary?: number;
+  min_salary?: number;
 }

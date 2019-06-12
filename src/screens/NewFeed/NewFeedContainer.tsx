@@ -8,6 +8,7 @@ import { actionSelector, errorSelector, jobDataSelector } from './selectors';
 import { getNextJobs, getJobs, refreshJobs } from './actions';
 import { PAGE_SIZE } from './constants';
 import { last } from 'lodash';
+import { registerForPushNotificationsAsync } from 'utils/notification';
 
 interface IProps {
   action: string;

@@ -28,6 +28,7 @@ interface IProps extends Partial<ActionSheetProps> {
   dispatchSaveJob?: (id: string) => void;
   dispatchUnsaveJob?: (id: string) => void;
   showSkill?: boolean;
+  showAvatar?: boolean;
 }
 
 // @ts-ignore
@@ -36,6 +37,7 @@ class ConnectedJobItem extends PureComponent<IProps> {
   static defaultProps = {
     userType: UserType.GUEST,
     showSkill: true,
+    showAvatar: true
   };
 
   handleLongPress = () => {
@@ -69,7 +71,7 @@ class ConnectedJobItem extends PureComponent<IProps> {
 
   handleFeedPress = () => {
     const { data = {} as IJob } = this.props;
-    navigationService.navigate({
+    navigationService.push({
       routeName: 'FeedDetail',
       params: {
         id: data.id
@@ -80,8 +82,16 @@ class ConnectedJobItem extends PureComponent<IProps> {
   toName = (i: any) => i.name;
 
   render() {
-    const { data = {} as IJob, userType, showSkill, id } = this.props;
-    if (!id || !data.id) { return null; }
+    const {
+      data = {} as IJob,
+      userType,
+      showSkill,
+      id,
+      showAvatar
+    } = this.props;
+    if (!id || !data.id) {
+      return null;
+    }
     const {
       company = {} as ISource,
       name,
@@ -89,21 +99,25 @@ class ConnectedJobItem extends PureComponent<IProps> {
       salary,
       created_at
     } = data;
-    const locations = get(data, 'company.location', []).map(this.toName).join(', ');
+    const locations = get(data, 'company.location', [])
+      .map(this.toName)
+      .join(', ');
     return (
       <ListItem
         onLongPress={this.handleLongPress}
         Component={TouchableOpacity}
         onPress={this.handleFeedPress}
         leftElement={
-          <Avatar
-            rounded={true}
-            size={45}
-            title={get(company, 'name[0]', '')}
-            source={{
-              uri: company.avatar
-            }}
-          />
+          showAvatar ? (
+            <Avatar
+              rounded={true}
+              size={45}
+              title={get(company, 'name[0]', '')}
+              source={{
+                uri: company.avatar
+              }}
+            />
+          ) : null
         }
         containerStyle={{ alignItems: 'flex-start' }}
         title={name}
@@ -126,21 +140,23 @@ class ConnectedJobItem extends PureComponent<IProps> {
             )}
             <WhiteSpace size={'sm'} />
             <Text>{locations}</Text>
-            {showSkill && <>
-            <WhiteSpace size={'sm'} />
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-              {skills.map((s: ISkill, i: number) => (
-                <Tag
-                  name={s.name.trim()}
-                  key={`${s.id}-${i}`}
-                  style={{
-                    marginRight: themeVariables.spacing_sm,
-                    marginVertical: themeVariables.spacing_xs
-                  }}
-                />
-              ))}
-            </View>
-              </>}
+            {showSkill && (
+              <>
+                <WhiteSpace size={'sm'} />
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                  {skills.map((s: ISkill, i: number) => (
+                    <Tag
+                      name={s.name.trim()}
+                      key={`${s.id}-${i}`}
+                      style={{
+                        marginRight: themeVariables.spacing_sm,
+                        marginVertical: themeVariables.spacing_xs
+                      }}
+                    />
+                  ))}
+                </View>
+              </>
+            )}
           </View>
         }
       />

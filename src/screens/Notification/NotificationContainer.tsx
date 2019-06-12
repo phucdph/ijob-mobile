@@ -47,7 +47,7 @@ class NotificationContainer extends Component<IProps> {
         <View>
           <Button
             type={'outline'}
-            title={'Join IJob'}
+            title={'Join Kosmos'}
             titleStyle={{ color: themeVariables.primary_color }}
             buttonStyle={{
               borderColor: themeVariables.primary_color,
