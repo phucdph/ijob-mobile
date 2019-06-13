@@ -140,6 +140,7 @@ class SignIn extends React.Component<IProps> {
               height: 100,
               resizeMode: 'contain'
             }}
+            fadeDuration={0}
           />
         </View>
         <View

@@ -8,12 +8,12 @@ import { IJob } from '../../../NewFeed/services/typings';
 const reducers = [
   {
     on: getCompanyJob,
-    reducer(state: ICompaniesJobState, action: Action<{ id: string }>) {
-      const { id } = action.payload;
-      if (!state[id]) {
-        state[id] = initialCompanyJobState;
+    reducer(state: ICompaniesJobState, action: Action<{ companyId: string }>) {
+      const { companyId } = action.payload;
+      if (!state[companyId]) {
+        state[companyId] = initialCompanyJobState;
       }
-      state[id].action = action.type;
+      state[companyId].action = action.type;
     }
   },
   {

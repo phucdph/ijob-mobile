@@ -40,7 +40,7 @@ export function configureStore() {
       )
     );
   }
-  return createStore(combineReducers(reducers), compose(enhancers));
+  return createStore(persistedReducer, compose(enhancers));
 }
 
 export const store = configureStore();

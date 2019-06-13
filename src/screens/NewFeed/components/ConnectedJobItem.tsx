@@ -19,8 +19,7 @@ import { connect } from 'react-redux';
 import { jobItemSelector } from '../selectors';
 import { saveJob, unsaveJob } from '../actions';
 import { userTypeSelector } from '../../../selectors';
-import { ILocation } from 'components/Locations/services/typings';
-
+import { Icon }from 'react-native-elements';
 interface IProps extends Partial<ActionSheetProps> {
   data?: IJob;
   id: string;
@@ -29,6 +28,7 @@ interface IProps extends Partial<ActionSheetProps> {
   dispatchUnsaveJob?: (id: string) => void;
   showSkill?: boolean;
   showAvatar?: boolean;
+  showBookmark?: boolean;
 }
 
 // @ts-ignore
@@ -37,7 +37,8 @@ class ConnectedJobItem extends PureComponent<IProps> {
   static defaultProps = {
     userType: UserType.GUEST,
     showSkill: true,
-    showAvatar: true
+    showAvatar: true,
+    showBookmark: true,
   };
 
   handleLongPress = () => {
@@ -87,7 +88,8 @@ class ConnectedJobItem extends PureComponent<IProps> {
       userType,
       showSkill,
       id,
-      showAvatar
+      showAvatar,
+       showBookmark
     } = this.props;
     if (!id || !data.id) {
       return null;
@@ -97,7 +99,8 @@ class ConnectedJobItem extends PureComponent<IProps> {
       name,
       skills = [],
       salary,
-      created_at
+      created_at,
+      saved = false,
     } = data;
     const locations = get(data, 'company.location', [])
       .map(this.toName)
@@ -126,6 +129,8 @@ class ConnectedJobItem extends PureComponent<IProps> {
             <Text style={{ fontSize: 12 }}>
               {moment(created_at).toNow(true)}
             </Text>
+            <WhiteSpace/>
+            {showBookmark && saved && <Icon name={'ios-bookmark'} type={'ionicon'} color={themeVariables.accent_color}/>}
           </View>
         }
         subtitle={

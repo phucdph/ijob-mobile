@@ -22,7 +22,7 @@
       "checkAutomatically": "ON_LOAD"
     },
     "assetBundlePatterns": [
-      "src/assets/*"
+      "./assets/*"
     ],
     "ios": {
       "supportsTablet": true
@@ -37,6 +37,6 @@
         "READ_EXTERNAL_STORAGE"
       ]
     },
-    "description": ""
+    "description": "Project for finding job in Infomation Technology category"
   }
 }

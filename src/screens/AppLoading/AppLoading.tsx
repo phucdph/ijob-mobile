@@ -86,9 +86,6 @@ class AppLoading extends Component<IProps, IState> {
             width: undefined,
             height: undefined
           }}
-          onLoadEnd={() => {
-            SplashScreen.hide();
-          }}
           fadeDuration={0}
         />
       </View>

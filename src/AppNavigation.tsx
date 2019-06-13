@@ -16,6 +16,7 @@ import AppLoading from './screens/AppLoading/AppLoading';
 import { themeVariables } from 'themes/themeVariables';
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
 import { Transition } from 'react-native-reanimated';
+import { isIOS } from 'utils/platform';
 
 
 
@@ -89,8 +90,10 @@ const ModalNavigators = Object.keys(AppNavigators).reduce((accumulator: any, cur
   return accumulator;
 }, {});
 
+const createSwitchNavigatorFunc = isIOS ? createAnimatedSwitchNavigator : createSwitchNavigator;
+
 const AppContainer = createAppContainer(
-  createAnimatedSwitchNavigator(
+  createSwitchNavigatorFunc(
     {
       AppLoading,
       App: createAllScreenStackNavigator({
@@ -122,13 +125,6 @@ const AppContainer = createAppContainer(
 );
 
 class App extends React.Component<any> {
-  componentWillMount() {
-    navigationService.dispatch(
-      NavigationActions.navigate({
-        routeName: 'App'
-      })
-    );
-  }
 
   render() {
     return (

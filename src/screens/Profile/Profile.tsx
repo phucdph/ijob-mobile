@@ -324,7 +324,7 @@ class Profile extends Component<IProps> {
   };
 
   renderJobItem = ({ item }: { item: string }) => {
-    return <ConnectedJobItem id={item} showSkill={false} />;
+    return <ConnectedJobItem id={item} showSkill={false} showBookmark={false} />;
   };
 
   handleSeeAllJobPress = () => {
@@ -364,7 +364,7 @@ class Profile extends Component<IProps> {
           <FlatList
             data={this.sliceJob(saveJob)}
             renderItem={this.renderJobItem}
-            keyExtractor={(item: string) => item}
+            keyExtractor={(item: string, index: number) => `${item}_${index}`}
             ItemSeparatorComponent={Divider}
           />
         </View>

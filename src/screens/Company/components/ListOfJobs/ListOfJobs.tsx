@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 import ConnectedJobItem from '../../../NewFeed/components/ConnectedJobItem';
+import { Divider } from 'react-native-elements';
 
 interface IProps {
   id: string;
@@ -25,6 +26,7 @@ class ListOfJobs extends Component<IProps> {
         <FlatList
           scrollEnabled={false}
           maxToRenderPerBatch={10}
+          ItemSeparatorComponent={Divider}
           data={data}
           keyExtractor={(item: string) => item}
           renderItem={this.renderItem}

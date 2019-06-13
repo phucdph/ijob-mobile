@@ -196,9 +196,15 @@ class FeedDetail extends Component<IProps> {
     });
   };
 
+  toName = (i: any) => i.name;
+
   renderHeader = () => {
     const company = get(this.props.data, 'company', {});
     const { name = '', avatar } = company as ISource;
+    const { saved = false } = this.props.data;
+    const locations = get(this.props.data, 'company.location', [])
+      .map(this.toName)
+      .join(', ');
     return (
       <View
         style={{
@@ -227,7 +233,7 @@ class FeedDetail extends Component<IProps> {
                 />
               }
               title={name}
-              subtitle={'Ho Chi Minh'}
+              subtitle={locations}
               subtitleStyle={{
                 color: themeVariables.secondary_text_color
               }}
@@ -240,17 +246,18 @@ class FeedDetail extends Component<IProps> {
         </View>
         <View
           style={{
-            flexDirection: 'row',
             minWidth: 50,
-            alignItems: 'center',
-            justifyContent: 'center'
+            height: '100%',
+            justifyContent: 'flex-start',
           }}
         >
+          <WhiteSpace size={'lg'}/>
           <Icon
             name={'ios-more'}
             type={'ionicon'}
             onPress={this.handleMenuPress}
           />
+          {saved && <Icon name={'ios-bookmark'} type={'ionicon'} color={themeVariables.accent_color}/>}
         </View>
       </View>
     );
