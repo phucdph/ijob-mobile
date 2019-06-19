@@ -3,10 +3,11 @@ import HeaderTitle from 'components/HeaderTitle';
 import HeaderButton from 'components/HeaderButton';
 import {
   NavigationInjectedProps,
-  NavigationScreenConfigProps, NavigationScreenProps,
+  NavigationScreenConfigProps,
+  NavigationScreenProps,
   withNavigation
 } from 'react-navigation';
-import { View, Text, Keyboard } from 'react-native';
+import { View, Text, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import navigationService from 'services/navigationService';
 import { themeVariables } from 'themes/themeVariables';
 import FloatingInput from 'components/FloatingInput';
@@ -18,6 +19,7 @@ import { ILocation } from 'components/Locations/services/typings';
 import { updateUserProfileSuccess } from '../../actions';
 import Spinner from 'components/base/Spinner';
 import * as Yup from 'yup';
+import FloatingLabel from 'components/FloatingLabel';
 
 interface IProps extends NavigationScreenProps {
   isLoading?: boolean;
@@ -50,15 +52,9 @@ class EditInfo extends Component<IProps, IState> {
       headerLeft: (
         <HeaderButton name={'Cancel'} onPress={navigationService.goBack} />
       ),
-      headerRight: (
-        <HeaderButton
-          name={'Save'}
-          onPress={handleSubmit}
-        />
-      )
+      headerRight: <HeaderButton name={'Save'} onPress={handleSubmit} />
     };
   };
-
   private submitForm: any;
 
   constructor(props: IProps) {
@@ -66,18 +62,19 @@ class EditInfo extends Component<IProps, IState> {
     const location = get(props, 'profile.location', {});
     this.state = {
       location,
-      disabled: true,
+      disabled: true
     };
   }
 
   componentDidMount() {
     this.props.navigation.setParams({
-      handleSubmit: this.submitForm,
+      handleSubmit: this.submitForm
     });
   }
 
-
-  componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
+  componentDidUpdate(
+    prevProps: Readonly<IProps>,
+  ): void {
     const { action, navigation } = this.props;
     if (prevProps.action !== action) {
       if (updateUserProfileSuccess.is(action)) {
@@ -87,7 +84,7 @@ class EditInfo extends Component<IProps, IState> {
   }
 
   handleSelectLocation = (location: ILocation) => {
-    this.setState({ location });
+    this.setState({ location: {...location} });
   };
 
   handleLocationInputPress = () => {
@@ -105,7 +102,7 @@ class EditInfo extends Component<IProps, IState> {
     values,
     handleChange,
     handleSubmit,
-    handleBlur,
+    handleBlur
   }: FormikProps<IFormValues>) => {
     const { firstName, lastName, email } = values;
     if (!this.submitForm) {
@@ -142,12 +139,11 @@ class EditInfo extends Component<IProps, IState> {
           editable={false}
           value={email}
         />
-          <FloatingInput
-            label={'Location'}
-            iconName={'ios-pin'}
-            onFocus={this.handleLocationInputPress}
-            value={location}
-          />
+        <FloatingLabel
+          label={'Location'}
+          onPress={this.handleLocationInputPress}
+          value={location}
+        />
       </>
     );
   };

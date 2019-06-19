@@ -8,8 +8,9 @@ import { NavigationActions } from 'react-navigation';
 import { Alert } from 'react-native';
 import { SignInStatus } from './constants';
 import { getUserProfileSuccess } from '../../../Profile/actions';
-import { registerForPushNotificationsAsync } from 'utils/notification';
+import { registerForPushNotificationsAsync } from 'utils/notification.tsx';
 import { get } from 'lodash';
+import { userService } from '../../../Profile/services/userService';
 
 const signInSaga = {
   on: signIn,
@@ -21,14 +22,17 @@ const signInSaga = {
         call(authService.presistAuth, res.data),
         put(getUserProfileSuccess(res.data.profile)),
       ]);
-      // yield registerForPushNotificationsAsync(get(res, 'data.profile.id'));
+      const token = yield call(registerForPushNotificationsAsync);
+      if (token) {
+        const { id: userId } = res.data.profile;
+        // yield call(userService.savePushToken, token, userId);
+      }
       navigationService.dispatch(
         NavigationActions.navigate({
           routeName: 'App'
         })
       );
     } catch (err) {
-      console.log(err);
       let msg = 'Something wrong. Please try again later';
       switch (err.status || err.error) {
         case SignInStatus.USER_NOT_FOUND: {

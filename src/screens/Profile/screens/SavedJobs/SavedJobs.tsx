@@ -18,7 +18,7 @@ class SavedJobs extends Component<IProps> {
   };
 
   renderCompanyItem = ({ item }: { item: string }) => {
-    return <ConnectedJobItem id={item} />;
+    return <ConnectedJobItem id={item} showBookmark={false}/>;
   };
 
   render() {
@@ -31,7 +31,7 @@ class SavedJobs extends Component<IProps> {
           data={data}
           ItemSeparatorComponent={Divider}
           renderItem={this.renderCompanyItem}
-          keyExtractor={item => item}
+          keyExtractor={(item: string, index: number) => `${item}_${index}`}
         />
       </View>
     );

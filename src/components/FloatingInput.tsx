@@ -5,6 +5,7 @@ import { Sae } from 'react-native-textinput-effects';
 import { themeVariables } from 'themes/themeVariables';
 import { TextInputProps, View, Text } from 'react-native';
 import WhiteSpace from 'components/base/WhiteSpace';
+import { noop } from 'lodash';
 
 interface IProps extends TextInputProps {
   label: string;
@@ -12,6 +13,7 @@ interface IProps extends TextInputProps {
   iconColor?: string;
   iconClass?: JSX.Element;
   error?: string;
+  onRef?: (ref:any) => void;
 }
 
 class FloatingInput extends Component<IProps> {
@@ -20,6 +22,14 @@ class FloatingInput extends Component<IProps> {
     iconClass: Ionicons as any,
     error: ''
   };
+
+  inputRef: any;
+
+  componentDidMount() {
+    const { onRef = noop } = this.props;
+    onRef(this.inputRef)
+  }
+
 
   render() {
     const {
@@ -33,6 +43,7 @@ class FloatingInput extends Component<IProps> {
     return (
       <View style={{ padding: 0 }}>
         <Sae
+          ref={(ref: any) => this.inputRef = ref}
           label={label}
           iconClass={iconClass}
           iconName={iconName}

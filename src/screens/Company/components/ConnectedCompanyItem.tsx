@@ -8,6 +8,7 @@ import { themeVariables } from 'themes/themeVariables';
 import { ICompany } from '../services/typings';
 import { companyStateSelector } from '../selectors';
 import { connect } from 'react-redux';
+ import { TouchableOpacity } from 'react-native';
 
 interface IProps {
   data?: ICompany;
@@ -32,6 +33,7 @@ class ConnectedCompanyItem extends Component<IProps> {
         leftElement={
           <Avatar size={45} source={{ uri: avatar }} />
         }
+        Component={TouchableOpacity}
         title={name}
         subtitle={locationFormatter(location)}
         subtitleStyle={{ color: themeVariables.secondary_text_color }}

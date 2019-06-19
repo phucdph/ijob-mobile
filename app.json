@@ -21,6 +21,10 @@
       "enabled": true,
       "checkAutomatically": "ON_LOAD"
     },
+    "notification": {
+      "icon": "./assets/thumb-icon.png",
+      "color": "#3F51B5"
+    },
     "assetBundlePatterns": [
       "./assets/*"
     ],
@@ -37,6 +41,6 @@
         "READ_EXTERNAL_STORAGE"
       ]
     },
-    "description": "Project for finding job in Infomation Technology category"
+    "description": "Project for finding job in Information Technology category"
   }
 }

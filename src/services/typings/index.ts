@@ -22,3 +22,9 @@ export interface ICloudiaryImage {
   signature: string;
   original_filename: string;
 }
+
+export interface INotification {
+  origin: string;
+  body: string;
+  data: any;
+};

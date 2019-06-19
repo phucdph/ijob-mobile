@@ -17,7 +17,13 @@ import { themeVariables } from 'themes/themeVariables';
 import createAnimatedSwitchNavigator from 'react-navigation-animated-switch';
 import { Transition } from 'react-native-reanimated';
 import { isIOS } from 'utils/platform';
+import { Notifications } from 'expo';
+import { noop } from 'lodash';
+import MessageBarManager from 'components/MessageBarManager';
+import { INotification } from 'services/typings';
+import { handleNotification } from 'utils/notification';
 
+const MessageBarAlert = require('react-native-message-bar').MessageBar;
 
 
 const AuthStack = createAllScreenStackNavigator(AuthNavigators, {
@@ -125,12 +131,28 @@ const AppContainer = createAppContainer(
 );
 
 class App extends React.Component<any> {
+  // tslint:disable-next-line:variable-name
+  private notificationSubscription: any = noop;
+
+  componentDidMount(): void {
+    this.notificationSubscription = Notifications.addListener(handleNotification) as any;
+    MessageBarManager.register(this.refs.alert);
+  }
+
+  componentWillUnmount() {
+    MessageBarManager.unregister();
+    this.notificationSubscription();
+  }
 
   render() {
     return (
-      <AppContainer
-        ref={(nav: any) => navigationService.setTopLevelNavigator(nav)}
-      />
+      <>
+        <AppContainer
+          ref={(nav: any) => navigationService.setTopLevelNavigator(nav)}
+        />
+        {/* tslint:disable-next-line:jsx-no-string-ref */}
+        <MessageBarAlert ref={'alert'}/>
+      </>
     );
   }
 }

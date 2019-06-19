@@ -26,6 +26,12 @@ class UserService extends RestAPIClient {
     delete res.confirmPassword;
     return res;
   };
+
+  savePushToken = (token: string, userId: string) => {
+    return this.post('user', {
+      token, userId
+    })
+  }
 }
 
 export const userService = new UserService();

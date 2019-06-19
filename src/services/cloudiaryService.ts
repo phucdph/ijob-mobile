@@ -24,7 +24,6 @@ class CloudiaryService {
       }, '')
       .substr(1)
       .concat(this.config.api_secret);
-    console.log(params);
     return sha1.hex(params);
   }
 
