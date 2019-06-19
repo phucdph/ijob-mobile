@@ -22,11 +22,11 @@ class Setting extends Component<IProps> {
 
   getMenuItems = () => {
     return [
-      {
-        title: 'Setting',
-        icon: 'ios-settings',
-        onPress: this.handleSettingPress
-      },
+      // {
+      //   title: 'Setting',
+      //   icon: 'ios-settings',
+      //   onPress: this.handleSettingPress
+      // },
       {
         title: 'Logout',
         icon: 'ios-log-out',

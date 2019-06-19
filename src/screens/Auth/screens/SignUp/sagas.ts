@@ -24,7 +24,7 @@ const signUpSaga = {
       }
       navigationService.dispatch(
         NavigationActions.navigate({
-          routeName: 'App'
+          routeName: 'TourGuide'
         })
       );
     } catch (err) {

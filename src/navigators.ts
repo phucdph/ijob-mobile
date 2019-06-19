@@ -22,5 +22,6 @@ export const AppNavigators = {
   ...CameraNavigator,
   ...SkillNavigator,
   ...require('./components/Search/SearchCompany/navigator').default,
-  ...require('./screens/Company/navigator').default
+  ...require('./screens/Company/navigator').default,
+  ...require('./screens/TourGuide/navigator').default
 };

@@ -1,5 +1,6 @@
 import RestAPIClient from 'services/RestAPIClient';
 import { IUser } from './typings';
+import { pick } from 'lodash';
 
 class UserService extends RestAPIClient {
   constructor() {
@@ -17,11 +18,8 @@ class UserService extends RestAPIClient {
 
   update = async (req:Partial<IUser>): Promise<IUser> => {
     const id = req.id;
-    delete req.id;
-    delete req._id;
-    delete req.created_at;
-    delete req.email;
-    const res = (await this.put(`user/${id}`, req)).data;
+    const request = pick(req, ['id', 'firstName', 'lastName', 'avatar', 'location', 'skills']);
+    const res = (await this.put(`user/${id}`, request)).data;
     delete res.password;
     delete res.confirmPassword;
     return res;

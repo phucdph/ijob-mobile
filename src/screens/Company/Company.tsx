@@ -101,14 +101,12 @@ class Company extends Component<IProps, IState> {
   };
 
   componentDidMount(): void {
-    const { onLoad, data, navigation, userType } = this.props;
+    const { onLoad, data, navigation } = this.props;
     const { name } = data;
     navigation.setParams({
       placeholder: name
     });
-    if (userType === UserType.USER) {
       onLoad();
-    }
   }
 
   handleFollowPress = () => {
@@ -121,7 +119,7 @@ class Company extends Component<IProps, IState> {
   };
 
   renderCoverAndAvatar = () => {
-    const { data } = this.props;
+    const { data, userType } = this.props;
     const { avatar, name, skills, follow } = data;
     return (
       <View style={{ backgroundColor: 'white' }}>
@@ -194,7 +192,7 @@ class Company extends Component<IProps, IState> {
             </Text>
             <WhiteSpace size={'lg'} />
             {
-              <View
+              userType === UserType.USER && <View
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -266,7 +264,7 @@ class Company extends Component<IProps, IState> {
   };
 
   render() {
-    const { onRefresh, isRefreshing = false, userType } = this.props;
+    const { onRefresh, isRefreshing = false } = this.props;
     return (
       <>
         <StatusBar barStyle={'light-content'} />

@@ -84,7 +84,7 @@ class EditInfo extends Component<IProps, IState> {
   }
 
   handleSelectLocation = (location: ILocation) => {
-    this.setState({ location: {...location} });
+    this.setState({ location });
   };
 
   handleLocationInputPress = () => {

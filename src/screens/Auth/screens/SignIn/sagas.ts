@@ -27,11 +27,20 @@ const signInSaga = {
         const { id: userId } = res.data.profile;
         // yield call(userService.savePushToken, token, userId);
       }
-      navigationService.dispatch(
-        NavigationActions.navigate({
-          routeName: 'App'
-        })
-      );
+      if (get(res, 'data.profile.location.id') && get(res, 'data.profile.skills', []).length > 0) {
+        navigationService.dispatch(
+          NavigationActions.navigate({
+            routeName: 'NewFeed'
+          })
+        );
+      } else {
+        navigationService.dispatch(
+          NavigationActions.navigate({
+            routeName: 'TourGuide'
+          })
+        );
+      }
+
     } catch (err) {
       let msg = 'Something wrong. Please try again later';
       switch (err.status || err.error) {

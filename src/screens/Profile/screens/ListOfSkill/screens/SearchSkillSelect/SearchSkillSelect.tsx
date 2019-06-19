@@ -40,6 +40,8 @@ class SearchSkillSelect extends Component<IProps> {
     };
   };
 
+  selectedIds = this.props.navigation.getParam('value', []).map((s: any) => s.id);
+
   componentDidMount(): void {
     const { onSearch, navigation } = this.props;
     navigation.setParams({
@@ -51,7 +53,8 @@ class SearchSkillSelect extends Component<IProps> {
     onSearch({
       searchText: '',
       limit: 20,
-      offset: 0
+      offset: 0,
+      excluded_ids: this.selectedIds
     });
   }
 
@@ -67,7 +70,8 @@ class SearchSkillSelect extends Component<IProps> {
     onSearch({
       searchText,
       limit: 20,
-      offset: 0
+      offset: 0,
+      excluded_ids: this.selectedIds
     });
   };
 

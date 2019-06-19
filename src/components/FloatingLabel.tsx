@@ -14,9 +14,9 @@ class FloatingLabel extends Component<IProps> {
     const { label, value, onPress = noop } = this.props;
     return (
       <TouchableOpacity onPress={onPress}>
-        <View style={{ width: '100%', height: 64 }}>
+        <View style={{ width: '100%', minheight: 64 }}>
           <View style={{ height: 16 }} />
-          <View style={{ height: 48, justifyContent: 'center' }}>
+          <View style={{ minheight: 48, justifyContent: 'center' }}>
             {!!value && (
               <Text
                 style={{

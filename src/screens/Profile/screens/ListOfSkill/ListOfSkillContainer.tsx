@@ -42,8 +42,8 @@ const mapStateToProps = (state: any) => {
   return {
     profile,
     action: userStateSelector(state).action,
-    skills: get(profile, 'skills', [])
-  };
+  skills: get(profile, 'skills', [])
+};
 };
 
 const mapDispatchToProps = (dispatch: any) => {
