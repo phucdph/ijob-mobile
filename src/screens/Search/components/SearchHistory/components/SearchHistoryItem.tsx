@@ -1,9 +1,11 @@
 import React, { PureComponent } from 'react';
-import { ListItem } from 'react-native-elements';
+import { Icon, ListItem } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
 import { ISearchHistory, SearchHistoryType } from '../../../services/typings';
 import { themeVariables } from 'themes/themeVariables';
 import navigationService from 'services/navigationService';
+import { get } from 'lodash';
+import Avatar from 'components/base/Avatar';
 
 interface IProps {
   data: ISearchHistory;
@@ -12,40 +14,41 @@ interface IProps {
 class SearchHistoryItem extends PureComponent<IProps> {
 
   getIcon = () => {
-    const { type } = this.props.data || {} as ISearchHistory;
+    const { type, content } = this.props.data || {} as ISearchHistory;
     switch (type) {
       case SearchHistoryType.COMPANY: {
-        return 'ios-search';
+        return <Avatar source={{uri: content.avatar}} size={19}/>;
       }
       case SearchHistoryType.JOB: {
-        return 'ios-search';
+        return <Icon name={'briefcase-search'} type={'material-community'} size={19}/>;
       }
       case SearchHistoryType.TEXT: {
-        return 'ios-search';
+        return <Icon name={'ios-search'} type={'ionicon'}/>;
       }
       default: {
-        return 'ios-search';
+        return <Icon name={'ios-search'} type={'ionicon'}/>;
       }
     }
   };
 
   handleItemPress = () => {
     const { type, content, name } = this.props.data || {} as ISearchHistory;
+    console.log(type);
     switch (type) {
       case SearchHistoryType.COMPANY: {
         navigationService.navigate({
           routeName: 'Company',
           params: {
-            id: content
+            id: get(content, 'id')
           },
         });
         break;
       }
       case SearchHistoryType.JOB: {
         navigationService.navigate({
-          routeName: 'Job',
+          routeName: 'FeedDetail',
           params: {
-            id: content
+            id: get(content, 'id')
           },
         });
         break;
@@ -69,7 +72,7 @@ class SearchHistoryItem extends PureComponent<IProps> {
     const { name } = this.props.data || {} as ISearchHistory;
     return (
       <ListItem
-        leftIcon={{ name: this.getIcon(), type: 'ionicon' }}
+        leftElement={this.getIcon()}
         title={name}
         titleStyle={{ fontSize: 14 }}
         containerStyle={{ justifyContent: 'center', alignItems: 'center', paddingVertical: themeVariables.spacing_md }}

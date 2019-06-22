@@ -41,6 +41,6 @@ export interface IJobDetail {
 
 export interface IFeedRequest {
   limit: number;
-  offset?: string;
+  offset?: number;
 }
 

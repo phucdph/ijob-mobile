@@ -1,8 +1,8 @@
 export interface ISearchHistory {
-  id: string;
+  id?: string;
   name: string;
   type: SearchHistoryType;
-  content: string;
+  content: any;
 }
 
 export enum SearchHistoryType {

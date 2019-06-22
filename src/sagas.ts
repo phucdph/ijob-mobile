@@ -13,4 +13,5 @@ export default [
   ...require('./screens/Search/sagas').default,
   ...require('./components/Search/SearchCompany/sagas').default,
   ...require('./screens/Company/sagas').default,
+  ...require('./screens/Notification/sagas').default,
 ];

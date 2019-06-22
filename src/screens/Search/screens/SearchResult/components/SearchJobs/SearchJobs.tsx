@@ -9,6 +9,7 @@ import JobItem from '../../../../../NewFeed/components/JobItem';
 import ListItemSpinner from 'components/base/ListItemSpinner';
 import Spinner from 'components/base/Spinner';
 import { size } from 'lodash';
+import { ISearchHistory } from '../../../../services/typings';
 
 interface IProps {
   jobs: IPageableData<IJob>;
@@ -17,11 +18,12 @@ interface IProps {
   isLoadingNext: boolean;
   onRefresh: () => void;
   onSearchNext: () => void;
+  onCreateHistory: (req: ISearchHistory) => void;
 }
 
 class SearchJobs extends Component<IProps> {
   renderJobItem = ({ item }: { item: IJob }) => {
-    return <JobItem data={item} />;
+    return <JobItem data={item} isFromSearch={true}/>;
   };
 
   renderHeaderComponent = () => {

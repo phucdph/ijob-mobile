@@ -1,4 +1,5 @@
 import RestAPIClient from 'services/RestAPIClient';
+import { INotificationRequest } from './typings';
 
 class NotificationService extends RestAPIClient {
   constructor() {
@@ -7,10 +8,12 @@ class NotificationService extends RestAPIClient {
 
   // tslint:disable-next-line:variable-name
   registerToken = async (token: string, user_id: string) => {
-    const res = await this.post('/register', { token, user_id });
-    console.log(res);
-    return res;
+    return await this.post('/register', { token, user_id });
   };
+
+  getNotification = async (req: INotificationRequest) => {
+    return (await this.get('', req)).data;
+  }
 
 
 }

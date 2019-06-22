@@ -28,7 +28,7 @@ class NewFeedContainer extends Component<IProps> {
 
   loadData = () => {
     const { dispatchGetFeeds } = this.props;
-    dispatchGetFeeds({ limit: PAGE_SIZE });
+    dispatchGetFeeds({ limit: PAGE_SIZE, offset: 0 });
   };
 
   isLoading = () => getJobs.is(this.props.action);
@@ -48,13 +48,13 @@ class NewFeedContainer extends Component<IProps> {
     }
     dispatchGetNextFeeds({
       limit: PAGE_SIZE,
-      offset: (last(data.data) || ({} as any))
+      offset: data.data.length,
     });
   };
 
   refreshFeed = () => {
     const { dispatchRefreshFeeds } = this.props;
-    dispatchRefreshFeeds({ limit: PAGE_SIZE });
+    dispatchRefreshFeeds({ limit: PAGE_SIZE, offset: 0 });
   };
 
   render() {
@@ -92,3 +92,5 @@ export default connect(
   mapStateToProps,
   mapDispatchToProp
 )(NewFeedContainer);
+
+

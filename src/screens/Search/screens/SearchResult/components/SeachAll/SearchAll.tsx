@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import { ISearchCompany, ISearchJob } from '../../services/typings';
 import { IPageableData } from 'services/models';
-import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  RefreshControl
-} from 'react-native';
+import { FlatList, RefreshControl, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import WhiteSpace from 'components/base/WhiteSpace';
 import { themeVariables } from 'themes/themeVariables';
 import { Divider, ListItem } from 'react-native-elements';
@@ -19,6 +12,7 @@ import { IJob } from '../../../../../NewFeed/services/typings';
 import Spinner from 'components/base/Spinner';
 import navigationService from 'services/navigationService';
 import { locationFormatter } from 'utils/formatter';
+import { ISearchHistory, SearchHistoryType } from '../../../../services/typings';
 
 interface IProps {
   companies: IPageableData<ISearchCompany>;
@@ -29,6 +23,7 @@ interface IProps {
   onRefresh: () => void;
   onCompanySeeAll: () => void;
   onJobSeeAll: () => void;
+  onCreateHistory: (req: ISearchHistory) => void;
 }
 
 class SearchAll extends Component<IProps> {
@@ -41,11 +36,20 @@ class SearchAll extends Component<IProps> {
 
   getJobs = () => get(this.props, 'jobs.data', []).slice(0, 5);
 
-  handleCompanyPress = (id: string) => {
+  handleCompanyPress = (item: ISearchCompany) => {
+    const { onCreateHistory  } = this.props;
+    const { id, name, avatar } = item;
     navigationService.navigate({
       routeName: 'Company',
       params: {
         id,
+      }
+    });
+    onCreateHistory({
+      type: SearchHistoryType.COMPANY,
+      name,
+      content: {
+        id, avatar, name
       }
     })
   };
@@ -60,13 +64,13 @@ class SearchAll extends Component<IProps> {
         title={name}
         subtitle={locationFormatter(location)}
         subtitleStyle={{ color: themeVariables.secondary_text_color }}
-        onPress={() => this.handleCompanyPress(id)}
+        onPress={() => this.handleCompanyPress(item)}
       />
     );
   };
 
   renderJobItem = ({ item }: { item: IJob }) => {
-    return <JobItem data={item} />;
+    return <JobItem data={item} isFromSearch={true}/>;
   };
 
   renderCompanySection = () => {

@@ -16,6 +16,7 @@ const searchHistoryReducers = [
     on: getSearchHistorySuccess,
     reducer(state: ISearchHistoryState, action: Action<ISearchHistory[]>) {
       state.action = action.type;
+      state.data = action.payload;
     }
   },
   {
@@ -29,7 +30,7 @@ const searchHistoryReducers = [
     on: createSearchHistorySuccess,
     reducer(state: ISearchHistoryState, action: Action<ISearchHistory>) {
       state.action = action.type;
-      state.data.push(action.payload);
+      state.data.unshift(action.payload);
       if (state.data.length > 10) {
         state.data.pop();
       }

@@ -2,26 +2,27 @@ import React, { PureComponent } from 'react';
 import { ListItem } from 'react-native-elements';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { IJob, ISkill, ISource } from '../services/typings';
-import {
-  connectActionSheet,
-  ActionSheetProps
-} from '@expo/react-native-action-sheet';
+import { ActionSheetProps, connectActionSheet } from '@expo/react-native-action-sheet';
 import { themeVariables } from 'themes/themeVariables';
 import WhiteSpace from 'components/base/WhiteSpace';
 import Avatar from 'components/base/Avatar';
 import Tag from './Tag';
 import { locationFormatter, salaryFormatter } from 'utils/formatter';
-import { noop, get } from 'lodash';
+import { get, noop } from 'lodash';
 import moment from 'moment';
 import navigationService from 'services/navigationService';
 import { UserType } from '../../../state';
 import { userTypeSelector } from '../../../selectors';
 import { connect } from 'react-redux';
+import { ISearchHistory, SearchHistoryType } from '../../Search/services/typings';
+import { createSearchHistory } from '../../Search/components/SearchHistory/actions';
 
 interface IProps extends Partial<ActionSheetProps> {
   data: IJob;
   userType?: UserType;
   showSkill?: boolean;
+  isFromSearch?:boolean;
+  dispatchCreateSearchHistory?: (req: ISearchHistory) => void;
 }
 
 // @ts-ignore
@@ -30,6 +31,7 @@ class JobItem extends PureComponent<IProps> {
   static defaultProps = {
     userType: UserType.GUEST,
     showSkill: true,
+    isFromSearch: false,
   };
 
   handleLongPress = () => {
@@ -48,13 +50,23 @@ class JobItem extends PureComponent<IProps> {
   };
 
   handleFeedPress = () => {
-    const { data } = this.props;
+    const { data, dispatchCreateSearchHistory = noop, isFromSearch } = this.props;
     navigationService.navigate({
       routeName: 'FeedDetail',
       params: {
         id: data.id
       }
     });
+    if (isFromSearch) {
+      const { id, name } = data;
+      dispatchCreateSearchHistory({
+        type: SearchHistoryType.JOB,
+        name,
+        content: {
+          id
+        }
+      })
+    }
   };
 
   render() {
@@ -129,7 +141,14 @@ const mapStateToProps = (state: any) => {
   return { userType: userTypeSelector(state) };
 };
 
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    dispatchCreateSearchHistory: (req: ISearchHistory) =>
+      dispatch(createSearchHistory(req)),
+  };
+};
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(JobItem);

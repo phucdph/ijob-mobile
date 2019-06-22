@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity
-} from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import {
   NavigationInjectedProps,
   NavigationScreenConfigProps
@@ -18,8 +13,11 @@ import navigationService from 'services/navigationService';
 import { SearchType } from './screens/SearchResult/services/typings';
 import SearchHistory from './components/SearchHistory/SearchHistoryContainer';
 import Authorize from 'components/base/Authorize';
+import { ISearchHistory, SearchHistoryType } from './services/typings';
 
-interface IProps extends NavigationInjectedProps {}
+interface IProps extends NavigationInjectedProps {
+  onCreateHistory: (req: ISearchHistory) => void;
+}
 
 interface IState {
   searchText: string;
@@ -123,9 +121,15 @@ class Search extends Component<IProps, IState> {
 
   handleSeeResultPress = () => {
     const { searchText } = this.state;
+    const { onCreateHistory } = this.props;
     navigationService.navigate({
       routeName: 'SearchResult',
       params: { searchText, searchType: SearchType.ALL }
+    });
+    onCreateHistory({
+      type: SearchHistoryType.TEXT,
+      name: searchText,
+      content: ''
     });
   };
 
@@ -161,7 +165,8 @@ class Search extends Component<IProps, IState> {
           <TouchableOpacity onPress={this.handleSeeResultPress}>
             <View
               style={{
-                paddingHorizontal: themeVariables.spacing_lg
+                paddingHorizontal: themeVariables.spacing_md,
+                paddingVertical: themeVariables.spacing_md
               }}
             >
               <Text

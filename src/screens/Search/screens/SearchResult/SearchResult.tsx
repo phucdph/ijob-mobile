@@ -23,6 +23,7 @@ import SearchJobs from './components/SearchJobs/SearchJobs';
 import navigationService from 'services/navigationService';
 import { ILocation } from 'components/Locations/services/typings';
 import { ISkill } from 'components/Search/SearchSkill/services/typings';
+import { ISearchHistory } from '../../services/typings';
 
 interface IProps extends NavigationInjectedProps {
   isRefreshing: boolean;
@@ -35,6 +36,7 @@ interface IProps extends NavigationInjectedProps {
   companies: IPageableData<ISearchCompany>;
   jobs: IPageableData<ISearchJob>;
   searchType: SearchType;
+  onCreateHistory: (req: ISearchHistory) => void;
 }
 
 interface IState {
@@ -412,7 +414,7 @@ class SearchResult extends Component<IProps, IState> {
   };
 
   renderSearchAll = () => {
-    const { companies, jobs, isLoading, isRefreshing, onRefresh } = this.props;
+    const { companies, jobs, isLoading, isRefreshing, onRefresh, onCreateHistory } = this.props;
     return (
       <SearchAll
         companies={companies}
@@ -422,6 +424,7 @@ class SearchResult extends Component<IProps, IState> {
         onRefresh={onRefresh}
         onCompanySeeAll={this.handleCompanyPress}
         onJobSeeAll={this.handleJobPress}
+        onCreateHistory={onCreateHistory}
       />
     );
   };
@@ -433,7 +436,8 @@ class SearchResult extends Component<IProps, IState> {
       isRefreshing,
       onRefresh,
       isLoadingNext,
-      onSearchNext
+      onSearchNext,
+      onCreateHistory
     } = this.props;
     return (
       <SearchCompanies
@@ -443,6 +447,8 @@ class SearchResult extends Component<IProps, IState> {
         isLoadingNext={isLoadingNext}
         onRefresh={onRefresh}
         onSearchNext={onSearchNext}
+        onCreateHistory={onCreateHistory}
+
       />
     );
   };
@@ -454,7 +460,8 @@ class SearchResult extends Component<IProps, IState> {
       isRefreshing,
       onRefresh,
       isLoadingNext,
-      onSearchNext
+      onSearchNext,
+      onCreateHistory
     } = this.props;
     return (
       <SearchJobs
@@ -464,6 +471,7 @@ class SearchResult extends Component<IProps, IState> {
         isLoadingNext={isLoadingNext}
         onRefresh={onRefresh}
         onSearchNext={onSearchNext}
+        onCreateHistory={onCreateHistory}
       />
     );
   };

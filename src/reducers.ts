@@ -36,5 +36,6 @@ export default {
   ...require('./screens/Search/reducers').default,
   ...require('./components/Search/SearchCompany/reducers').default,
   ...require('./screens/Company/reducers').default,
+  ...require('./screens/Notification/reducers').default,
   ...createReducers(stateContext, appReducers, initialState),
 };

@@ -1,6 +1,6 @@
 export default {
   Search: {
-    getScreen: () => require('./Search').default
+    getScreen: () => require('./SearchContainer').default
   },
   ...require('./screens/SearchResult/navigator').default
 };

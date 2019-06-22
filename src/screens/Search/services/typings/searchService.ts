@@ -8,30 +8,30 @@ import { ISearchHistory } from './index';
 
 class SearchService extends RestAPIClient {
   constructor() {
-    super('search');
+    super('');
   }
 
   searchJob = async (req: Readonly<ISearchRequest>) => {
-    const res = await this.get('/job', omit(req, ['searchType']));
+    const res = await this.get('search/job', omit(req, ['searchType']));
     return res.data;
   };
 
   searchCompany = async (req: Readonly<ISearchCompanyRequest | ISearchRequest>) => {
-    const res = await this.get('/company', omit(req, ['searchType']));
+    const res = await this.get('search/company', omit(req, ['searchType']));
     return res.data;
   };
 
   searchSkill = async (req: ISearchSKillRequest): Promise<IPageableData<ISkill>> => {
-    const res = await this.get('/skill', req);
+    const res = await this.get('search/skill', req);
     return res.data;
   };
 
   getHistory = async () => {
-    return (await this.get('/history')).data;
+    return (await this.get('recent-search?limit=10&offset=0')).data.data;
   };
 
   createHistory = async (req: ISearchHistory) => {
-    return (await this.post('/history', req)).data;
+    return (await this.post('recent-search', req)).data;
   }
 }
 

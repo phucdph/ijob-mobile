@@ -25,9 +25,9 @@ class UserService extends RestAPIClient {
     return res;
   };
 
-  savePushToken = (token: string, userId: string) => {
-    return this.post('user', {
-      token, userId
+  savePushToken = (token: string) => {
+    return this.post('user/saveToken', {
+      token
     })
   }
 }

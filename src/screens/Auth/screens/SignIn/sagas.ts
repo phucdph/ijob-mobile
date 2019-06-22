@@ -24,8 +24,7 @@ const signInSaga = {
       ]);
       const token = yield call(registerForPushNotificationsAsync);
       if (token) {
-        const { id: userId } = res.data.profile;
-        // yield call(userService.savePushToken, token, userId);
+        yield call(userService.savePushToken, token);
       }
       if (get(res, 'data.profile.location.id') && get(res, 'data.profile.skills', []).length > 0) {
         navigationService.dispatch(
@@ -42,6 +41,7 @@ const signInSaga = {
       }
 
     } catch (err) {
+      console.log(err);
       let msg = 'Something wrong. Please try again later';
       switch (err.status || err.error) {
         case SignInStatus.USER_NOT_FOUND: {

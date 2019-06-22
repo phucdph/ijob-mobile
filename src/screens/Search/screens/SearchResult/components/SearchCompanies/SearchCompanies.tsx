@@ -12,6 +12,7 @@ import { size } from 'lodash';
 import Spinner from 'components/base/Spinner';
 import navigationService from 'services/navigationService';
 import { locationFormatter } from 'utils/formatter';
+import { ISearchHistory, SearchHistoryType } from '../../../../services/typings';
 
 interface IProps {
   companies: IPageableData<ISearchCompany>;
@@ -20,17 +21,27 @@ interface IProps {
   isLoadingNext: boolean;
   onRefresh: () => void;
   onSearchNext: () => void;
+  onCreateHistory: (req: ISearchHistory) => void;
 }
 
 class SearchCompanies extends Component<IProps> {
 
-  handleCompanyPress = (id: string) => {
+  handleCompanyPress = (item: ISearchCompany) => {
+    const { id, name, avatar } = item;
+    const { onCreateHistory } = this.props;
     navigationService.navigate({
       routeName: 'Company',
       params: {
         id,
       }
     });
+    onCreateHistory({
+      type: SearchHistoryType.COMPANY,
+      name,
+      content: {
+        id, avatar, name
+      }
+    })
   };
 
   renderCompanyItem = ({ item }: { item: ISearchCompany }) => {
@@ -43,7 +54,7 @@ class SearchCompanies extends Component<IProps> {
         title={name}
         subtitle={locationFormatter(location)}
         subtitleStyle={{ color: themeVariables.secondary_text_color }}
-        onPress={() => this.handleCompanyPress(item.id)}
+        onPress={() => this.handleCompanyPress(item)}
       />
     );
   };

@@ -31,6 +31,7 @@ export function configureStore() {
   const middlewares = [sagaMiddleware];
   const enhancers = applyMiddleware(...middlewares);
   if (__DEV__) {
+    console.log('__DEV__');
     const Reactotron = require('./config/Reactotron').default;
     return createStore(
       persistedReducer,

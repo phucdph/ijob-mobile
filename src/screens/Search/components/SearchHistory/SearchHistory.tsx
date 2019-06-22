@@ -3,13 +3,14 @@ import { FlatList, Text, View } from 'react-native';
 import { themeVariables } from 'themes/themeVariables';
 import { ISearchHistory } from '../../services/typings';
 import SearchHistoryItem from './components/SearchHistoryItem';
+import WhiteSpace from 'components/base/WhiteSpace';
 
-const data = [
-  { id: '1', name: 'react js', type: 'text' },
-  { id: '1', name: 'react native', type: 'text' },
-  { id: '1', name: 'golang', type: 'text' },
-  { id: '1', name: 'kms technology', type: 'text' }
-];
+// const data = [
+//   { id: '1', name: 'react js', type: 'text' },
+//   { id: '1', name: 'react native', type: 'text' },
+//   { id: '1', name: 'golang', type: 'text' },
+//   { id: '1', name: 'kms technology', type: 'text' }
+// ];
 
 interface IProps {
   data: ISearchHistory[];
@@ -28,6 +29,8 @@ class SearchHistory extends Component<IProps> {
   };
 
   render() {
+    const { data = []} = this.props;
+    if (data.length <=0) return null;
     return (
       <View style={{ backgroundColor: 'white' }}>
         <View style={{ padding: themeVariables.spacing_md }}>
@@ -40,6 +43,7 @@ class SearchHistory extends Component<IProps> {
           >
             Recent Searches
           </Text>
+          <WhiteSpace size={'sm'}/>
           <FlatList
             data={data}
             keyExtractor={(item: ISearchHistory, index: number) =>

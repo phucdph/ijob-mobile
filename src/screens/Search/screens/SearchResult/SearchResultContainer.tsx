@@ -12,6 +12,8 @@ import { IPageableData } from 'services/models';
 import { cleanUpSearch, refreshSearch, search, searchNext } from './actions';
 import { PAGE_SIZE } from '../../../NewFeed/constants';
 import { NavigationInjectedProps } from 'react-navigation';
+import { ISearchHistory } from '../../services/typings';
+import { createSearchHistory } from '../../components/SearchHistory/actions';
 
 interface IProps extends NavigationInjectedProps {
   req: ISearchRequest;
@@ -24,6 +26,7 @@ interface IProps extends NavigationInjectedProps {
   dispatchCleanUpSearch: () => void;
   searchText: string;
   searchType: SearchType;
+  dispatchCreateSearchHistory: (req: ISearchHistory) => void;
 }
 
 class SearchResultContainer extends Component<IProps> {
@@ -87,7 +90,7 @@ class SearchResultContainer extends Component<IProps> {
   };
 
   render() {
-    const { req, companies, jobs, navigation, searchType } = this.props;
+    const { req, companies, jobs, navigation, searchType, dispatchCreateSearchHistory } = this.props;
     return (
       <SearchResult
         req={req}
@@ -101,6 +104,7 @@ class SearchResultContainer extends Component<IProps> {
         onRefresh={this.handleRefreshSearch}
         navigation={navigation}
         searchType={searchType}
+        onCreateHistory={dispatchCreateSearchHistory}
       />
     );
   }
@@ -127,7 +131,9 @@ const mapDispatchToProps = (dispatch: any) => {
     dispatchSearchNext: (req: ISearchRequest) => dispatch(searchNext(req)),
     dispatchRefreshSearch: (req: ISearchRequest) =>
       dispatch(refreshSearch(req)),
-    dispatchCleanUpSearch: () => dispatch(cleanUpSearch())
+    dispatchCleanUpSearch: () => dispatch(cleanUpSearch()),
+    dispatchCreateSearchHistory: (req: ISearchHistory) =>
+      dispatch(createSearchHistory(req)),
   };
 };
 

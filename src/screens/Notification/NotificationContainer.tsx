@@ -8,9 +8,17 @@ import { themeVariables } from 'themes/themeVariables';
 import { Button, Icon } from 'react-native-elements';
 import WhiteSpace from 'components/base/WhiteSpace';
 import navigationService from 'services/navigationService';
+import { getNextNotification, getNotification, refreshNotification } from './actions';
+import { INotification, INotificationRequest } from './services/typings';
+import { notificationSelector } from './selectors';
+import { IPageableData } from 'services/models';
 
 interface IProps {
-
+  dispatchGetNotification: (req: INotificationRequest) => void;
+  dispatchGetNextNotification: (req: INotificationRequest) => void;
+  dispatchRefreshNotification: (req: INotificationRequest) => void;
+  action: string;
+  data: IPageableData<INotification>;
 }
 
 class NotificationContainer extends Component<IProps> {
@@ -41,7 +49,8 @@ class NotificationContainer extends Component<IProps> {
         </Text>
         <WhiteSpace size={'lg'} />
         <Text style={{ fontSize: 16, textAlign: 'center' }}>
-          Get notified when job posters view your application, new jobs match your saved skill.
+          Get notified when job posters view your application, new jobs match
+          your saved skill.
         </Text>
         <View style={{ height: '20%' }} />
         <View>
@@ -53,7 +62,7 @@ class NotificationContainer extends Component<IProps> {
               borderColor: themeVariables.primary_color,
               borderWidth: 1
             }}
-            onPress={() => navigationService.push({ routeName: 'SignIn'})}
+            onPress={() => navigationService.push({ routeName: 'SignIn' })}
           />
           <WhiteSpace size={'md'} />
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -62,7 +71,7 @@ class NotificationContainer extends Component<IProps> {
               title={'Signin'}
               type={'clear'}
               titleStyle={{ color: themeVariables.primary_color }}
-              onPress={() => navigationService.push({ routeName: 'SignUp'})}
+              onPress={() => navigationService.push({ routeName: 'SignUp' })}
             />
           </View>
         </View>
@@ -70,24 +79,82 @@ class NotificationContainer extends Component<IProps> {
     );
   };
 
+  handleLoad = () => {
+    const { dispatchGetNotification } = this.props;
+    dispatchGetNotification({
+      limit: 20,
+      offset: 0
+    });
+  };
+
+  handleRefresh = () => {
+    const { dispatchRefreshNotification } = this.props;
+    dispatchRefreshNotification({
+      limit: 20,
+      offset: 0
+    });
+  };
+
+  handleLoadNext = () => {
+    const {
+      dispatchGetNextNotification,
+      data: { data, total }
+    } = this.props;
+    if (this.isLoading() || this.isLoadingNext() || data.length >= total) {
+      return;
+    }
+    dispatchGetNextNotification({
+      limit: data.length + 20,
+      offset: data.length
+    });
+  };
+
+  isLoading = () => getNotification.is(this.props.action);
+
+  isLoadingNext = () => getNextNotification.is(this.props.action);
+
+  isRefreshing = () => refreshNotification.is(this.props.action);
+
   render() {
+    const { data } = this.props;
     return (
       <Authorize GuestViewComponent={this.renderGuestView}>
-        <Notification/>
+        <Notification
+          onLoad={this.handleLoad}
+          onLoadNext={this.handleLoadNext}
+          onRefresh={this.handleRefresh}
+          data={data.data}
+          isLoading={this.isLoading()}
+          isLoadingNext={this.isLoadingNext()}
+          isRefreshing={this.isRefreshing()}
+        />
       </Authorize>
     );
   }
 }
 
 const mapStateToProps = (state: any) => {
+  const notificationState = notificationSelector(state);
   return {
-    userType: userTypeSelector(state)
+    userType: userTypeSelector(state),
+    action: notificationState.action,
+    data: notificationState.data,
+    error: notificationState.error
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    dispatchGetNotification: (req: INotificationRequest) =>
+      dispatch(getNotification(req)),
+    dispatchGetNextNotification: (req: INotificationRequest) =>
+      dispatch(getNextNotification(req)),
+    dispatchRefreshNotification: (req: INotificationRequest) =>
+      dispatch(refreshNotification(req))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NotificationContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NotificationContainer);
