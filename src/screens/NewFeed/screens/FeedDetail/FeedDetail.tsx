@@ -6,7 +6,7 @@ import {
   ScrollView,
   RefreshControl
 } from 'react-native';
-import Constants from 'expo-constants'
+import Constants from 'expo-constants';
 import { Button, Icon, ListItem } from 'react-native-elements';
 import HeaderBackButton from 'components/HeaderBackButton';
 import { themeVariables } from 'themes/themeVariables';
@@ -23,6 +23,7 @@ import {
   connectActionSheet
 } from '@expo/react-native-action-sheet';
 import navigationService from 'services/navigationService';
+import { UserType } from '../../../../state';
 
 interface IProps extends Partial<ActionSheetProps> {
   data: IJobDetail | IJob;
@@ -30,16 +31,18 @@ interface IProps extends Partial<ActionSheetProps> {
   onRefresh: () => void;
   onSave: () => void;
   onUnsave: () => void;
+  onApply: () => void;
   isLoading: boolean;
   isRefresing: boolean;
+  userType: UserType;
 }
 // @ts-ignore
 @connectActionSheet
 class FeedDetail extends Component<IProps> {
   static navigationOptions = () => {
     return {
-    header: null,
-    }
+      header: null
+    };
   };
 
   componentDidMount() {
@@ -114,11 +117,11 @@ class FeedDetail extends Component<IProps> {
             <ListItem
               key={index}
               title={item}
-              leftElement={
-                <View style={{ width: 10, alignItems: 'center' }}>
-                  <Icon name={'circle'} type={'font-awesome'} size={8} />
-                </View>
-              }
+              // leftElement={
+              //   <View style={{ width: 10, alignItems: 'center' }}>
+              //     <Icon name={'circle'} type={'font-awesome'} size={8} />
+              //   </View>
+              // }
               titleStyle={{ fontSize: 14 }}
               containerStyle={{ padding: themeVariables.spacing_xs }}
             />
@@ -143,11 +146,11 @@ class FeedDetail extends Component<IProps> {
             <ListItem
               key={index}
               title={item}
-              leftElement={
-                <View style={{ width: 10, alignItems: 'center' }}>
-                  <Icon name={'circle'} type={'font-awesome'} size={8} />
-                </View>
-              }
+              // leftElement={
+              //   {/*<View style={{ width: 10, alignItems: 'center' }}>*/}
+              //   {/*  <Icon name={'circle'} type={'font-awesome'} size={8} />*/}
+              //   {/*</View>*/}
+              // }
               titleStyle={{ fontSize: 14 }}
               containerStyle={{ padding: themeVariables.spacing_xs }}
             />
@@ -228,7 +231,7 @@ class FeedDetail extends Component<IProps> {
                 <Avatar
                   size={45}
                   source={{
-                    uri: avatar,
+                    uri: avatar
                   }}
                 />
               }
@@ -248,24 +251,38 @@ class FeedDetail extends Component<IProps> {
           style={{
             minWidth: 50,
             height: '100%',
-            justifyContent: 'flex-start',
+            justifyContent: 'flex-start'
           }}
         >
-          <WhiteSpace size={'lg'}/>
+          <WhiteSpace size={'lg'} />
           <Icon
             name={'ios-more'}
             type={'ionicon'}
             onPress={this.handleMenuPress}
           />
-          {saved && <Icon name={'ios-bookmark'} type={'ionicon'} color={themeVariables.accent_color}/>}
+          {saved && (
+            <Icon
+              name={'ios-bookmark'}
+              type={'ionicon'}
+              color={themeVariables.accent_color}
+            />
+          )}
         </View>
       </View>
     );
   };
 
+  handleApply = () => {
+    const { applied } = this.props.data;
+    const { onApply } = this.props;
+    if (!applied) {
+      onApply();
+    }
+  };
+
   render() {
-    const { name } = this.props.data;
-    const { isRefresing, onRefresh } = this.props;
+    const { name, applied } = this.props.data;
+    const { isRefresing, onRefresh, userType } = this.props;
     return (
       <View style={{ flex: 1, paddingTop: Constants.statusBarHeight }}>
         <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
@@ -284,16 +301,23 @@ class FeedDetail extends Component<IProps> {
           {this.renderRequirementSection()}
           <WhiteSpace size={'md'} />
           {this.renderBenefitSection()}
-          <WhiteSpace size={'lg'} />
-          <Button
-            title={'Apply Now'}
-            buttonStyle={{ backgroundColor: themeVariables.accent_color }}
-            titleStyle={{
-              color: 'white'
-            }}
-          />
-          <WhiteSpace size={'lg'} />
-          <WhiteSpace size={'xl'} />
+          {userType === UserType.USER && (
+            <>
+              <WhiteSpace size={'lg'} />
+              <Button
+                title={
+                  applied ? 'You was interested this job' : `I'm intersted`
+                }
+                buttonStyle={{ backgroundColor: themeVariables.accent_color }}
+                disabled={applied}
+                titleStyle={{
+                  color: 'white'
+                }}
+                onPress={this.handleApply}
+              />
+              <WhiteSpace size={'lg'} />
+            </>
+          )}
         </ScrollView>
       </View>
     );

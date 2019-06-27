@@ -81,6 +81,12 @@ export const handleNotification = (notification: INotification) => {
       break;
     }
     case 'selected': {
+      navigationService.push({
+        routeName: 'FeedDetail',
+        params:{
+          id: jobId
+        }
+      });
       break;
     }
     default: {

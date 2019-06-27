@@ -7,17 +7,21 @@ import {
 } from './selectors';
 import { NavigationInjectedProps } from 'react-navigation';
 import { IJob, IJobDetail } from '../../services/typings';
-import { getJobDetail, refreshJobDetail } from './actions';
+import { getJobDetail, refreshJobDetail, applyJob } from './actions';
 import { saveJob, unsaveJob } from '../../actions';
+import { userTypeSelector } from '../../../../selectors';
+import { UserType } from '../../../../state';
 
 interface IProps extends NavigationInjectedProps {
   id: string;
   data: IJobDetail | IJob;
   action: string;
-  dispatchGetJobDetail: (id: string) => void;
-  dispatchRefreshJobDetail: (id: string) => void;
+  dispatchGetJobDetail: (res: any) => void;
+  dispatchRefreshJobDetail: (res: any) => void;
   dispatchSaveJob: (id: string) => void;
   dispatchUnsaveJob: (id: string) => void;
+  dispatchApplyJob: (res: {id: string}) => void;
+  userType: UserType;
 }
 
 class FeedDetailContainer extends Component<IProps> {
@@ -29,12 +33,12 @@ class FeedDetailContainer extends Component<IProps> {
 
   handleLoad = () => {
     const { id, dispatchGetJobDetail } = this.props;
-    dispatchGetJobDetail(id);
+    dispatchGetJobDetail({id});
   };
 
   handleRefresh = () => {
     const { id, dispatchRefreshJobDetail } = this.props;
-    dispatchRefreshJobDetail(id);
+    dispatchRefreshJobDetail({id});
   };
 
   handleSaveJob = () => {
@@ -47,15 +51,22 @@ class FeedDetailContainer extends Component<IProps> {
     dispatchUnsaveJob(id);
   };
 
+  handleApplyJob = () => {
+    const { id, dispatchApplyJob } = this.props;
+    dispatchApplyJob({id});
+  };
+
   render() {
-    const { data } = this.props;
+    const { data, userType } = this.props;
     return (
       <FeedDetail
         data={data}
+        userType={userType}
         onLoad={this.handleLoad}
         onRefresh={this.handleRefresh}
         onSave={this.handleSaveJob}
         onUnsave={this.handleUnsaveJob}
+        onApply={this.handleApplyJob}
         isLoading={this.isLoading()}
         isRefresing={this.isRefreshing()}
       />
@@ -70,7 +81,8 @@ const mapStateToProps = (state: any, props: IProps) => {
     id,
     action: jobDetailState.action,
     error: jobDetailState.error,
-    data: jobDetailDataStateSelector(state, { id })
+    data: jobDetailDataStateSelector(state, { id }),
+    userType: userTypeSelector(state)
   };
 };
 
@@ -79,7 +91,8 @@ const mapDispatchToProps = (dispatch: any) => {
     dispatchGetJobDetail: (id: string) => dispatch(getJobDetail(id)),
     dispatchRefreshJobDetail: (id: string) => dispatch(refreshJobDetail(id)),
     dispatchSaveJob: (id: string) => dispatch(saveJob(id)),
-    dispatchUnsaveJob: (id: string) => dispatch(unsaveJob(id))
+    dispatchUnsaveJob: (id: string) => dispatch(unsaveJob(id)),
+    dispatchApplyJob: (res: {id: string}) => dispatch(applyJob(res))
   };
 };
 

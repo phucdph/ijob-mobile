@@ -24,6 +24,7 @@ export interface IJob {
   isActive: boolean;
   created_at: string;
   saved?: boolean;
+  applied?: boolean;
 }
 
 export interface IJobDetail {
@@ -37,6 +38,7 @@ export interface IJobDetail {
   isActive: boolean;
   created_at: string;
   saved: boolean;
+  applied?: boolean;
 }
 
 export interface IFeedRequest {

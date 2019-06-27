@@ -21,7 +21,12 @@ class JobService extends RestAPIClient {
 
   getJob = (id: string) => {
     return this.get(`/${id}`);
+  };
+
+  apply = (id: string) => {
+    return this.post(`/${id}/apply`, {})
   }
+
 }
 
 export const jobService = new JobService();

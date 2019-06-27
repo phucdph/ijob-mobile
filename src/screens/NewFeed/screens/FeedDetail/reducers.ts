@@ -1,6 +1,6 @@
 import { createReducers } from 'utils/redux';
 import { IJobsDetailState, initialState, jobDetailInitialState, stateContext } from './state';
-import { getJobDetail, getJobDetailSuccess, getJobDetailFail, refreshJobDetail } from './actions';
+import { getJobDetail, getJobDetailSuccess, getJobDetailFail, refreshJobDetail, applyJobSuccess, applyJobFail, applyJob } from './actions';
 import { Action } from 'services/typings';
 import { IJob, IJobDetail } from '../../services/typings';
 import { IError } from 'services/models/Error';
@@ -12,9 +12,9 @@ import { ISearchCompany, ISearchJob } from '../../../Search/screens/SearchResult
 
 const feedDetailReducers = [
   {
-    on: [getJobDetail, refreshJobDetail],
-    reducer: (state: IJobsDetailState, action: Action<string>) => {
-      const id = action.payload;
+    on: [getJobDetail, refreshJobDetail, applyJobSuccess],
+    reducer: (state: IJobsDetailState, action: Action<{ id: string }>) => {
+      const {id} = action.payload;
       if (!state[id]) {
         state[id] = jobDetailInitialState;
       }
@@ -30,7 +30,7 @@ const feedDetailReducers = [
     }
   },
   {
-    on: getJobDetailFail,
+    on: [getJobDetailFail, applyJobFail],
     reducer: (state: IJobsDetailState, action: Action<{ id: string, error: IError}>) => {
       const { id, error } = action.payload;
       if (!state[id]) {
@@ -45,6 +45,15 @@ const feedDetailReducers = [
       const id = action.payload;
       if (state[id]) {
         state[id].data.saved = true;
+      }
+    }
+  },
+  {
+    on: applyJob,
+    reducer: (state: IJobsDetailState, action: Action<{ id: string }>) => {
+      const {id} = action.payload;
+      if (state[id]) {
+        state[id].data.applied = true;
       }
     }
   },
