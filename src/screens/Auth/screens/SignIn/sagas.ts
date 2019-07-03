@@ -35,13 +35,12 @@ const signInSaga = {
       } else {
         navigationService.dispatch(
           NavigationActions.navigate({
-            routeName: 'TourGuide'
+            routeName: 'TourGuideModal'
           })
         );
       }
 
     } catch (err) {
-      console.log(err);
       let msg = 'Something wrong. Please try again later';
       switch (err.status || err.error) {
         case SignInStatus.USER_NOT_FOUND: {

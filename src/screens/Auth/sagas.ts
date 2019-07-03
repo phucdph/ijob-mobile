@@ -11,6 +11,7 @@ const signOutSaga = {
     try {
       yield call(authService.clearPresistAuth);
       yield put(resetAppState());
+      authService.signOut();
     } catch (err) {
       console.log(err);
     } finally {

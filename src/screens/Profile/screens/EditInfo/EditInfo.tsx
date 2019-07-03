@@ -32,6 +32,7 @@ interface IFormValues {
   firstName: string;
   lastName: string;
   email: string;
+  phoneNumber: string;
 }
 
 interface IState {
@@ -41,7 +42,8 @@ interface IState {
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required('Please enter your first name'),
-  lastName: Yup.string().required('Please enter your last name')
+  lastName: Yup.string().required('Please enter your last name'),
+  phoneNumber: Yup.string().matches(/((09|03|07|08|05)+([0-9]{8})\b)/, 'Please enter valid phone number'),
 });
 
 class EditInfo extends Component<IProps, IState> {
@@ -104,7 +106,7 @@ class EditInfo extends Component<IProps, IState> {
     handleSubmit,
     handleBlur
   }: FormikProps<IFormValues>) => {
-    const { firstName, lastName, email } = values;
+    const { firstName, lastName, email, phoneNumber } = values;
     if (!this.submitForm) {
       this.submitForm = handleSubmit;
     }
@@ -139,6 +141,18 @@ class EditInfo extends Component<IProps, IState> {
           editable={false}
           value={email}
         />
+        <WhiteSpace />
+        <FloatingInput
+          label={'Phone number'}
+          iconName={'ios-call'}
+          error={touched.phoneNumber ? errors.phoneNumber : ''}
+          value={phoneNumber}
+          onChangeText={handleChange('phoneNumber')}
+          onBlur={handleBlur('phoneNumber')}
+          autoCorrect={false}
+          autoCapitalize={'words'}
+          keyboardType={'number-pad'}
+        />
         <FloatingLabel
           label={'Location'}
           onPress={this.handleLocationInputPress}
@@ -157,13 +171,13 @@ class EditInfo extends Component<IProps, IState> {
 
   render() {
     const { profile, isLoading } = this.props;
-    const { firstName, lastName, email } = profile;
+    const { firstName, lastName, email, phoneNumber } = profile;
     return (
       <Spinner isModal={true} loading={isLoading} overlay={0.3}>
         <View style={{ flex: 1, padding: themeVariables.spacing_md }}>
           <Formik
             onSubmit={this.handleSubmit}
-            initialValues={{ firstName, lastName, email }}
+            initialValues={{ firstName, lastName, email, phoneNumber }}
             render={this.renderFormComponent}
             validationSchema={validationSchema}
           />

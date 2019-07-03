@@ -5,7 +5,6 @@ import WhiteSpace from 'components/base/WhiteSpace';
 import { Formik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Constants from 'expo-constants'
 import TextInput from 'components/base/TextInput';
 import Button from 'components/base/Button';
 
@@ -22,7 +21,7 @@ const initialFormValues: IFormValues = {
   lastName: '',
   email: '',
   password: '',
-  confirmPassword: ''
+  confirmPassword: '',
 };
 
 const SignupSchema = Yup.object().shape({

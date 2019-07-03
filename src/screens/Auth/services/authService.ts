@@ -3,19 +3,23 @@ import { AsyncStorage } from 'react-native';
 
 class AuthService extends RestAPIClient {
   constructor() {
-    super('auth');
+    super('');
   }
 
   signUp = (req: ISignUpRequest) => {
-    return this.post('/register', req);
+    return this.post('/auth/register', req);
   };
 
   signIn = (req: ISignInRequest) => {
-    return this.post('/login', req);
+    return this.post('/auth/login', req);
+  };
+
+  signOut = () => {
+    return this.delete('/user/logout');
   };
 
   checkTokenValid = async () => {
-    return (await this.get('/validateToken')).data;
+    return (await this.get('/auth/validateToken')).data;
   };
 
   presistAuth = async (req: ISignUpRequest) => {

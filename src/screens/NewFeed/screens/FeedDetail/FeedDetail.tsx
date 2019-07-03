@@ -306,7 +306,7 @@ class FeedDetail extends Component<IProps> {
               <WhiteSpace size={'lg'} />
               <Button
                 title={
-                  applied ? 'You was interested this job' : `I'm intersted`
+                  applied ? 'WOU WAS INTERESTED THIS JOB' : `I'M INTERESTED`
                 }
                 buttonStyle={{ backgroundColor: themeVariables.accent_color }}
                 disabled={applied}

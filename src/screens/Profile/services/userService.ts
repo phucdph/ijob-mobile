@@ -18,7 +18,7 @@ class UserService extends RestAPIClient {
 
   update = async (req:Partial<IUser>): Promise<IUser> => {
     const id = req.id;
-    const request = pick(req, ['id', 'firstName', 'lastName', 'avatar', 'location', 'skills']);
+    const request = pick(req, ['id', 'firstName', 'lastName', 'avatar', 'location', 'skills', 'phoneNumber']);
     const res = (await this.put(`user/${id}`, request)).data;
     delete res.password;
     delete res.confirmPassword;

@@ -468,7 +468,7 @@ class Profile extends Component<IProps> {
   };
 
   renderInfo = () => {
-    const { email } = this.props.profile;
+    const { email, phoneNumber } = this.props.profile;
     const location = get(this.props, 'profile.location.name');
     return (
       <View
@@ -517,6 +517,18 @@ class Profile extends Component<IProps> {
             </View>
             <View style={{ flex: 0.7, alignItems: 'flex-end' }}>
               <Text>{location}</Text>
+            </View>
+          </View>
+        )}
+        {phoneNumber && (
+          <View
+            style={{ padding: themeVariables.spacing_md, flexDirection: 'row' }}
+          >
+            <View style={{ flex: 0.3 }}>
+              <Text style={{ fontWeight: 'bold' }}>Phone:</Text>
+            </View>
+            <View style={{ flex: 0.7, alignItems: 'flex-end' }}>
+              <Text>{phoneNumber}</Text>
             </View>
           </View>
         )}

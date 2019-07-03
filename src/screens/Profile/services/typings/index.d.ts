@@ -15,4 +15,5 @@ export interface IUser {
   skills?: ISkill[];
   saveJob?: string[];
   followCompany?: string[];
+  phoneNumber: string;
 }

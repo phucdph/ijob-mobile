@@ -26,9 +26,9 @@ class TourGuideContainer extends Component<IProps> {
   };
 
   render() {
-    const { navigation, skills } = this.props;
+    const { navigation, skills, profile } = this.props;
     return (
-      <TourGuide navigation={navigation} skills={skills} onUpdate={this.onUpdate}/>
+      <TourGuide navigation={navigation} skills={skills} onUpdate={this.onUpdate} profile={profile}/>
     );
   }
 }

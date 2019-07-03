@@ -19,6 +19,7 @@ import { ISkill } from '../NewFeed/services/typings';
 interface IProps extends NavigationInjectedProps {
   onUpdate: (req: Partial<IUser>) => void;
   skills: ISkill[];
+  profile: IUser;
 }
 
 interface IState {
@@ -38,7 +39,7 @@ class TourGuide extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      location: null as any
+      location: get(props, 'profile.location', null)
     };
   }
 
@@ -114,7 +115,7 @@ class TourGuide extends Component<IProps, IState> {
           <WhiteSpace size={'lg'} />
           <WhiteSpace size={'lg'} />
           <Button
-            disabled={!!location && !!skills}
+            disabled={!location || !skills}
             title="Let's start"
             type="solid"
             style={{ width: '100%' }}
