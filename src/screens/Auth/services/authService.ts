@@ -7,19 +7,19 @@ class AuthService extends RestAPIClient {
   }
 
   signUp = (req: ISignUpRequest) => {
-    return this.post('/auth/register', req);
+    return this.post('auth/register', req);
   };
 
   signIn = (req: ISignInRequest) => {
-    return this.post('/auth/login', req);
+    return this.post('auth/login', req);
   };
 
   signOut = () => {
-    return this.delete('/user/logout');
+    return this.delete('user/logout');
   };
 
   checkTokenValid = async () => {
-    return (await this.get('/auth/validateToken')).data;
+    return (await this.get('auth/validateToken')).data;
   };
 
   presistAuth = async (req: ISignUpRequest) => {
