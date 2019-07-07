@@ -104,7 +104,7 @@ class NotificationContainer extends Component<IProps> {
       return;
     }
     dispatchGetNextNotification({
-      limit: data.length + 20,
+      limit: 20,
       offset: data.length
     });
   };
