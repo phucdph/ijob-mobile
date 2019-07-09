@@ -26,8 +26,9 @@ import ScrollableTabbar from 'components/base/Tabbar/ScrollableTabbar';
 import About from './screens/About/About';
 import { ISkill } from '../NewFeed/services/typings';
 import Tag from '../NewFeed/components/Tag';
-import ListOfJobs from './components/ListOfJobs/ListOfJobs';
 import ListOfJobsContainer from './components/ListOfJobs/ListOfJobsContainer';
+import Rating from './components/Rating/Rating';
+import Review from './components/Review/ReviewContainer';
 
 interface IProps extends NavigationInjectedProps {
   data: ICompany;
@@ -77,7 +78,11 @@ class Company extends Component<IProps, IState> {
     {
       title: 'Jobs',
       component: () => <ListOfJobsContainer id={this.props.id}/>,
-    }
+    },
+    {
+      title: 'Reviews',
+      component: () => <Review id={this.props.id}/>,
+    },
   ];
 
   tabComponents = {};
@@ -120,7 +125,7 @@ class Company extends Component<IProps, IState> {
 
   renderCoverAndAvatar = () => {
     const { data, userType } = this.props;
-    const { avatar, name, skills, follow } = data;
+    const { avatar, name, skills, follow, id } = data;
     return (
       <View style={{ backgroundColor: 'white' }}>
         <Image
@@ -190,7 +195,9 @@ class Company extends Component<IProps, IState> {
             >
               {name}
             </Text>
-            <WhiteSpace size={'lg'} />
+            <WhiteSpace size={'md'} />
+            <Rating id={id}/>
+            <WhiteSpace size={'md'} />
             {
               userType === UserType.USER && <View
                 style={{

@@ -152,5 +152,6 @@ const companyReducers = [
 
 export default {
   ...createReducers(stateContext, companyReducers, initialState),
-  ...require('./components/ListOfJobs/reducers').default
+  ...require('./components/ListOfJobs/reducers').default,
+  ...require('./components/Rating/reducers').default,
 };

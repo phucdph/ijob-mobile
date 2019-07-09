@@ -17,7 +17,7 @@ const compressor = createCompressor();
 const persistConfig = {
   storage,
   key: 'root',
-  whitelist: ['Feed', 'MyProfile', 'Locations', 'AppState'],
+  whitelist: ['Feed', 'MyProfile', 'Locations', 'AppState', 'CompanyRating', 'Company'],
   transforms: [compressor]
 };
 
