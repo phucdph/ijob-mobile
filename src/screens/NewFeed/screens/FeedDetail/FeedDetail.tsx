@@ -51,13 +51,14 @@ class FeedDetail extends Component<IProps> {
   }
 
   renderInfo = () => {
+    const { userType } = this.props;
     const { salary, skills = [] } = this.props.data;
     const locations = get(this.props.data, 'company.location', [])
       .map((l: ILocation) => l.name)
       .join(', ');
     return (
       <View style={{ padding: themeVariables.spacing_md }}>
-        <ListItem
+        {userType === UserType.USER && <ListItem
           leftElement={
             <View style={{ width: 25, alignItems: 'center' }}>
               <Icon
@@ -70,7 +71,7 @@ class FeedDetail extends Component<IProps> {
           containerStyle={{ padding: themeVariables.spacing_xs }}
           title={salaryFormatter(salary)}
           titleStyle={{ fontSize: 14 }}
-        />
+        />}
         <ListItem
           leftElement={
             <View style={{ width: 25, alignItems: 'center' }}>
