@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://ec-c43.phucdph.ijob-mobile.exp.direct",
-  "packagerNgrokUrl": "https://packager.ec-c43.phucdph.ijob-mobile.exp.direct",
-  "ngrokPid": 5237
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Dimensions,
+  KeyboardAvoidingView,
   RefreshControl,
   ScrollView,
   StatusBar,
@@ -77,12 +78,12 @@ class Company extends Component<IProps, IState> {
     },
     {
       title: 'Jobs',
-      component: () => <ListOfJobsContainer id={this.props.id}/>,
+      component: () => <ListOfJobsContainer id={this.props.id} />
     },
     {
       title: 'Reviews',
-      component: () => <Review id={this.props.id}/>,
-    },
+      component: () => <Review id={this.props.id} />
+    }
   ];
 
   tabComponents = {};
@@ -111,7 +112,7 @@ class Company extends Component<IProps, IState> {
     navigation.setParams({
       placeholder: name
     });
-      onLoad();
+    onLoad();
   }
 
   handleFollowPress = () => {
@@ -119,7 +120,7 @@ class Company extends Component<IProps, IState> {
     if (data.follow) {
       onUnFollow();
     } else {
-      onFollow()
+      onFollow();
     }
   };
 
@@ -196,10 +197,10 @@ class Company extends Component<IProps, IState> {
               {name}
             </Text>
             <WhiteSpace size={'md'} />
-            <Rating id={id}/>
+            <Rating id={id} />
             <WhiteSpace size={'md'} />
-            {
-              userType === UserType.USER && <View
+            {userType === UserType.USER && (
+              <View
                 style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -214,7 +215,9 @@ class Company extends Component<IProps, IState> {
                       flexDirection: 'row',
                       borderWidth: 1,
                       borderColor: themeVariables.primary_color,
-                      backgroundColor: follow ? themeVariables.primary_color : 'white',
+                      backgroundColor: follow
+                        ? themeVariables.primary_color
+                        : 'white',
                       width: 150
                     }}
                   >
@@ -236,8 +239,8 @@ class Company extends Component<IProps, IState> {
                   </View>
                 </TouchableOpacity>
               </View>
-            }
-            <WhiteSpace size={'lg'}/>
+            )}
+            <WhiteSpace size={'lg'} />
             <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
               {(skills || []).map((s: ISkill, i: number) => (
                 <Tag
@@ -273,22 +276,24 @@ class Company extends Component<IProps, IState> {
   render() {
     const { onRefresh, isRefreshing = false } = this.props;
     return (
-      <>
+      <View style={{ flex: 1}}>
         <StatusBar barStyle={'light-content'} />
-        <ScrollView
-          style={{ backgroundColor: themeVariables.fill_base_color, flex: 1 }}
-          keyboardShouldPersistTaps={'handled'}
-          refreshControl={
-            <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
-          }
-          stickyHeaderIndices={[2]}
-        >
-          {this.renderCoverAndAvatar()}
-          <Divider />
-          {this.renderScrollableTabbar()}
-          {this.renderTabView()}
-        </ScrollView>
-      </>
+        <KeyboardAvoidingView behavior={'padding'} style={{ flex: 1 }} keyboardVerticalOffset={64}>
+          <ScrollView
+            style={{ backgroundColor: themeVariables.fill_base_color, flex: 1 }}
+            keyboardShouldPersistTaps={'handled'}
+            refreshControl={
+              <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+            }
+            stickyHeaderIndices={[2]}
+          >
+            {this.renderCoverAndAvatar()}
+            <Divider />
+            {this.renderScrollableTabbar()}
+            {this.renderTabView()}
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </View>
     );
   }
 }

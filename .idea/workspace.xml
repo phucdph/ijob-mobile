@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a47a707a-b55d-4944-bb96-55193f4bb89c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/NewFeed/screens/FeedDetail/FeedDetail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/NewFeed/screens/FeedDetail/FeedDetail.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Company/Company.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Company/Company.tsx" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,18 +21,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="440">
               <caret line="21" column="79" selection-start-line="21" selection-start-column="79" selection-end-line="21" selection-end-column="79" />
-              <folding>
-                <element signature="e#0#41#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/screens/Company/components/Review/ReviewContainer.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="16" column="16" selection-start-line="16" selection-end-line="17" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -64,11 +52,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/screens/NewFeed/screens/FeedDetail/FeedDetail.tsx">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="222">
               <caret line="61" column="23" lean-forward="true" selection-start-line="61" selection-start-column="23" selection-end-line="61" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/screens/Company/Company.tsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="280" column="97" selection-start-line="280" selection-start-column="97" selection-end-line="280" selection-end-column="97" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -196,7 +196,6 @@
         <option value="$PROJECT_DIR$/src/screens/Auth/sagas.ts" />
         <option value="$PROJECT_DIR$/src/screens/Company/components/Rating/actions.ts" />
         <option value="$PROJECT_DIR$/src/screens/Company/reducers.ts" />
-        <option value="$PROJECT_DIR$/src/screens/Company/Company.tsx" />
         <option value="$PROJECT_DIR$/src/screens/Company/components/Review/ReviewContainer.tsx" />
         <option value="$PROJECT_DIR$/src/screens/Company/components/Rating/services/typings/index.d.ts" />
         <option value="$PROJECT_DIR$/src/screens/Company/components/Rating/state.ts" />
@@ -206,6 +205,7 @@
         <option value="$PROJECT_DIR$/src/screens/Company/components/Review/Review.tsx" />
         <option value="$PROJECT_DIR$/src/screens/Company/components/Rating/Rating.tsx" />
         <option value="$PROJECT_DIR$/src/screens/NewFeed/screens/FeedDetail/FeedDetail.tsx" />
+        <option value="$PROJECT_DIR$/src/screens/Company/Company.tsx" />
       </list>
     </option>
   </component>
@@ -247,24 +247,7 @@
               <item name="ijob-mobile" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="NewFeed" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ijob-mobile" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ijob-mobile" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="NewFeed" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ijob-mobile" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ijob-mobile" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="NewFeed" type="462c0819:PsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-              <item name="FeedDetail" type="462c0819:PsiDirectoryNode" />
+              <item name="Company" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -357,12 +340,12 @@
       <workItem from="1561735033953" duration="2543000" />
       <workItem from="1561902037098" duration="311000" />
       <workItem from="1562168010364" duration="168000" />
-      <workItem from="1562682781129" duration="8084000" />
+      <workItem from="1562682781129" duration="8521000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="218676000" />
+    <option name="totallyTimeSpent" value="219113000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -770,13 +753,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/screens/Company/Company.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-195">
-          <caret line="29" column="46" selection-start-line="29" selection-start-column="46" selection-end-line="29" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/screens/Company/components/Rating/sagas.ts">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -881,6 +857,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="222">
           <caret line="61" column="23" lean-forward="true" selection-start-line="61" selection-start-column="23" selection-end-line="61" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/screens/Company/Company.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="280" column="97" selection-start-line="280" selection-start-column="97" selection-end-line="280" selection-end-column="97" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
